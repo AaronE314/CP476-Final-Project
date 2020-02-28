@@ -9,7 +9,9 @@ export class TopNav extends React.Component {
 
     return <div className={styles.topNav}>
 
-            <img className={styles.logo} id="logo" src="logo.png"></img>
+            <div className={styles.logo}>
+                <img id="logo" src="/images/tempLogo.svg"></img>
+            </div>
 
             <nav className={styles.catagories}>
                 <a>MEN</a>
@@ -19,23 +21,23 @@ export class TopNav extends React.Component {
             </nav>
 
             <div className={styles.right}>
-                <div className="search">
-                    <img id="search" src="search.png"></img>
+                <div className={styles.search}>
+                    <img src="/images/search.svg" id="search"></img>
                     <input placeholder="Search"></input>
                 </div>
                 
                 <a className="signIn">
-                    <img id="userImage"></img>
+                    <img src="/images/user.svg" width="16px" height="16px" id="userImage"></img>
                     SIGN IN
                 </a>
 
                 <a className="wishlist">
-                    <img id="heart"></img>
+                    <img src="/images/heart.svg" id="heart"></img>
                     WISHLIST
                 </a>
 
                 <a className="cart">
-                    <img id="cart"></img>
+                    <img src="/images/cart.svg" id="cart"></img>
                     CART
                 </a>
             </div>
