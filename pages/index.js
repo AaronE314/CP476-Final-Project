@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Footer } from '../components/Footer'
 
 const Home = () => (
   <div className="container">
@@ -8,7 +9,7 @@ const Home = () => (
     </Head>
 
     <main>
-      <h1 className="title">
+      {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
 
@@ -44,17 +45,18 @@ const Home = () => (
             Instantly deploy your Next.js site to a public URL with ZEIT Now.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
 
     <footer>
-      <a
+      {/* <a
         href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
         target="_blank"
         rel="noopener noreferrer"
       >
         Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
+      </a> */}
+      <Footer></Footer>
     </footer>
 
     <style jsx>{`
