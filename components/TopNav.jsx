@@ -2,7 +2,6 @@
 import React from 'react';
 import styles from "../css/TopNav.module.css";
 
-
 export class TopNav extends React.Component {
 
     render() {
