@@ -11,7 +11,7 @@
 .aboutCol{
     width: 72px;
     
-font-family: Open Sans;
+font-family: "Open Sans";
 font-style: normal;
 font-weight: normal;
 font-size: 14px;
@@ -20,7 +20,7 @@ line-height: 19px;
 }
 .helpCol{
     
-font-family: Open Sans;
+font-family: "Open Sans";
 font-style: normal;
 font-weight: normal;
 font-size: 14px;
@@ -30,7 +30,7 @@ line-height: 19px;
 }
 .titles{
     margin-bottom: 16px;
-    font-family: Open Sans;
+    font-family: "Open Sans";
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
@@ -43,7 +43,7 @@ height: 16px;
 left: 32px;
 bottom: 24px;
 
-font-family: Roboto;
+font-family: "Roboto";
 font-style: normal;
 font-weight: normal;
 font-size: 14px;
@@ -60,7 +60,7 @@ height: 16px;
 right: 206px;
 bottom: 24px;
 
-font-family: Roboto;
+font-family: "Roboto";
 font-style: normal;
 font-weight: normal;
 font-size: 14px;
@@ -80,7 +80,7 @@ height: 16px;
 right: 32px;
 bottom: 24px;
 
-font-family: Roboto;
+font-family: "Roboto";
 font-style: normal;
 font-weight: normal;
 font-size: 14px;
