@@ -19,7 +19,6 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto:700&display=swap"
             rel="stylesheet"
           />
-          <link rel="stylesheet" type="text/css" href="css/styles.css"/>
         </Head>
         <body>
           <Main />
