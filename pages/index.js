@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Dialog } from '../components/Dialog'
 
 const Home = () => (
   <div className="container">
@@ -8,7 +9,14 @@ const Home = () => (
     </Head>
 
     <main>
-      <h1 className="title">
+
+      <Dialog></Dialog>
+      {/* <br/>
+      <br/>
+      <br/>
+      <br/>
+      <SignInDialog></SignInDialog> */}
+      {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
 
@@ -44,20 +52,20 @@ const Home = () => (
             Instantly deploy your Next.js site to a public URL with ZEIT Now.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
 
     <footer>
-      <a
+      {/* <a
         href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
         target="_blank"
         rel="noopener noreferrer"
       >
         Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
+      </a> */}
     </footer>
 
-    <style jsx>{`
+    {/* <style jsx>{`
       .container {
         min-height: 100vh;
         padding: 0 0.5rem;
@@ -182,20 +190,21 @@ const Home = () => (
           flex-direction: column;
         }
       }
-    `}</style>
+    `}</style> */}
 
     <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
 
       * {
-        box-sizing: border-box;
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: bold;
+        line-height: 19px;
+
+        letter-spacing: 0.1em;
+
       }
+
+
     `}</style>
   </div>
 )
