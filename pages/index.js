@@ -1,5 +1,5 @@
 import Head from 'next/head'
-
+import {Product} from "../components/Product"
 const Home = () => (
   <div className="container">
     <Head>
@@ -8,7 +8,8 @@ const Home = () => (
     </Head>
 
     <main>
-      <h1 className="title">
+      <Product></Product>
+      {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
 
@@ -44,7 +45,7 @@ const Home = () => (
             Instantly deploy your Next.js site to a public URL with ZEIT Now.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
 
     <footer>
