@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Dialog } from '../components/Dialog'
 import { Footer } from '../components/Footer'
 import TopNav from '../components/TopNav'
 
@@ -19,6 +20,8 @@ const Home = () => (
     <main>
   
       <Product></Product>
+      <Dialog></Dialog>
+      
       {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
@@ -67,7 +70,6 @@ const Home = () => (
         Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
       </a> */}
       <Footer></Footer>
-
     </footer>
 
     {/* <style jsx>{`
@@ -195,21 +197,22 @@ const Home = () => (
           flex-direction: column;
         }
       }
-    `}</style>
+    `}</style> */}
 
     <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
 
       * {
-        box-sizing: border-box;
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: bold;
+        line-height: 19px;
+
+        letter-spacing: 0.1em;
+
       }
-    `}</style> */}
+
+
+    `}</style>
   </div>
 )
 
