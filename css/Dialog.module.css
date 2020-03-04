@@ -8,8 +8,8 @@
 
 .span {
     font-family: Open Sans;
-    font-style: normal;
     font-weight: normal;
+    text-transform: none;
     font-size: 12px;
     line-height: 16px;
     color: #000000;
@@ -17,9 +17,9 @@
 
 .span a {
 
+    text-transform: none;
     font-family: Open Sans;
     color: #000000;
-    font-style: normal;
 }
 
 .mainSection {
@@ -28,37 +28,82 @@
 
 .container {
 
+    position: relative;
     width: 256px;
-    height: 16px;
+    height: 24px;
+    margin: 16px 0;
+    
 
 }
 
 .checkBoxContainer {
-    margin-top: 16px;
-}
-
-.checkboxContainter {
-    border: 1px solid #000000;
-    width: 15px;
-    height: 15px;
+    position: relative;
 }
 
 .checkbox {
-    /* position: absolute; */
+    position: absolute;
     opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+    top: 0;
+    left: 0;
 }
 
-.checkmark {
-    /* position: absolute; */
-    /* top: 0;
-    left: 0; */
-    /* height: 25px;
-    width: 25px; */
-    background-color: #eee;
+.checkbox + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
 }
+
+.checkbox + label:before {
+    content: '';
+    margin-right: 10px;
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 15px;
+    height: 15px;
+    background: white;
+}
+
+.checkbox:hover + label:before {
+    background: #f35429;
+}
+
+.checkbox:focus + label:before {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+
+.checkbox:checked + label:before {
+    background: #f35429;
+}
+
+.checkbox:disabled + label {
+    color: #b8b8b8;
+    cursor: auto;
+}
+
+.checkbox:disabled + label:before {
+    box-shadow: none;
+    background: #ddd;
+}
+
+.checkbox:checked + label:after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 9px;
+    background: white;
+    width: 2px;
+    height: 2px;
+    box-shadow: 
+        2px 0 0 white,
+        4px 0 0 white,
+        4px -2px 0 white,
+        4px -4px 0 white,
+        4px -6px 0 white,
+        4px -8px 0 white;
+    transform: rotate(45deg);
+}
+
 
 .submit:hover {
     background: #ffeb00;
@@ -79,16 +124,24 @@
 
 }
 
-/* 
-.signUpButton {
-
-} */
-
 .showHide {
 
     position: absolute;
-    right: 10px;
-    top: 7px;
+    right: 8px;
+    top: 5px;
+    padding: 0;
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
 }
 
 .signUpButton {
@@ -113,6 +166,7 @@
 .text {
 
     width: 100%;
+    max-width: 256px;
     /* width: 256px; */
     height: 16px;
     background-color: rgba(0, 0, 0, 0.07);
@@ -122,8 +176,8 @@
     padding-left: 8px;
     overflow: hidden;
 
-    margin: 8px;
-    margin-left: 0;
+    /* margin: 8px;
+    margin-left: 0; */
 
     border: none;
 
