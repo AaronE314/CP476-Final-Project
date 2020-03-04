@@ -19,7 +19,7 @@ const Home = () => (
 
     <main>
   
-      <Product></Product>
+      {/* <Product></Product> */}
       <Dialog></Dialog>
       
       {/* <h1 className="title">

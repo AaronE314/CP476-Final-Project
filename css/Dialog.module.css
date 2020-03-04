@@ -1,4 +1,6 @@
 
+
+
 .close {
     float: right;
     margin: 13px;
@@ -149,6 +151,9 @@
 }
 
 .dialog {
+    position: absolute;
+    top: 20%;
+    left: 50%;
     width: 312px;
     background: #FFFFFF;
     border: 0.5px solid #000000;

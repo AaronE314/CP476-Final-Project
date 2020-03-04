@@ -1,10 +1,10 @@
 import React from 'react';
 
-// import styles from '../css/Dialog.module.css';
+import styles from '../css/Dialog.module.css';
 import SignUpDialog from './SignUpDialog';
 import SignInDialog from './SignInDialog';
 
-import '../css/Dialog.module.css';
+// import '../css/Dialog.module.css';
 
 export class Dialog extends React.Component {
 
@@ -30,15 +30,15 @@ export class Dialog extends React.Component {
     render() {
 
         return <div className={
-            this.state.signUp ? "signUp" : "signIn",
-            "dialog"
+            this.state.signUp ? styles.signUp : styles.signIn,
+            styles.dialog
             }>
 
-            <img className="close" src="/images/close.svg"/>
+            <img className={styles.close} src="/images/close.svg"/>
 
-            <div className="mainSection">
-                <span className="signUpButton" onClick={this.toggleSignIn}>SIGN IN</span>
-                <span className="signInButton" onClick={this.toggleSignUp}>SIGN UP</span>
+            <div className={styles.mainSection}>
+                <span className={styles.signUpButton} onClick={this.toggleSignIn}>SIGN IN</span>
+                <span className={styles.signInButton} onClick={this.toggleSignUp}>SIGN UP</span>
                 <hr/>
 
                 { (this.state.signUp) ? <SignUpDialog></SignUpDialog> : <SignInDialog></SignInDialog>}
