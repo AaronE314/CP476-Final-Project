@@ -1,6 +1,7 @@
 import Head from 'next/head'
-
 import TopNav from '../components/TopNav'
+
+import {Product} from "../components/Product"
 
 const Home = () => (
   <div className="container">
@@ -15,8 +16,8 @@ const Home = () => (
     </header>
 
     <main>
- 
-
+  
+      <Product></Product>
       {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
