@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Footer } from '../components/Footer'
 import TopNav from '../components/TopNav'
 
 import {Product} from "../components/Product"
@@ -65,6 +66,8 @@ const Home = () => (
       >
         Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
       </a> */}
+      <Footer></Footer>
+
     </footer>
 
     {/* <style jsx>{`
