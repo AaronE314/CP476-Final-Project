@@ -1,21 +1,27 @@
 import Head from 'next/head'
 import { Dialog } from '../components/Dialog'
+import { Footer } from '../components/Footer'
+import TopNav from '../components/TopNav'
+
+import {Product} from "../components/Product"
 
 const Home = () => (
   <div className="container">
     <Head>
-      <title>Create Next App</title>
+      <title>Web Store</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <main>
+    <header>
+        <TopNav>
+        </TopNav>
+    </header>
 
+    <main>
+  
+      <Product></Product>
       <Dialog></Dialog>
-      {/* <br/>
-      <br/>
-      <br/>
-      <br/>
-      <SignInDialog></SignInDialog> */}
+      
       {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
@@ -63,6 +69,7 @@ const Home = () => (
       >
         Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
       </a> */}
+      <Footer></Footer>
     </footer>
 
     {/* <style jsx>{`
