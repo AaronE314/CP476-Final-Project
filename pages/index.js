@@ -1,13 +1,22 @@
 import Head from 'next/head'
+import TopNav from '../components/TopNav'
+
 import {Product} from "../components/Product"
+
 const Home = () => (
   <div className="container">
     <Head>
-      <title>Create Next App</title>
+      <title>Web Store</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
+    <header>
+        <TopNav>
+        </TopNav>
+    </header>
+
     <main>
+  
       <Product></Product>
       {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -49,16 +58,16 @@ const Home = () => (
     </main>
 
     <footer>
-      <a
+      {/* <a
         href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
         target="_blank"
         rel="noopener noreferrer"
       >
         Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
+      </a> */}
     </footer>
 
-    <style jsx>{`
+    {/* <style jsx>{`
       .container {
         min-height: 100vh;
         padding: 0 0.5rem;
@@ -197,7 +206,7 @@ const Home = () => (
       * {
         box-sizing: border-box;
       }
-    `}</style>
+    `}</style> */}
   </div>
 )
 
