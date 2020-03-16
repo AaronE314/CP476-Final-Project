@@ -34,10 +34,10 @@ export class TopNav extends React.Component {
             </div>
 
             <nav className={styles.catagories}>
-                <a>MEN</a>
-                <a>WOMEN</a>
-                <a>KIDS</a>
-                <a>HOME</a>
+                <a className={styles.clickableText}>MEN</a>
+                <a className={styles.clickableText}>WOMEN</a>
+                <a className={styles.clickableText}>KIDS</a>
+                <a className={styles.clickableText}>HOME</a>
             </nav>
 
             <div className={styles.right}>
@@ -46,17 +46,17 @@ export class TopNav extends React.Component {
                     <input placeholder="Search"></input>
                 </div>
                 
-                <a onClick={this.showSignUp} className="signIn">
+                <a onClick={this.showSignUp} className={styles.clickableText}>
                     <img src="/images/user.svg" width="16px" height="16px" id="userImage"></img>
                     SIGN IN
                 </a>
 
-                <a className="wishlist">
+                <a className={styles.clickableText}>
                     <img src="/images/heart.svg" id="heart"></img>
                     WISHLIST
                 </a>
 
-                <a className="cart">
+                <a className={styles.clickableText}>
                     <img src="/images/cart.svg" id="cart"></img>
                     CART
                 </a>

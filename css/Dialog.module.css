@@ -220,3 +220,7 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+.clickableText:hover {
+    color: #414141;
+}

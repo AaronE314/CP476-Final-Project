@@ -14,7 +14,7 @@ export class Dialog extends React.Component {
         console.log(props);
 
         this.state = {
-            signUp: true,
+            signUp: false,
             hidden: false,
         };
 
