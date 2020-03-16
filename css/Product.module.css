@@ -1,19 +1,22 @@
 .Product{
-    width:100%; 
+    position: relative;
+    width: 578px;
+    height: 229px;
     font-family: "Open Sans";
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 24px;
+    display: inline-block;
 }
+
 .ImageBox{
     background-color: black;
     width: 151px;
     height: 205px;
     float: left;
-    position: absolute;
-    top: 0px;
-    left: 0px;
+
+
 }
 .ProdName{
     float: left;
@@ -25,7 +28,11 @@
 .ProductTable{
     float: left;
 }
+.Container tr{
+    background-color: blue;
+    max-width: 1px;
+}
 .Container{
-    float: left;
+
     margin-left: 16px;
 }
