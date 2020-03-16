@@ -18,7 +18,7 @@ export class Product extends React.Component {
                     </tr>
                 </table>
 
-                <table className={styles.ProductTable}>
+                <table >
                     <tr>
                         <td><p>Item no:</p></td>
                         <td><p>0850318003</p></td>
