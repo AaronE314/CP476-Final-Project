@@ -1,11 +1,8 @@
-
-
-
 .close {
     float: right;
     margin: 13px;
     margin-right: 24px;
-
+    cursor: pointer;
 }
 
 .form {
@@ -156,10 +153,26 @@
     float: right;    
 }
 
+/* body:not(.dialog), body:not(.dialog) * {
+    -webkit-filter: blur(2px);
+    filter: blur(2px);   
+} */
+
+.popUpBackground {
+    background: rgba(255, 255, 255, 0.418);
+    position: absolute;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+}
+
 .dialog {
     position: absolute;
     top: 20%;
-    left: 50%;
+    left: calc(50% - 312px/2); /*50%;*/
     width: 312px;
     background: #FFFFFF;
     border: 0.5px solid #000000;

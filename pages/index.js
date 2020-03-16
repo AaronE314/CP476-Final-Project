@@ -20,7 +20,7 @@ const Home = () => (
     <main>
   
       {/* <Product></Product> */}
-      <Dialog></Dialog>
+      {/* <Dialog></Dialog> */}
       
       {/* <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>

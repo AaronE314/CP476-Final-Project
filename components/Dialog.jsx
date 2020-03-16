@@ -11,41 +11,57 @@ export class Dialog extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log(props);
+
         this.state = {
-            signUp: true
+            signUp: true,
+            hidden: false,
         };
 
         this.setSignUp = this.setSignUp.bind(this);
         this.setSignIn = this.setSignIn.bind(this);
+        this.close = this.close.bind(this);
     }
 
     setSignUp() {
-        console.log("click1");
-        this.setState({signUp: true});
+        this.setState({...this.state, signUp: true});
     }
 
     setSignIn() {
-        console.log("click2");
-        this.setState({signUp: false});
+        this.setState({...this.state, signUp: false});
+    }
+
+    close() {
+
+        // this.setState({...this.state, hidden: true});
+
+        if (!this.state.hidden) {
+            if (this.props.close) {
+                this.props.close();
+            }
+        }
+
     }
 
     render() {
 
-        return <div className={
-            this.state.signUp ? styles.signUp : styles.signIn,
-            styles.dialog
-            }>
+        return <div className={styles.popUpBackground} onClick={this.close}>
+            <div className={
+                this.state.signUp ? styles.signUp : styles.signIn,
+                styles.dialog
+                } onClick={(event) => event.stopPropagation()}>
 
-            <img className={styles.close} src="/images/close.svg"/>
+                <img className={styles.close} onClick={this.close} src="/images/close.svg"/>
 
-            <div className={styles.mainSection}>
-                <span className={`${styles.signUpButton} ${styles.clickableText}`} onClick={this.setSignUp}>SIGN IN</span>
-                <span className={`${styles.signInButton} ${styles.clickableText}`} onClick={this.setSignIn}>SIGN UP</span>
-                <hr/>
+                <div className={styles.mainSection}>
+                    <span className={`${styles.signUpButton} ${styles.clickableText}`} onClick={this.setSignUp}>SIGN IN</span>
+                    <span className={`${styles.signInButton} ${styles.clickableText}`} onClick={this.setSignIn}>SIGN UP</span>
+                    <hr/>
 
-                { (this.state.signUp) ? <SignUpDialog></SignUpDialog> : <SignInDialog></SignInDialog>}
+                    { (this.state.signUp) ? <SignUpDialog></SignUpDialog> : <SignInDialog></SignInDialog>}
+                </div>
             </div>
-        </div>
+        </div>;
 
     }
 
