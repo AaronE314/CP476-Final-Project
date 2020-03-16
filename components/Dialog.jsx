@@ -20,10 +20,12 @@ export class Dialog extends React.Component {
     }
 
     setSignUp() {
+        console.log("click1");
         this.setState({signUp: true});
     }
 
     setSignIn() {
+        console.log("click2");
         this.setState({signUp: false});
     }
 
@@ -37,8 +39,8 @@ export class Dialog extends React.Component {
             <img className={styles.close} src="/images/close.svg"/>
 
             <div className={styles.mainSection}>
-                <span className={styles.signUpButton} onClick={this.toggleSignIn}>SIGN IN</span>
-                <span className={styles.signInButton} onClick={this.toggleSignUp}>SIGN UP</span>
+                <span className={`${styles.signUpButton} ${styles.clickableText}`} onClick={this.setSignUp}>SIGN IN</span>
+                <span className={`${styles.signInButton} ${styles.clickableText}`} onClick={this.setSignIn}>SIGN UP</span>
                 <hr/>
 
                 { (this.state.signUp) ? <SignUpDialog></SignUpDialog> : <SignInDialog></SignInDialog>}
@@ -50,4 +52,4 @@ export class Dialog extends React.Component {
 
 }
 
-export default SignInDialog
+export default Dialog

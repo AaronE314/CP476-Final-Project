@@ -8,6 +8,10 @@
 
 }
 
+.form {
+    text-align: center;
+}
+
 .span {
     font-family: Open Sans;
     font-weight: normal;
@@ -40,6 +44,7 @@
 
 .checkBoxContainer {
     position: relative;
+    text-align: left;
 }
 
 .checkbox {
@@ -47,6 +52,7 @@
     opacity: 0;
     top: 0;
     left: 0;
+    z-index: 2;
 }
 
 .checkbox + label {
@@ -67,7 +73,7 @@
 }
 
 .checkbox:hover + label:before {
-    background: #f35429;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .checkbox:focus + label:before {
@@ -75,7 +81,7 @@
 }
 
 .checkbox:checked + label:before {
-    background: #f35429;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .checkbox:disabled + label {
@@ -91,8 +97,8 @@
 .checkbox:checked + label:after {
     content: '';
     position: absolute;
-    left: 5px;
-    top: 9px;
+    left: 4px;
+    top: 8px;
     background: white;
     width: 2px;
     height: 2px;
@@ -192,4 +198,12 @@
     outline: none;
     height: 15px;
     border-bottom: 1px solid #000000;
+}
+
+.clickableText {
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
