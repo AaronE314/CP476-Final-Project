@@ -92,3 +92,15 @@
     margin-right: 12px;
 
 }
+
+.clickableText {
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.clickableText:hover {
+    color: #414141;
+}

@@ -31,7 +31,7 @@ export class SignUpDialog extends React.Component {
 
     render() {
 
-        return <form>
+        return <form method="post">
             
             <div className={styles.container}>
                 <input autoComplete="email" className={styles.text} type="email" placeholder="Email"/>
