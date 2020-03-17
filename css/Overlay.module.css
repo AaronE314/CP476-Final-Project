@@ -33,5 +33,5 @@
 }
 
 .list li a:hover {
-    background-color: #FFF500;
+    background-color: var(--highlightColor);
 }

@@ -36,7 +36,6 @@ export class TopNav extends React.Component {
     }
 
     mouseOut() {
-        console.log("out");
         this.setState({...this.state, hover: false});
     }
 

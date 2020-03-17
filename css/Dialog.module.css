@@ -15,14 +15,14 @@
     text-transform: none;
     font-size: 12px;
     line-height: 16px;
-    color: #000000;
+    color: var(--foregroundColor);
 }
 
 .span a {
 
     text-transform: none;
     font-family: Open Sans;
-    color: #000000;
+    color: var(--foregroundColor);
 }
 
 .mainSection {
@@ -66,7 +66,7 @@
     vertical-align: text-top;
     width: 15px;
     height: 15px;
-    background: white;
+    background: var(--backgroundColor);
 }
 
 .checkbox:hover + label:before {
@@ -96,16 +96,16 @@
     position: absolute;
     left: 4px;
     top: 8px;
-    background: white;
+    background: var(--backgroundColor);
     width: 2px;
     height: 2px;
     box-shadow: 
-        2px 0 0 white,
-        4px 0 0 white,
-        4px -2px 0 white,
-        4px -4px 0 white,
-        4px -6px 0 white,
-        4px -8px 0 white;
+        2px 0 0 var(--backgroundColor),
+        4px 0 0 var(--backgroundColor),
+        4px -2px 0 var(--backgroundColor),
+        4px -4px 0 var(--backgroundColor),
+        4px -6px 0 var(--backgroundColor),
+        4px -8px 0 var(--backgroundColor);
     transform: rotate(45deg);
 }
 
@@ -125,7 +125,7 @@
 
     left: calc(50% - 264px/2);
 
-    background: #FFF500;
+    background: var(--highlightColor);
 
 }
 
@@ -174,8 +174,8 @@
     top: 20%;
     left: calc(50% - 312px/2); /*50%;*/
     width: 312px;
-    background: #FFFFFF;
-    border: 0.5px solid #000000;
+    background: var(--backgroundColor);
+    border: 0.5px solid var(--foregroundColor);
     box-sizing: border-box;
 }
 
@@ -210,7 +210,7 @@
 .text:focus {
     outline: none;
     height: 15px;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid var(--foregroundColor);
 }
 
 .clickableText {
@@ -223,5 +223,5 @@
 
 .clickableText:hover {
     /* color: #414141; */
-    background: #FFF500;
+    background: var(--highlightColor);
 }

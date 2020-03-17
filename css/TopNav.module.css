@@ -12,7 +12,7 @@
     width: 100%;
     display: inline-flex;
 
-    background: #FFFFFF;
+    background: var(--backgroundColor);
 
 }
 
@@ -32,7 +32,7 @@
     margin-right: 32px;
     margin-left: 48px;
 
-    background: #FFF500;
+    background: var(--highlightColor);
 }
 
 .logo img {
@@ -73,7 +73,7 @@
 
     text-align: center;
 
-    color: #000000;
+    color: var(--foregroundColor);
 }
 
 .right {
@@ -107,5 +107,5 @@
 
 .clickableText span:hover {
     /* color: #414141; */
-    background: #FFF500;
+    background: var(--highlightColor);
 }

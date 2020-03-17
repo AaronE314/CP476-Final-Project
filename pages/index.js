@@ -223,6 +223,10 @@ const Home = () => (
       
       :root {
         --overlayOffset: 128px;
+        --backgroundColor: white;
+        --foregroundColor: black;
+        --highlightColor: #FFF500;
+
       }
 
 
