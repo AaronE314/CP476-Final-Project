@@ -1,0 +1,27 @@
+
+.overlay {
+
+    display: inline-flex;
+    /* position: absolute; */
+    top: 80px;
+    left: 0px;
+    padding-left: 80px;
+    width: calc(100%-80px);
+}
+
+.title {
+    font-family: "Open Sans";
+    margin-top:0;
+    margin-right: 73px;
+    font-weight: bold;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.list li {
+    font-family: "Open Sans";
+    font-weight: normal;
+}

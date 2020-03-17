@@ -222,5 +222,6 @@
 }
 
 .clickableText:hover {
-    color: #414141;
+    /* color: #414141; */
+    background: #FFF500;
 }
