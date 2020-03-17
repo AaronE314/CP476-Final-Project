@@ -4,9 +4,7 @@ import styles from "../css/CheckoutProduct.module.css";
 export class CheckoutProduct extends React.Component{
     render(){
         return <div className={styles.CheckoutProduct}>
-            <div className={styles.CheckoutImage}>
-                <img src = ""></img>
-            </div>
+            <img className={styles.CheckoutImage} src = ""></img>
             <div className={styles.CheckoutInfo}>
                 <p>Product Name</p>
                 <p>$3.99</p>
@@ -16,7 +14,7 @@ export class CheckoutProduct extends React.Component{
                         <td>Black</td>
                     </tr>
                     <tr>
-                        <td>Size</td>
+                        <td>Size:</td>
                         <td>S</td>
                     </tr>
                     <tr>

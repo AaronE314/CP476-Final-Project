@@ -8,20 +8,16 @@
 }
 
 .CheckoutImage{
-    position: absolute;
     width: 91px;
     height: 123px;
-    left: 0px;
-    top: 0px;
     background-color: #F0F0F0;
+    float: left;
 }
 
 .CheckoutInfo{
-    position: absolute;
-    width: 135px;
     height: 123px;
-    left: 107px;
-    top: 0px;
+    margin-left: 16px;
+    display: inline-block;
 }
 
 .CheckoutInfo p{
@@ -39,12 +35,10 @@
     position: absolute;
     width: 36px;
     height: 24px;
-    right: 5px;
-    top: 104px;
+    right: 4px;
+    bottom: 19px;
 
     font-weight: bold;
     font-size: 14px;
     text-align: right;
-
-    color: #000000;
 }

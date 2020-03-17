@@ -1,0 +1,75 @@
+.CartProduct{
+    position: relative;
+    width: 578px;
+    height: 229px;
+    border-bottom: 0.5px solid #000000;
+    font-family: "Open Sans";
+    font-size: 16px;
+}
+
+.CartImage{
+    width: 151px;
+    height: 205px;
+    background-color: #F0F0F0;
+    float: left;
+}
+
+.CartInfo{
+    height: 205px;
+    margin-left: 16px;
+    display: inline-block;
+}
+
+.CartInfo p{
+    margin: 0px;
+    height: 19px;
+    margin-bottom: 4px;
+}
+
+.CartSpecs{
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.CartWishQuantity{
+    margin-top: 16px;
+    height: 43px;
+}
+
+.CartWishlist{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    vertical-align: middle;
+    width: 27px;
+    height: 27px;
+    float: left;
+}
+
+.CartQuantity{
+    margin-left: 16px;
+    padding: 8px;
+    display: inline-flex;
+    justify-content: space-around;
+    align-content: center;
+    width: 87px;
+    height: 43px;
+    border: 0.5px solid #000000;
+    box-sizing: border-box;
+}
+
+.CartMinus{
+    float: left;
+}
+
+.CartQuantity p{
+    align-self: center;
+    font-size: 14px;
+}
+
+.CartPlus{
+    float: right;
+}
+
+.CartRemove{
+    float: right;
+}
