@@ -211,6 +211,20 @@ const Home = () => (
 
       }
 
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      a:selcted {
+        color: black;
+      }
+
+      
+      :root {
+        --overlayOffset: 128px;
+      }
+
 
     `}</style>
   </div>

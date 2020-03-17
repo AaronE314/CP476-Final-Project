@@ -29,7 +29,7 @@
     height: 48px;
 
     margin: 16px;
-    margin-right: 16px;
+    margin-right: 32px;
     margin-left: 48px;
 
     background: #FFF500;
@@ -65,7 +65,7 @@
     font-style: normal;
     font-weight: bold;
     line-height: 19px;
-    padding-right: 26px;
+    padding-right: 48px;
 
     letter-spacing: 0.1em;
 

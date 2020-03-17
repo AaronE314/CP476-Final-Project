@@ -11,24 +11,27 @@ export class Overlay extends React.Component {
         this.state = {
 
             arivals: [
-                "View All"
+                {name: "View All", link: "#"}
             ],
 
             category: [
-                "View All",
-                "Shirts",
-                "T-shirts",
-                "Sweaters & Cardigans",
-                "Pants",
-                "Jeans",
-                "Joggers"
+                {name: "View All", link: "#"},
+                {name: "Shirts", link: "#"},
+                {name: "T-shirts", link: "#"},
+                {name: "Sweaters & Cardigans", link: "#"},
+                {name: "Pants", link: "#"},
+                {name: "Jeans", link: "#"},
+                {name: "Joggers", link: "#"}
             ]
 
-        }
+        
 
+        }
     }
 
     render() {
+
+        document.documentElement.style.setProperty("--overlayOffset", (128 + this.props.offset) + "px");
 
         return <div className={styles.overlay}>
 
@@ -36,7 +39,7 @@ export class Overlay extends React.Component {
                 <h4 className={styles.title}>New Arrivals</h4>
                 <ul className={styles.list}>
                     {this.state.arivals.map((item, i) => {
-                        return <li key={i}>{item}</li>
+                        return <li key={i}><a href={item.link}>{item.name}</a></li>
                     })}
                 </ul>
             </div>
@@ -45,7 +48,7 @@ export class Overlay extends React.Component {
                 <h4 className={styles.title}>Shop by Category</h4>
                 <ul className={styles.list}>
                     {this.state.category.map((item, i) => {
-                        return <li key={i}>{item}</li>
+                        return <li key={i}><a href={item.link}>{item.name}</a></li>
                     })}
                 </ul>
             </div>

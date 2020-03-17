@@ -1,12 +1,14 @@
 
 .overlay {
 
+    
+
     display: inline-flex;
     /* position: absolute; */
     top: 80px;
     left: 0px;
-    padding-left: 80px;
-    width: calc(100%-80px);
+    padding-left: var(--overlayOffset);
+    width: calc(100% - var(--overlayOffset));
 }
 
 .title {
@@ -22,6 +24,14 @@
 }
 
 .list li {
+    margin-top: 12px;
+}
+
+.list li a {
     font-family: "Open Sans";
     font-weight: normal;
+}
+
+.list li a:hover {
+    background-color: #FFF500;
 }

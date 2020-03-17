@@ -12,7 +12,8 @@ export class TopNav extends React.Component {
 
         this.state = {
             signupShown: false,
-            hover: false
+            hover: false,
+            hoveredIndex: -1
         };
 
         this.showSignUp = this.showSignUp.bind(this);
@@ -21,11 +22,21 @@ export class TopNav extends React.Component {
         this.mouseOver = this.mouseOver.bind(this);
     }
 
-    mouseOver() {
-        this.setState({...this.state, hover: true});
+    mouseOver(i) {
+
+        let nodes = document.getElementById("CategoriesNav").childNodes;
+
+        let offset = 0;
+
+        for (let j = 0; j < nodes.length && j < i; j++) {
+            offset += nodes[j].offsetWidth;
+        }
+
+        this.setState({...this.state, hover: true, hoveredIndex: offset});
     }
 
     mouseOut() {
+        console.log("out");
         this.setState({...this.state, hover: false});
     }
 
@@ -46,12 +57,15 @@ export class TopNav extends React.Component {
                     <img id="logo" src="/images/tempLogo.svg"></img>
                 </div>
 
-                <nav className={styles.catagories}>
+                <nav id="CategoriesNav" className={styles.catagories}>
                     <a className={styles.clickableText} 
-                    onMouseEnter={this.mouseOver}><span>MEN</span></a>
-                    <a className={styles.clickableText}><span>WOMEN</span></a>
-                    <a className={styles.clickableText}><span>KIDS</span></a>
-                    <a className={styles.clickableText}><span>HOME</span></a>
+                    onMouseEnter={() => {this.mouseOver(0)}}><span>MEN</span></a>
+                    <a className={styles.clickableText}
+                    onMouseEnter={() => {this.mouseOver(1)}}><span>WOMEN</span></a>
+                    <a className={styles.clickableText}
+                    onMouseEnter={() => {this.mouseOver(2)}}><span>KIDS</span></a>
+                    <a className={styles.clickableText}
+                    onMouseEnter={() => {this.mouseOver(3)}}><span>HOME</span></a>
                 </nav>
 
                 <div className={styles.right}>
@@ -78,7 +92,7 @@ export class TopNav extends React.Component {
                 
                 {(this.state.signupShown) ? <Dialog close={this.hideSignUp}></Dialog> : null}
             </div>
-            {(this.state.hover) ? <Overlay></Overlay>: null}
+            {(this.state.hover) ? <Overlay offset={this.state.hoveredIndex}></Overlay>: null}
         </div>;
 
     }
