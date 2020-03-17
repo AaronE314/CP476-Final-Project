@@ -26,6 +26,17 @@
     margin-bottom: 4px;
 }
 
+.CartDiscount{
+    float: left;
+    font-weight: bold;
+}
+
+.CartOldPrice{
+    padding-left: 8px;
+    text-decoration: line-through;
+    display: inline-block;
+}
+
 .CartSpecs{
     margin-top: 16px;
     font-size: 14px;
@@ -37,16 +48,26 @@
 }
 
 .CartWishlist{
-    margin-top: 8px;
-    margin-bottom: 8px;
-    vertical-align: middle;
+    position: absolute;
+    padding-top: 8px;
+    padding-bottom: 8px;
     width: 27px;
-    height: 27px;
+    height: 43px;
     float: left;
+    z-index: 2;
+}
+
+.CartWishlistInner{
+    position: absolute;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width: 27px;
+    height: 43px;
+    z-index: 1;
 }
 
 .CartQuantity{
-    margin-left: 16px;
+    margin-left: 43px;
     padding: 8px;
     display: inline-flex;
     justify-content: space-around;
@@ -58,16 +79,16 @@
 }
 
 .CartMinus{
-    float: left;
+    opacity: 1;
+}
+
+.CartMinusDisabled{
+    opacity: 0.3;
 }
 
 .CartQuantity p{
     align-self: center;
     font-size: 14px;
-}
-
-.CartPlus{
-    float: right;
 }
 
 .CartRemove{
