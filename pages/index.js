@@ -2,10 +2,52 @@ import Head from 'next/head'
 import { Dialog } from '../components/Dialog'
 import { Footer } from '../components/Footer'
 import TopNav from '../components/TopNav'
-
+import React, {useState, useEffect} from 'react'
+import fetch from 'isomorphic-unfetch'
 import {Product} from "../components/Product"
+import { URLString } from './constants'
 
-const Home = () => (
+const Home = ({data}) => {
+  const results = {
+    "productID" : "2023456",
+    "name":"Sweater",
+    "size":"medium",
+    "cost":125.00
+  }; 
+
+
+  const updateMacros = async () => {
+    try {
+      const res = await fetch(URLString+'/api/products', {
+        method: 'post',
+        body: JSON.stringify(results)
+      }).catch(function(err){
+        throw err; 
+      });
+  
+      console.log(res);
+    }catch(err){
+      console.log( err); 
+    }
+  }
+  const getDataForPreviousDay = async () => {
+    try{
+      const res = await fetch(URLString+ '/api/getProducts?productType=' + results.name, {
+        method: "get",
+      })
+      const json = await res.json()
+      console.log("*********************************\n");
+      console.log(json);
+      console.log("*********************************\n"); 
+      
+    }catch(err){
+      throw err;
+    }
+
+  }
+  // updateMacros();
+  getDataForPreviousDay();
+  return (
   <div className="container">
     <Head>
       <title>Web Store</title>
@@ -214,6 +256,7 @@ const Home = () => (
 
     `}</style>
   </div>
-)
+  )
+}
 
 export default Home
