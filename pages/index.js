@@ -11,7 +11,7 @@ const Home = ({data}) => {
 
   console.log(image.toString('base64'))
   const results = {
-    "productID" : "1010110",
+    "productID" : "1010112",
     "productName" : "Cardigan",
     "dateCreated" : new Date(), 
     "recomended" : 1, 
@@ -24,7 +24,7 @@ const Home = ({data}) => {
     "category" : "Sweater",
     "size":["Medium", "small"],
     "description" : "Blah Blah Blah were making a webstore", 
-    "cost":125.00
+    "cost":12.00
   }; 
 
 
@@ -44,7 +44,7 @@ const Home = ({data}) => {
   }
   const getDataForPreviousDay = async () => {
     try{
-      const res = await fetch(URLString+ '/api/getProducts?productType=' + results.category+"&class="+ results.gender, {
+      const res = await fetch(URLString+ '/api/getProductsHighestPrice?productType=' + results.category+"&class="+ results.gender, {
         method: "get",
       })
       const json = await res.json()
