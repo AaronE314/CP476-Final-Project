@@ -11,7 +11,7 @@ handler.get(async (req, res) => {
         const { productType } = req.query;
         let doc = {}
         console.log("CLASS : "+ req.query.class)
-        doc = await req.db.collection('StoreProducts').find({"category":req.query.productType, "gender": req.query.class}).sort({"cost":1}).toArray();
+        doc = await req.db.collection('StoreProducts').find({"category":req.query.productType, "gender": req.query.class}).sort({"cost":-1}).toArray();
         
     
         
