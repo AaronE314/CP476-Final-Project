@@ -132,6 +132,7 @@ export class Home extends React.Component {
         margin: var(--margin);
         height: calc(100% - (2 * var(--margin)));
         width: calc(50% - (var(--margin) + var(--margin)/2));
+        object-fit: cover;
       }
 
       .img1 {
