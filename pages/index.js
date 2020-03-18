@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import Layout from '../components/layout';
 
@@ -11,6 +12,65 @@ export class Home extends React.Component {
       slogan: "A GOOD PLACE FOR A COMPANY SLOGAN"
     }
   }
+=======
+import Head from 'next/head'
+import { Dialog } from '../components/Dialog'
+import { Footer } from '../components/Footer'
+import TopNav from '../components/TopNav'
+import React, {useState, useEffect} from 'react'
+import fetch from 'isomorphic-unfetch'
+import {Product} from "../components/Product"
+import { URLString } from '../constants'
+import image from '../public/img1.jpg'
+const Home = ({data}) => {
+
+  console.log(image.toString('base64'))
+  const results = {
+    "productID" : "1010112",
+    "productName" : "Hoodie",
+    "dateCreated" : new Date(), 
+    "recomended" : 1, 
+    "gender": "male", 
+    "newArrival": false,
+    "availability": false, 
+    "discount": 0,
+    "variants": [{"color": "red", "image":"image"},{"color": "blue", "image":"image"},{"color": "green", "image":"image"}], 
+    "displayImg": image,
+    "category" : "Sweater",
+    "size":["Medium", "small"],
+    "description" : "Blah Blah Blah were making a webstore", 
+    "cost":49.99
+  }; 
+
+
+  const updateMacros = async () => {
+    try {
+      const res = await fetch(URLString+'/api/products', {
+        method: 'post',
+        body: JSON.stringify(results)
+      }).catch(function(err){
+        throw err; 
+      });
+  
+      console.log(res);
+    }catch(err){
+      console.log( err); 
+    }
+  }
+  const getDataForPreviousDay = async () => {
+    try{
+      const res = await fetch(URLString+ '/api/getProductsNewArrivals?class='+ results.gender, {
+        method: "get",
+      })
+      const json = await res.json()
+      console.log("*********************************\n");
+      console.log(json);
+      console.log("*********************************\n"); 
+      
+    }catch(err){
+      throw err;
+    }
+>>>>>>> New arrivals end point added
 
   render() {
   return <Layout>
