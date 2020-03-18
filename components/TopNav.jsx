@@ -74,8 +74,7 @@ export class TopNav extends React.Component {
                     <div className={styles.logo}>
                         <img id="logo" src="/images/tempLogo.svg"></img>
                     </div>
-
-                    <a className={styles.categoriesButton}>CATEGORIES</a>
+                    
                     <nav id="CategoriesNav" className={styles.catagories}>
                         <a className={styles.clickableText} 
                         onMouseEnter={() => {this.mouseOver(0)}}><span>MEN</span></a>
