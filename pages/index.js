@@ -12,11 +12,11 @@ const Home = ({data}) => {
   console.log(image.toString('base64'))
   const results = {
     "productID" : "1010112",
-    "productName" : "Cardigan",
+    "productName" : "Hoodie",
     "dateCreated" : new Date(), 
     "recomended" : 1, 
     "gender": "male", 
-    "newArrival": true,
+    "newArrival": false,
     "availability": false, 
     "discount": 0,
     "variants": [{"color": "red", "image":"image"},{"color": "blue", "image":"image"},{"color": "green", "image":"image"}], 
@@ -24,7 +24,7 @@ const Home = ({data}) => {
     "category" : "Sweater",
     "size":["Medium", "small"],
     "description" : "Blah Blah Blah were making a webstore", 
-    "cost":12.00
+    "cost":49.99
   }; 
 
 
@@ -44,7 +44,7 @@ const Home = ({data}) => {
   }
   const getDataForPreviousDay = async () => {
     try{
-      const res = await fetch(URLString+ '/api/getProducts?class='+ results.gender, {
+      const res = await fetch(URLString+ '/api/getProductsNewArrivals?class='+ results.gender, {
         method: "get",
       })
       const json = await res.json()
