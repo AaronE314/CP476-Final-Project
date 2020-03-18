@@ -10,8 +10,11 @@ handler.get(async (req, res) => {
     try{
         const { productType } = req.query;
         let doc = {}
-        doc = await req.db.collection('StoreProducts').find({ "gender": req.query.class}).toArray();
-
+        console.log("CLASS : "+ req.query.class)
+        doc = await req.db.collection('StoreProducts').find({"category":req.query.productType, "gender": req.query.class}).sort({"dateCreated":-1}).toArray();
+        
+    
+        
         res.json(doc)
     }catch(err){
         throw err; 
