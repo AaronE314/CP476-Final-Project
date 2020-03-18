@@ -5,13 +5,25 @@ import TopNav from '../components/TopNav'
 import React, {useState, useEffect} from 'react'
 import fetch from 'isomorphic-unfetch'
 import {Product} from "../components/Product"
-import { URLString } from './constants'
-
+import { URLString } from '../constants'
+import image from '../public/img1.jpg'
 const Home = ({data}) => {
+
+  console.log(image.toString('base64'))
   const results = {
-    "productID" : "2023456",
-    "name":"Sweater",
-    "size":"medium",
+    "productID" : "1010110",
+    "productName" : "Cardigan",
+    "dateCreated" : new Date(), 
+    "recomended" : 1, 
+    "gender": "male", 
+    "newArrival": true,
+    "availability": false, 
+    "discount": 0,
+    "variants": [{"color": "red", "image":"image"},{"color": "blue", "image":"image"},{"color": "green", "image":"image"}], 
+    "displayImg": image,
+    "category" : "Sweater",
+    "size":["Medium", "small"],
+    "description" : "Blah Blah Blah were making a webstore", 
     "cost":125.00
   }; 
 
@@ -32,7 +44,7 @@ const Home = ({data}) => {
   }
   const getDataForPreviousDay = async () => {
     try{
-      const res = await fetch(URLString+ '/api/getProducts?productType=' + results.name, {
+      const res = await fetch(URLString+ '/api/getProducts?productType=' + results.category+"&class="+ results.gender, {
         method: "get",
       })
       const json = await res.json()
@@ -45,7 +57,7 @@ const Home = ({data}) => {
     }
 
   }
-  // updateMacros();
+  updateMacros();
   getDataForPreviousDay();
   return (
   <div className="container">
