@@ -111,7 +111,9 @@
 
 
 .submit:hover {
-    background: #ffeb00;
+    /* background: #ffeb00; */
+    filter: brightness(95%);
+    cursor: pointer;
 }
 
 .submit {

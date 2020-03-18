@@ -31,7 +31,7 @@ export class Overlay extends React.Component {
 
     render() {
 
-        document.documentElement.style.setProperty("--overlayOffset", (128 + this.props.offset) + "px");
+        // document.documentElement.style.setProperty("--overlayOffset", (112 + this.props.offset) + "px");
 
         return <div className={styles.overlay}>
 
