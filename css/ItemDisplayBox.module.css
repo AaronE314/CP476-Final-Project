@@ -1,0 +1,64 @@
+.DisplayItem{
+    width: 343px;
+    font-family: "Open Sans";
+    font-size: 14px;
+}
+
+.DisplayImage{
+    position: relative;
+    background: #F0F0F0;
+    width: 100%;
+    height: 467px;
+    z-index: 1;
+    margin-bottom: 4px;
+}
+
+.DisplayWishlist{
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    bottom: 8px;
+    right: 8px;
+    z-index: 3;
+}
+
+.DisplayWishlistInner{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    bottom: 9px;
+    right: 9px;
+    z-index: 2;
+}
+
+.DisplayInfo{
+    width: 100%;
+}
+
+.DisplayInfo p{
+    margin: 0px 4px 0px 0px;
+}
+
+.DisplayDiscount{
+    float: left;
+    font-weight: bold;
+}
+
+.DisplayOldPrice{
+    padding-left: 8px;
+    text-decoration: line-through;
+    display: inline-block;
+}
+
+.DisplayColorContainer{
+    display: flex;
+}
+
+.DisplayColorOption{
+    height: 12px;
+    width: 12px;
+    border: 0.5px solid rgba(0, 0, 0, 0.38);
+    box-sizing: border-box;
+    margin: 6px;
+    margin-left: 0px;
+}
