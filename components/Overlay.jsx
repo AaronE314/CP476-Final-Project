@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Link from 'next/link';
 
 import styles from "../css/Overlay.module.css";
 
@@ -15,13 +16,13 @@ export class Overlay extends React.Component {
             ],
 
             category: [
-                {name: "View All", link: "#"},
-                {name: "Shirts", link: "#"},
-                {name: "T-shirts", link: "#"},
-                {name: "Sweaters & Cardigans", link: "#"},
-                {name: "Pants", link: "#"},
-                {name: "Jeans", link: "#"},
-                {name: "Joggers", link: "#"}
+                {name: "View All", link: "/categories"},
+                {name: "Shirts", link: "/categories"},
+                {name: "T-shirts", link: "/categories"},
+                {name: "Sweaters & Cardigans", link: "/categories"},
+                {name: "Pants", link: "/categories"},
+                {name: "Jeans", link: "/categories"},
+                {name: "Joggers", link: "/categories"}
             ]
 
         
@@ -39,7 +40,7 @@ export class Overlay extends React.Component {
                 <h4 className={styles.title}>New Arrivals</h4>
                 <ul className={styles.list}>
                     {this.state.arivals.map((item, i) => {
-                        return <li key={i}><a href={item.link}>{item.name}</a></li>
+                        return <li key={i}><Link href={item.link}><a>{item.name}</a></Link></li>
                     })}
                 </ul>
             </div>

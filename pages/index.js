@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { Footer } from '../components/Footer'
 import TopNav from '../components/TopNav'
 import React from 'react'
+import Layout from '../components/layout';
 
 //const Home = () => (
 export class Home extends React.Component {
@@ -15,19 +16,7 @@ export class Home extends React.Component {
   }
 
   render() {
-  return <div className="container">
-    <Head>
-      <title>Web Store</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-
-    <header>
-        <TopNav>
-        </TopNav>
-    </header>
-
-    <main>
-
+  return <Layout>
       <div className="background">
         
         <img src="/images/img1.jpg" className="backgroundImage img1 noselect"/>
@@ -50,25 +39,7 @@ export class Home extends React.Component {
           </button>
         </div>
       </div>
-
-    </main>
-
-    <footer>
-      <Footer></Footer>
-    </footer>
-
-    <style jsx>{`
-
-      .container {
-        position: relative;
-        height: calc(100vh + 310px) !important;
-      }
-
-      main {
-        position: relative;
-        padding-top: 80px;
-        height: calc(100vh - 80px);
-      }
+      <style jsx>{`
 
       .centerText {
         width: 728px;
@@ -201,39 +172,7 @@ export class Home extends React.Component {
       }
     
     `}</style>
-    <style jsx global>{`
-
-      * {
-        font-family: "Roboto";
-        font-style: normal;
-        font-weight: bold;
-        line-height: 19px;
-
-        letter-spacing: 0.1em;
-
-      }
-
-      a {
-        text-decoration: none;
-        color: black;
-      }
-
-      a:selcted {
-        color: black;
-      }
-
-      
-      :root {
-        --overlayOffset: 112px;
-        --backgroundColor: white;
-        --foregroundColor: black;
-        --highlightColor: #FFF500;
-
-      }
-
-
-    `}</style>
-  </div>
+    </Layout>
   }
 }
 
