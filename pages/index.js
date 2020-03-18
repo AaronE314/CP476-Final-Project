@@ -44,7 +44,7 @@ const Home = ({data}) => {
   }
   const getDataForPreviousDay = async () => {
     try{
-      const res = await fetch(URLString+ '/api/getProductsHighestPrice?productType=' + results.category+"&class="+ results.gender, {
+      const res = await fetch(URLString+ '/api/getProducts?class='+ results.gender, {
         method: "get",
       })
       const json = await res.json()
