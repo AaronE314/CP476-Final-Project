@@ -1,14 +1,13 @@
 
 .overlay {
 
-    
-
     display: inline-flex;
     /* position: absolute; */
     top: 80px;
     left: 0px;
     padding-left: var(--overlayOffset);
     width: calc(100% - var(--overlayOffset));
+    background-color: var(--backgroundColor);
 }
 
 .title {
