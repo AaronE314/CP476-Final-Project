@@ -142,6 +142,62 @@ export class Home extends React.Component {
       .img2 {
         background: #F5E1FF;
       }
+
+      @media only screen and (max-width: 1024px) {
+
+        .img2 {
+          display: none;
+        }
+
+        .img1 {
+          --margin: 16px;
+          margin: var(--margin);
+          width: calc(100% - (2 * var(--margin)));
+        }
+
+      }
+
+      @media only screen and (max-width: 800px) {
+
+        .slogan {
+          width: 100%;
+          font-size: 20px;
+          text-align: center;
+          line-height: 22px;
+        }
+
+        .centerText {
+          --width: calc(100vw - 20%);
+          width: var(--width);
+          position: absolute;
+          top: calc(50% - 94px/2);
+          left: calc(50% - var(--width)/2);
+        }
+
+        .buttons button {
+
+          border: none;
+
+          width: calc(var(--width)/3 - 3%);
+          /* 120px; */
+          min-height: 32px;
+
+          margin-top: 32px;
+
+          left: calc(50% - 264px/2);
+
+          background: var(--highlightColor);
+
+        }
+
+        .img1 {
+          --margin: 16px;
+          margin: var(--margin) 0;
+          width: 100%;
+        }
+
+
+      }
     
     `}</style>
     <style jsx global>{`
@@ -167,7 +223,7 @@ export class Home extends React.Component {
 
       
       :root {
-        --overlayOffset: 128px;
+        --overlayOffset: 112px;
         --backgroundColor: white;
         --foregroundColor: black;
         --highlightColor: #FFF500;

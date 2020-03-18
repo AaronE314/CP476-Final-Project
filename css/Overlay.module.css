@@ -34,3 +34,15 @@
 .list li a:hover {
     background-color: var(--highlightColor);
 }
+
+@media only screen and (max-width: 610px) {
+
+    .overlay {
+        --overlayOffset: 11px;
+        position: absolute;
+        top: 122px;
+        left: 0px;
+        padding-left: var(--overlayOffset);
+    }
+
+}

@@ -38,7 +38,7 @@
 }
 .copyright {
   position: absolute;
-  width: 288px;
+  width: 293px;
   height: 16px;
   left: 32px;
   bottom: 24px;
@@ -55,7 +55,7 @@
 }
 .tos {
   position: absolute;
-  width: 111px;
+  width: 150px;
   height: 16px;
   right: 206px;
   bottom: 24px;
@@ -74,7 +74,7 @@
 
 .privacyPol {
   position: absolute;
-  width: 126px;
+  width: 130px;
   height: 16px;
   right: 32px;
   bottom: 24px;
@@ -89,4 +89,21 @@
   text-transform: uppercase;
 
   color: rgba(0, 0, 0, 0.54);
+}
+
+@media only screen and (max-width: 610px) {
+    .copyright {
+        left: calc(50vw - 293px/2);
+        bottom: 0px;
+    }
+
+    .tos {
+        left: 7px;
+        bottom: 24px;
+    }
+
+    .privacyPol {
+        right: 6px;
+        bottom: 24px;
+    }
 }
