@@ -15,8 +15,18 @@ handler.use(middleware);
 handler.get(async (req, res) => {
     try{
         let doc = {}
-        doc = await req.db.StoreProducts.find({ gender: req.query.gender}, {category:1}).toArray();
-        res.json(doc)
+        doc = await req.db.collection('StoreProducts').find({ gender: req.query.gender }, {fields: {category: 1,_id:0 } }).toArray();
+        console.log(doc)
+
+        let temp = [];
+        await doc.forEach(element => {
+           if (temp.indexOf(element.category) === -1){
+               temp.push(element.category)
+               console.log("added :" + element.category)
+           } 
+        });
+
+        res.json(temp)
     }catch(err){
         throw err; 
     }
