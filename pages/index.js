@@ -11,40 +11,29 @@ const Home = ({data}) => {
 
   console.log(image.toString('base64'))
   const results = {
-    "productID" : "1010112",
-    "productName" : "Hoodie",
-    "dateCreated" : new Date(), 
-    "recomended" : 1, 
-    "gender": "male", 
-    "newArrival": false,
-    "availability": false, 
-    "discount": 0,
-    "variants": [{"color": "red", "image":"image"},{"color": "blue", "image":"image"},{"color": "green", "image":"image"}], 
-    "displayImg": image,
-    "category" : "Sweater",
-    "size":["Medium", "small"],
-    "description" : "Blah Blah Blah were making a webstore", 
-    "cost":49.99
+    "email":"billyray@hotmail.com",
+    "password":"password"
   }; 
 
 
   const updateMacros = async () => {
     try {
-      const res = await fetch(URLString+'/api/products', {
+      const res = await fetch(URLString+'/api/SignUp', {
         method: 'post',
         body: JSON.stringify(results)
       }).catch(function(err){
         throw err; 
       });
-  
+      let user = await res.json(); 
       console.log(res);
+      console.log(user);
     }catch(err){
       console.log( err); 
     }
   }
   const getDataForPreviousDay = async () => {
     try{
-      const res = await fetch(URLString+ '/api/getProductsNewArrivals?class='+ results.gender, {
+      const res = await fetch(URLString+ '/api/getSignIn?email='+ encodeURI(results.email)+"&password="+ encodeURI(results.password), {
         method: "get",
       })
       const json = await res.json()
@@ -58,7 +47,7 @@ const Home = ({data}) => {
 
   }
   updateMacros();
-  getDataForPreviousDay();
+  //getDataForPreviousDay();
   return (
   <div className="container">
     <Head>
