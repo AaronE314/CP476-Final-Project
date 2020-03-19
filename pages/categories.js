@@ -52,12 +52,14 @@ export class Categories extends React.Component {
   
     getLink(item) {
 
+        const { router } = this.props;
+
         let link = item.link;
 
         if (item.filter !== "") {
-            return {pathname: link, query: {mainCategory: this.state.query.mainCategory, subCategory: item.filter}};
+            return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
         }
-        return {pathname: link, query: {mainCategory: this.state.query.mainCategory}};
+        return {pathname: link, query: {mainCategory: router.query.mainCategory}};
     }
 
     showMore() {
@@ -73,8 +75,6 @@ export class Categories extends React.Component {
         for (let i = 0; i < 100; i++) {
             products.push(<ItemDisplayBox key={i}/>);
         }
-
-        
 
         return <Layout>
 
