@@ -360,6 +360,13 @@ export class Categories extends React.Component {
 
                 }
 
+                @media only screen and (max-width: 610px) {
+
+                    .mainContent {
+                        margin-top: 32px;
+                    }
+                }
+
 
             `}</style>
         </Layout>
