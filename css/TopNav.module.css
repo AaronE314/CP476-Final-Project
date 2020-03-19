@@ -33,6 +33,14 @@
     height: 36px;
     margin: 6px;
 
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+
 }
 
 .catagories {

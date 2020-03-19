@@ -1,6 +1,3 @@
-import Head from 'next/head'
-import { Footer } from '../components/Footer'
-import TopNav from '../components/TopNav'
 import React from 'react'
 import Layout from '../components/layout';
 
@@ -49,7 +46,7 @@ export class Home extends React.Component {
       }
 
       .background {
-        height: 100%;
+        height: calc(100vh - var(--headerHeight));;
         width: 100%;
       }
 

@@ -30,13 +30,15 @@ export class Layout extends React.Component {
         <style jsx>{`
             .container {
                 position: relative;
-                height: calc(100vh + 310px) !important;
+                /*height: calc(100vh + 310px) !important;*/
+                min-height: calc(100vh + 310px);
             }
         
             main {
                 position: relative;
                 padding-top: 80px;
-                height: calc(100vh - 80px);
+                /*height: calc(100vh - 80px);*/
+                min-height: calc(100vh - 80px);
             }
         `}</style>
         <style jsx global>{`
@@ -66,6 +68,8 @@ export class Layout extends React.Component {
             --backgroundColor: white;
             --foregroundColor: black;
             --highlightColor: #FFF500;
+            --headerHeight: 80px;
+            --footerHeight: 310;
 
             }
 
