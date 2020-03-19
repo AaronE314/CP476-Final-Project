@@ -1,7 +1,7 @@
 
 import React from 'react';
 import styles from "../css/TopNav.module.css";
-
+import Link from 'next/link';
 import Dialog from './Dialog';
 import { Overlay } from './Overlay';
 
@@ -16,6 +16,14 @@ export class TopNav extends React.Component {
             hoveredIndex: -1,
             menuOpen: false,
             shiftMenu: false,
+
+            categories: [
+                "MEN",
+                "WOMEN",
+                "KIDS",
+                "HOME"
+            ],
+            category: null
         };
 
         this.showSignUp = this.showSignUp.bind(this);
@@ -38,15 +46,15 @@ export class TopNav extends React.Component {
             }
         }
 
-        this.setState({...this.state, hover: true, hoveredIndex: offset, menuOpen: false});
+        this.setState({...this.state, hover: true, hoveredIndex: offset, menuOpen: false, category: this.state.categories[i]});
     }
 
     mouseOut() {
-        this.setState({...this.state, hover: false});
+        this.setState({...this.state, hover: false, category: null});
     }
 
     showSignUp() {
-        this.setState({...this.state, signupShown: true, menuOpen: false, hover:false});
+        this.setState({...this.state, signupShown: true, menuOpen: false, hover:false, category: null});
     }
 
     hideSignUp() {
@@ -54,11 +62,11 @@ export class TopNav extends React.Component {
     }
 
     toggleMenu() {
-        this.setState({...this.state, menuOpen: !this.state.menuOpen, hover:false})
+        this.setState({...this.state, menuOpen: !this.state.menuOpen, hover:false, category: null})
     }
 
     focusId(id) {
-        this.setState({...this.state, menuOpen: false, hover:false})
+        this.setState({...this.state, menuOpen: false, hover:false, category: null})
         let element = document.getElementById(id);
         console.log(element);
         if (element) {
@@ -72,18 +80,14 @@ export class TopNav extends React.Component {
             <div className={styles.topNav}>
 
                     <div className={styles.logo}>
-                        <img id="logo" src="/images/tempLogo.svg"></img>
+                        <Link href="/"><img id="logo" src="/images/tempLogo.svg"></img></Link>
                     </div>
                     
                     <nav id="CategoriesNav" className={styles.catagories}>
-                        <a className={styles.clickableText} 
-                        onMouseEnter={() => {this.mouseOver(0)}}><span>MEN</span></a>
-                        <a className={styles.clickableText}
-                        onMouseEnter={() => {this.mouseOver(1)}}><span>WOMEN</span></a>
-                        <a className={styles.clickableText}
-                        onMouseEnter={() => {this.mouseOver(2)}}><span>KIDS</span></a>
-                        <a className={styles.clickableText}
-                        onMouseEnter={() => {this.mouseOver(3)}}><span>HOME</span></a>
+                        {this.state.categories.map((item, i) => {
+                        return <a key={i} className={styles.clickableText} 
+                        onMouseEnter={() => {this.mouseOver(i)}}><span>{item}</span></a>
+                        })}
                     </nav>
 
                     <div className={styles.right}>
@@ -118,7 +122,7 @@ export class TopNav extends React.Component {
                     
                     {(this.state.signupShown) ? <Dialog close={this.hideSignUp}></Dialog> : null}
                 </div>
-                {(this.state.hover) ? <Overlay offset={this.state.hoveredIndex}></Overlay>: null}
+                {(this.state.hover) ? <Overlay category={this.state.category} offset={this.state.hoveredIndex}></Overlay>: null}
             </div>;
 
         }
