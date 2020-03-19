@@ -11,8 +11,20 @@ const Home = ({data}) => {
 
   console.log(image.toString('base64'))
   const results = {
-    "email":"billyray@hotmail.com",
-    "password":"password"
+    "productID" : "2023456",
+    "productName" : "Black Cardigan",
+    "dateCreated" : "", 
+    "recomended" : 1, 
+    "gender": "male", 
+    "newArrival": false,
+    "availability": true, 
+    "discount": 0,
+    "variants": [{"color": "red", "image":"image"},{"color": "blue", "image":"image"},{"color": "green", "image":"image"}], 
+    "displayImg": "imageStrings",
+    "category" : "Sweater",
+    "size":["Medium", "small"],
+    "description" : "Blah Blah Blah were making a webstore", 
+    "cost":125.00
   }; 
 
 
@@ -33,7 +45,7 @@ const Home = ({data}) => {
   }
   const getDataForPreviousDay = async () => {
     try{
-      const res = await fetch(URLString+ '/api/getSignIn?email='+ encodeURI(results.email)+"&password="+ encodeURI(results.password), {
+      const res = await fetch(URLString+ '/api/getOverlay?gender='+ encodeURI(results.gender), {
         method: "get",
       })
       const json = await res.json()
@@ -46,8 +58,8 @@ const Home = ({data}) => {
     }
 
   }
-  updateMacros();
-  //getDataForPreviousDay();
+  //updateMacros();
+  getDataForPreviousDay();
   return (
   <div className="container">
     <Head>

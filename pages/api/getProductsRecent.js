@@ -1,3 +1,10 @@
+/**
+ * @author Austin Bursey
+ * @public
+ * @summary Get request that returns all products by most recent date 
+ * @argument category  [in html] the category you would like to sort by. 
+ * @argument gender [in html] the gender you are sorting for.   
+ */
 import nextConnect from 'next-connect';
 import middleware from '../../middleware/ReadOnlydatabase';
 import {ObjectID} from 'mongodb';
@@ -8,12 +15,8 @@ handler.use(middleware);
 
 handler.get(async (req, res) => {
     try{
-        const { productType } = req.query;
         let doc = {}
-        console.log("CLASS : "+ req.query.class)
-        doc = await req.db.collection('StoreProducts').find({"category":req.query.productType, "gender": req.query.class}).sort({"dateCreated":-1}).toArray();
-        
-    
+        doc = await req.db.collection('StoreProducts').find({"category":req.query.category, "gender": req.query.gender}).sort({"dateCreated":-1}).toArray();
         
         res.json(doc)
     }catch(err){
