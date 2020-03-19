@@ -1,3 +1,9 @@
+/**
+ * @author Austin Bursey
+ * @public
+ * @summary Post request Signs a user in given email
+ * @argument email [in body] that you would like to add to collection. 
+ */
 import nextConnect from 'next-connect';
 import middleware from '../../middleware/database';
 import {ObjectID} from 'mongodb';
