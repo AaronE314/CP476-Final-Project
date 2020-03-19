@@ -8,7 +8,7 @@ handler.use(middleware);
 
 handler.get(async (req, res) => {
     try{
-        const { productType } = req.query;
+        
         let doc = {}
         doc = await req.db.collection('StoreProducts').find({ "gender": req.query.class}).toArray();
 

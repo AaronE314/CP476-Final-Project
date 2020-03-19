@@ -1,17 +1,6 @@
 {
-    "productID" : "2023456",
-    "productName" : "Black Cardigan",
-    "dateCreated" : "", 
-    "recomended" : 1, 
-    "gender": "male", 
-    "newArrival": false,
-    "availability": true, 
-    "discount": 0,
-    "color": ["red", "blue", "green"], 
-    "displayImg": "imageStrings",
-    "variantPicture" : ["imageStrings"], 
-    "category" : "Sweater",
-    "size":["Medium", "small"],
-    "description" : "Blah Blah Blah were making a webstore", 
-    "cost":125.00
+    "email": "String", 
+    "password":"pasword", 
+    "wishlist":  ["productIDs"], 
+    "ShoppingCart" : [{"productId":"String", "size": "Small", "color":"red"}]
   }
