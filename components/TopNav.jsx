@@ -109,7 +109,7 @@ export class TopNav extends React.Component {
 
                             <a className={styles.clickableText}>
                                 <img src="/images/heart.svg" id="heart"></img>
-                                <span>WISHLIST</span>
+                                <Link href="/wishlist"><span>WISHLIST</span></Link>
                             </a>
 
                             <a className={styles.clickableText}>
