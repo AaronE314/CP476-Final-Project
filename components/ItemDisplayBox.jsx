@@ -5,8 +5,6 @@ export class ItemDisplayBox extends React.Component{
     constructor(props){
         super(props);
 
-        let r = Math.floor(Math.random() * 3 + 1);
-
         this.state = {
             productName: "Product Name",
             price: 3.99,
