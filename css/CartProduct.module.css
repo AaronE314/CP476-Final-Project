@@ -1,10 +1,11 @@
 .CartProduct{
     position: relative;
-    width: 578px;
+    max-width: 578px;
     height: 229px;
     border-bottom: 0.5px solid #000000;
     font-family: "Open Sans";
     font-size: 16px;
+    margin-top: 32px;
 }
 
 .CartImage{
@@ -55,6 +56,7 @@
     height: 43px;
     float: left;
     z-index: 2;
+    cursor: pointer;
 }
 
 .CartWishlistInner{
@@ -78,6 +80,10 @@
     box-sizing: border-box;
 }
 
+.CartQuantity img {
+    cursor: pointer;
+}
+
 .CartMinus{
     opacity: 1;
 }
@@ -93,4 +99,14 @@
 
 .CartRemove{
     float: right;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1300px) {
+
+    .CartProduct {
+        max-width: 100%;
+        width: 100%;
+    }
+
 }

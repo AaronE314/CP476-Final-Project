@@ -263,16 +263,17 @@ export class ProductDetail extends React.Component {
                     position: relative;
 
                 }
-
-                .buttons {
-                    display: inline-flex;
-                    width: 80%;
-                }
                 
                 .buttons button:hover {
                     filter: brightness(95%);
                     cursor: pointer;
                 }
+                
+                .buttons {
+                    display: inline-flex;
+                    width: 80%;
+                }
+                
 
                 .buttons img {
                     width: 100%;

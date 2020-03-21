@@ -36,14 +36,14 @@ export class Wishlist extends React.Component {
 
     getTitle() {
 
-            const { router } = this.props;
-            let title = router.query.mainCategory;
+        const { router } = this.props;
+        let title = router.query.mainCategory;
 
-            if (router.query.subCategory) {
-                title += " " + router.query.subCategory;
-            }
+        if (router.query.subCategory) {
+            title += " " + router.query.subCategory;
+        }
 
-            return title;
+        return title;
     }
 
     componentDidMount() {

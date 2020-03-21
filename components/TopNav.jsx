@@ -112,10 +112,12 @@ export class TopNav extends React.Component {
                                 <Link href="/wishlist"><span>WISHLIST</span></Link>
                             </a>
 
-                            <a className={styles.clickableText}>
-                                <img src="/images/cart.svg" id="cart"></img>
-                                <span>CART</span>
-                            </a>
+                            <Link href="/cart">
+                                <a className={styles.clickableText}>
+                                    <img src="/images/cart.svg" id="cart"></img>
+                                    <span>CART</span>
+                                </a>
+                            </Link>
                         </div>
 
                     </div>
