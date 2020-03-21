@@ -52,6 +52,7 @@ export class Cart extends React.Component {
 
         this.updateProduct = this.updateProduct.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
+        this.getTotal = this.getTotal.bind(this);
     }
 
     updateProduct(property, value, i) {
@@ -62,7 +63,7 @@ export class Cart extends React.Component {
 
         products[i][property] = value;
 
-        this.setState({...this.state, products: products});
+        this.setState({...this.state, products: products, total: this.getTotal(), numberOfItems: this.getItemsSold()});
     }
 
     removeProduct(i) {
@@ -73,7 +74,33 @@ export class Cart extends React.Component {
 
         products.splice(i, 1);
 
-        this.setState({...this.state, products: products});
+        this.setState({...this.state, products: products, total: this.getTotal(), numberOfItems: this.getItemsSold()});
+    }
+
+    getSubTotal(product) {
+        return (product.price * (1 - product.discount)) * product.quantity;
+    }
+
+    getTotal() {
+
+        let total = 0;
+
+        for (let i = 0; i < this.state.products.length; i++) {
+            total += this.getSubTotal(this.state.products[i]);
+        }
+
+        return total;
+    }
+
+    getItemsSold() {
+
+        let items = 0;
+
+        for (let i = 0; i < this.state.products.length; i++) {
+            items += this.state.products[i].quantity;
+        }
+
+        return items;
     }
 
     render() {
@@ -98,11 +125,11 @@ export class Cart extends React.Component {
                             <h1>Order Summary</h1>
                             <div>
                                 <label>Items sold</label>
-                                <label className="right">{this.state.numberOfItems}</label>
+                                <label className="right">{this.getItemsSold()}</label>
                             </div>
                             <div>
                                 <label>Total</label>
-                                <label className="right">{`CAD $${this.state.total.toFixed(2)}`}</label>
+                                <label className="right">{`CAD $${this.getTotal().toFixed(2)}`}</label>
                             </div>
                             <p>Taxes & Shipping calculated at next step</p>
                         </div>
