@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from "../css/ItemDisplayBox.module.css";
+import Link from 'next/link';
 
 export class ItemDisplayBox extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
+            productId: "0850318003",
             productName: "Product Name",
             price: 3.99,
             discount: 0.1,
@@ -14,7 +16,8 @@ export class ItemDisplayBox extends React.Component{
                 {name:"Black", hex:"#000000", link: ""},
                 {name:"Yellow", hex:"#FFF500", link: ""}
             ],
-            displayImage: "",
+            displayImageIndex: 0,
+            displayColorIndex: 0,
             highlightColor: "#FFF500",
             wishlisted: false
         };
@@ -24,27 +27,23 @@ export class ItemDisplayBox extends React.Component{
         this.hoverOff = this.hoverOff.bind(this);
         this.updateWishlist = this.updateWishlist.bind(this);
     }
-    
-    componentDidMount() {
-        this.setState({...this.state, displayImage: this.state.colours[0].link});
-    }
 
     getAdjustedPrice(){
         return Math.round((this.state.price * (1 - this.state.discount)) * 100) / 100
     }
 
     hoverOn(colourLink){
-        document.getElementById("displayTemp").style.background = colourLink;
+        // document.getElementById("displayTemp").style.background = colourLink;
         //Replace later with changing the image with id = displayImage
         // document.getElementById("displayImage").src = colourLink;
-        this.setState({...this.state, displayImage: colourLink});
+        this.setState({...this.state, displayImageIndex: colourLink, displayColorIndex: colourLink});
     }
 
     hoverOff(){
-        document.getElementById("displayTemp").style.background = this.state.colours[0].link;
+        // document.getElementById("displayTemp").style.background = this.state.colours[0].link;
         //Replace later with changing the image with id = displayImage
         // document.getElementById("displayImage").src = this.state.colours[0].link;
-        this.setState({...this.state, displayImage: this.state.colours[0].link});
+        this.setState({...this.state, displayImageIndex: 0, displayColorIndex: 0});
     }
 
     updateWishlist(){
@@ -58,8 +57,8 @@ export class ItemDisplayBox extends React.Component{
         }
 
         return <div className={styles.DisplayItem}>
-            <div className={styles.DisplayImage} id="displayTemp">
-            <img className={styles.img} src={this.state.displayImage} id="displayImage"></img>
+            <div className={styles.DisplayImage} id="displayTemp" style={{background: this.state.colours[this.state.displayImageIndex].hex}}>
+            <Link href={{pathname: "/productDetail", query: {id: this.state.productId}}}><img className={styles.img} src={this.state.colours[this.state.displayImageIndex].link} id="displayImage"></img></Link>
             <img onClick={this.updateWishlist} className={styles.DisplayWishlist} src="/images/heart.svg"></img>
                 {(this.state.wishlisted) ? 
                     <svg className={styles.DisplayWishlistInner} width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,7 +73,7 @@ export class ItemDisplayBox extends React.Component{
                 {(this.state.discount > 0) ? <p className={styles.DisplayOldPrice}>${this.state.price.toFixed(2)}</p> : <p>${this.state.price.toFixed(2)}</p>}
                 <div className={styles.DisplayColorContainer}>
                     {this.state.colours.map((item, i) => {
-                        return <div key={i} className={styles.DisplayColorOption} style={{background: item.hex}} onMouseOver={() => {this.hoverOn(item.link)}} onMouseOut={() => {this.hoverOff()}}></div>
+                        return <div key={i} className={styles.DisplayColorOption} style={{background: item.hex}} onMouseOver={() => {this.hoverOn(i)}} onMouseOut={() => {this.hoverOff()}}></div>
                     })}
                 </div>
             </div>
