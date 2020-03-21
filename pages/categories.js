@@ -84,7 +84,7 @@ export class Categories extends React.Component {
                     <h4>New Arrivals</h4>
                     <ul>
                         {this.state.arivals.map((item, i) => {
-                            return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
+                            return <li key={i}><Link href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
                         })}
                     </ul>
                 </div>
@@ -93,7 +93,7 @@ export class Categories extends React.Component {
                     <h4>Shop by Category</h4>
                     <ul>
                         {this.state.category.map((item, i) => {
-                            return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
+                            return <li key={i}><Link href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
                         })}
                     </ul>
                 </div>
@@ -200,6 +200,10 @@ export class Categories extends React.Component {
                     outline: none;
                 }
 
+                .hoverColor:hover {
+                    background-color: var(--highlightColor);
+                }
+
                 .filterPannel {
                     position: relative;
                     width: 110px;
@@ -256,6 +260,11 @@ export class Categories extends React.Component {
 
                     position: relative;
 
+                }
+
+                .loadMore:hover {
+                    filter: brightness(95%);
+                    cursor: pointer;
                 }
 
                 [type="radio"]:checked,
