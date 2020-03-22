@@ -10,7 +10,7 @@
 }
 
 .span {
-    font-family: Open Sans;
+    font-family: 'Open Sans';
     font-weight: normal;
     text-transform: none;
     font-size: 12px;
@@ -21,7 +21,7 @@
 .span a {
 
     text-transform: none;
-    font-family: Open Sans;
+    font-family: 'Open Sans';
     color: var(--foregroundColor);
 }
 

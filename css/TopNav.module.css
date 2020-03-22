@@ -310,7 +310,7 @@
         padding-left: 11px;
         padding-bottom: 10px;
         background: white;
-        width: calc(100% - 10px);
+        width: calc(100% - 11px);
         justify-content: space-between;
     }
 
