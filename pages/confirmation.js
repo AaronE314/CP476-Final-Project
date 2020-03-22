@@ -4,7 +4,7 @@ import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import ReactToPrint from 'react-to-print';
 
-export class Review extends React.Component {
+export class Confirmation extends React.Component {
 
     constructor(props) {
         super(props);        
@@ -373,4 +373,4 @@ export class Review extends React.Component {
 
 } 
 
-export default Review;
+export default Confirmation;
