@@ -76,7 +76,7 @@ export class Wishlist extends React.Component {
             products.push(<ItemDisplayBox key={i}/>);
         }
 
-        return <Layout>
+        return <Layout fullPage={false}>
 
             <div className="mainContent">
                     <h1>WISHLIST</h1>
@@ -127,7 +127,7 @@ export class Wishlist extends React.Component {
                 }
 
                 .filterby select, .filterby option {
-                    font-family: Open Sans;
+                    font-family: 'Open Sans';
                     font-weight: normal;
                     font-size: 14px;
                     min-width: 50px;
@@ -154,7 +154,7 @@ export class Wishlist extends React.Component {
                 .filterPannel span {
                     position: absolute;
                     left: 12px;
-                    font-family: Open Sans;
+                    font-family: 'Open Sans';
                     font-style: normal;
                     font-weight: normal;
                     font-size: 14px;
@@ -178,7 +178,7 @@ export class Wishlist extends React.Component {
                 }
 
                 .sortBy label:not(:first-child) {
-                    font-family: Open Sans;
+                    font-family: 'Open Sans';
                     font-weight: normal;
                     font-size: 14px;
                 }

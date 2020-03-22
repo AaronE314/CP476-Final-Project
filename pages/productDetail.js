@@ -17,11 +17,11 @@ export class ProductDetail extends React.Component {
                 colors: ["red", "black", "grey", "white", "yellow"],
                 sizes: ["S", "M", "L", "XL"],
                 
-                images: ["/images/tempImages/tempImg1_11.jpg",
-                         "/images/tempImages/tempImg1_21.jpg", 
-                         "/images/tempImages/tempImg1_31.jpg", 
-                         "/images/tempImages/tempImg2_11.jpg", 
-                         "/images/tempImages/tempImg2_21.jpg"],
+                images: ["/images/tempImages/tempImg1_1.jpg",
+                         "/images/tempImages/tempImg1_2.jpg", 
+                         "/images/tempImages/tempImg1_3.jpg", 
+                         "/images/tempImages/tempImg2_1.jpg", 
+                         "/images/tempImages/tempImg2_2.jpg"],
                 
                 description: `Casual modernity. Designed from pure cotton, this jacket is reimagined with a waist belt and a cropped length.\n
                 \n
@@ -131,15 +131,31 @@ export class ProductDetail extends React.Component {
                         <img src="/images/blackWhiteHeart.svg"/>
                     </div>
 
-                    <p>{this.state.productDetails.description.split('\n').map((item, key) => {
+                    <p className="desc">{this.state.productDetails.description.split('\n').map((item, key) => {
                         return <Fragment key={key}>{item}<br/></Fragment>
                     })}</p>
 
-                    <p>Product No: {router.query.id}</p>
+                    <p className="productNo">Product No: {router.query.id}</p>
                 </div>
             </div>
 
             <style jsx>{`
+
+                .desc, .productNo {
+                    font-family: 'Open Sans';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 21px;
+                }
+
+                .colors, .sizes {
+                    font-family: 'Open Sans';
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 16px;
+                    line-height: 22px;
+                }
 
                 .container {
                     display: grid;
@@ -194,7 +210,7 @@ export class ProductDetail extends React.Component {
                     margin-top: 8px;
 
                     /* TODO: Remove this when we add photos */
-                    height: 117px;
+                    /* height: 117px; */
                 }
 
                 .smallImage img {
@@ -211,7 +227,7 @@ export class ProductDetail extends React.Component {
                     margin-bottom: 8px;
 
                     /* TODO: Remove this when we add photos */
-                    height: 876px;
+                    /* height: 876px; */
                 }
 
                 .sizes p, .colors p {

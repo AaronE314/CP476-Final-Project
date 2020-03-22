@@ -8,6 +8,11 @@
     margin-top: 32px;
 }
 
+.CartProduct * {
+    font-family: "Open Sans";
+    font-weight: normal;
+}
+
 .CartImage{
     width: 151px;
     height: 205px;

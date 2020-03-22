@@ -22,29 +22,29 @@ export class Cart extends React.Component {
                     size: "S",
                     colour: "Black",
                     orderNumber: "0850318003",
-                    imageLink: "",
+                    imageLink: "/images/tempImages/tempImg1_1.jpg",
                     wishlisted: true,
                 },
                 {
                     productName: "Product Name",
-                    quantity: 1,
+                    quantity: 2,
                     price: 3.99,
                     discount: 0.2,
                     size: "M",
                     colour: "Black",
                     orderNumber: "0850318004",
-                    imageLink: "",
+                    imageLink: "/images/tempImages/tempImg1_2.jpg",
                     wishlisted: false,
                 },
                 {
                     productName: "Product Name",
-                    quantity: 1,
+                    quantity: 4,
                     price: 3.99,
                     discount: 0.4,
                     size: "XL",
                     colour: "Blue",
                     orderNumber: "0850318005",
-                    imageLink: "",
+                    imageLink: "/images/tempImages/tempImg1_3.jpg",
                     wishlisted: false,
                 },
             ]
@@ -105,7 +105,7 @@ export class Cart extends React.Component {
 
     render() {
 
-        return <Layout>
+        return <Layout fullPage={false}>
 
             <div className="mainContent">
 
@@ -133,7 +133,9 @@ export class Cart extends React.Component {
                             </div>
                             <p>Taxes & Shipping calculated at next step</p>
                         </div>
-                        <button className="checkoutBtn">CHECKOUT</button>
+                        <Link href="/checkout">
+                            <button className="checkoutBtn">CHECKOUT</button>
+                        </Link>
                         <p>Read more about how to return an item <a href="#">here</a></p>
                         <p>Standard home delivery CAD $20 / Delivery in 5-7 business days<br/>
                         Free delivery on orders over CAD $200 before shipping & taxes</p>
@@ -171,10 +173,15 @@ export class Cart extends React.Component {
 
                 .mainContent {
                     width: calc(100% - (2 * 138px));
-                    margin: 0 138px;
+                    margin: 16px 138px;
+                }
+
+                .mainContent > h1 {
+                    margin-top: 16px;
                 }
 
                 .cartItems { 
+                    position: relative;
                     grid-area: products;
                     display: grid;
                     grid-template-columns: repeat(auto-fill, minmax(578px, 1fr));
@@ -190,7 +197,7 @@ export class Cart extends React.Component {
                 }
 
                 .summary p, .summary p a {
-                    font-family: Open Sans;
+                    font-family: 'Open Sans';
                     font-weight: normal;
                     font-size: 16px;
                     line-height: 24px;
@@ -223,7 +230,7 @@ export class Cart extends React.Component {
 
                 @media only screen and (max-width: 1940px) {
                     .content {
-                        grid-template-columns: 50% 50%;
+                        grid-template-columns: 50% calc(50% - 96px);
                     }
                 }
 
@@ -236,18 +243,36 @@ export class Cart extends React.Component {
                             "products";
                     }
 
+                    .cartItems {
+                        grid-template-columns: 100%;
+                    }
+
                     .mainContent {
                         width: calc(100% - (2 * 48px));
                         margin: 0 48px;
+                    }
+
+                    .checkoutBtn {
+                        margin: 30px 0 30px 0;
                     }
                 }
 
                 @media only screen and (max-width: 992px) {
 
                     .mainContent {
-                        width: 100%;
-                        margin: 0;
+                        width: calc(100% - (2 * 16px));
+                        margin: 16px;
                     }
+                }
+
+                @media only screen and (max-width: 610px) {
+
+                    .mainContent {
+                        margin: 76px 16px 0 16px;
+                    }
+
+
+
                 }
             
             `}</style>

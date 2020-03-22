@@ -184,7 +184,7 @@ export class Categories extends React.Component {
                 }
 
                 .filterby select, .filterby option {
-                    font-family: Open Sans;
+                    font-family: 'Open Sans';
                     font-weight: normal;
                     font-size: 14px;
                     min-width: 50px;
@@ -215,7 +215,7 @@ export class Categories extends React.Component {
                 .filterPannel span {
                     position: absolute;
                     left: 12px;
-                    font-family: Open Sans;
+                    font-family: 'Open Sans';
                     font-style: normal;
                     font-weight: normal;
                     font-size: 14px;
@@ -239,7 +239,7 @@ export class Categories extends React.Component {
                 }
 
                 .sortBy label:not(:first-child) {
-                    font-family: Open Sans;
+                    font-family: 'Open Sans';
                     font-weight: normal;
                     font-size: 14px;
                 }

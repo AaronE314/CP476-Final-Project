@@ -6,10 +6,18 @@ import React from 'react'
 //const Home = () => (
 export class Layout extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            fullPage: (this.props.fullPage === undefined || this.props.fullPage)
+        }
+
+    }
 
   render() {
 
-    return <div className="container">
+    return <div className="container" style={{minHeight: (this.state.fullPage) ? "calc(100vh + 310px)" : "calc(100vh)"}}>
         <Head>
             <title>Web Store</title>
             <link rel="icon" href="/favicon.ico" />
@@ -19,7 +27,7 @@ export class Layout extends React.Component {
             <TopNav/>
         </header>
 
-        <main>
+        <main style={{minHeight: (this.state.fullPage) ? "calc(100vh - 80px)" : "calc(100vh - 80px - 310px)"}}>
             {this.props.children}
         </main>
 
@@ -44,33 +52,37 @@ export class Layout extends React.Component {
         <style jsx global>{`
 
             * {
-            font-family: "Roboto";
-            font-style: normal;
-            font-weight: bold;
-            line-height: 19px;
+                font-family: "Roboto";
+                font-style: normal;
+                font-weight: bold;
+                line-height: 19px;
 
-            letter-spacing: 0.1em;
+                letter-spacing: 0.1em;
 
             }
 
             a {
-            text-decoration: none;
-            color: black;
+                text-decoration: none;
+                color: black;
             }
 
             a:selcted {
-            color: black;
+                color: black;
             }
 
 
             :root {
-            --overlayOffset: 112px;
-            --backgroundColor: white;
-            --foregroundColor: black;
-            --highlightColor: #FFF500;
-            --headerHeight: 80px;
-            --footerHeight: 310;
+                --overlayOffset: 112px;
+                --backgroundColor: white;
+                --foregroundColor: black;
+                --highlightColor: #FFF500;
+                --headerHeight: 80px;
+                --footerHeight: 310;
 
+            }
+
+            body {
+                margin: 0;
             }
 
         `}</style>
