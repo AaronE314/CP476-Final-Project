@@ -21,8 +21,6 @@ export class SignUpDialog extends React.Component {
         this.toggleShowRep = this.toggleShowRep.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
-        console.log(this.state);
     }
 
     toggleShow(e) {

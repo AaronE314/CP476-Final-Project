@@ -68,7 +68,6 @@ export class TopNav extends React.Component {
     focusId(id) {
         this.setState({...this.state, menuOpen: false, hover:false, category: null})
         let element = document.getElementById(id);
-        console.log(element);
         if (element) {
             element.focus();
         }
