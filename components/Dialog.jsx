@@ -11,8 +11,6 @@ export class Dialog extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
-
         this.state = {
             signUp: false,
             hidden: false,
@@ -54,8 +52,8 @@ export class Dialog extends React.Component {
                 <img className={styles.close} onClick={this.close} src="/images/close.svg"/>
 
                 <div className={styles.mainSection}>
-                    <span className={`${styles.signUpButton} ${styles.clickableText}`} onClick={this.setSignUp}>SIGN IN</span>
-                    <span className={`${styles.signInButton} ${styles.clickableText}`} onClick={this.setSignIn}>SIGN UP</span>
+                    <span className={`${styles.signInButton} ${styles.clickableText}`} onClick={this.setSignIn}>SIGN IN</span>
+                    <span className={`${styles.signUpButton} ${styles.clickableText}`} onClick={this.setSignUp}>SIGN UP</span>
                     <hr/>
 
                     { (this.state.signUp) ? <SignUpDialog></SignUpDialog> : <SignInDialog></SignInDialog>}

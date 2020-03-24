@@ -1,15 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Layout from '../components/layout';
-import Head from 'next/head'
-import { Dialog } from '../components/Dialog'
-import { Footer } from '../components/Footer'
-import TopNav from '../components/TopNav'
 import fetch from 'isomorphic-unfetch'
-import {Product} from "../components/Product"
 import { URLString } from '../constants'
-// import image from '../public/img1.jpg'
 
-//const Home = () => (
 export class Home extends React.Component {
 
   constructor(props) {
@@ -17,63 +10,27 @@ export class Home extends React.Component {
 
     this.state = {
       slogan: "A GOOD PLACE FOR A COMPANY SLOGAN",
-      results: {
-        "productID" : "2023456",
-        "productName" : "Black Cardigan",
-        "dateCreated" : "", 
-        "recomended" : 1, 
-        "gender": "male", 
-        "newArrival": false,
-        "availability": true, 
-        "discount": 0,
-        "variants": [{"color": "red", "image":"image"},{"color": "blue", "image":"image"},{"color": "green", "image":"image"}], 
-        "displayImg": "imageStrings",
-        "category" : "Sweater",
-        "size":["Medium", "small"],
-        "description" : "Blah Blah Blah were making a webstore", 
-        "cost":125.00
-      }
+      // results: {
+      //   productID : "2023456",
+      //   productName : "Black Cardigan",
+      //   dateCreated : "", 
+      //   recomended : 1, 
+      //   gender: "male", 
+      //   newArrival: false,
+      //   availability: true, 
+      //   discount: 0,
+      //   variants: [{color: "red", image:"image"},{color: "blue", image:"image"},{color: "green", image:"image"}], 
+      //   displayImg: "imageStrings",
+      //   category: "Sweater",
+      //   size:["Medium", "small"],
+      //   description : "Blah Blah Blah were making a webstore", 
+      //   cost:125.00
+      // }
     }
-
-    this.updateMacros = this.updateMacros.bind(this);
-    this.getDataForPreviousDay = this.getDataForPreviousDay.bind(this);
-  }
-
-  async updateMacros() {
-    try {
-      const res = await fetch(URLString+'/api/SignUp', {
-        method: 'post',
-        body: JSON.stringify(this.state.results)
-      }).catch(function(err){
-        throw err; 
-      });
-      let user = await res.json(); 
-      console.log(res);
-      console.log(user);
-    }catch(err){
-      console.log( err); 
-    }
-  }
-  async getDataForPreviousDay() {
-    try{
-      const res = await fetch(URLString+ '/api/getOverlay?gender='+ encodeURI(this.state.results.gender), {
-        method: "get",
-      })
-      const json = await res.json()
-      console.log("*********************************\n");
-      console.log(json);
-      console.log("*********************************\n"); 
-      
-    }catch(err){
-      throw err;
-    }
-
   }
 
   render() {
 
-    // this.updateMacros();
-    //this.getDataForPreviousDay();
     return <Layout>
         <div className="background">
           

@@ -2,21 +2,46 @@ import React from 'react'
 
 import styles from "../css/Dialog.module.css";
 
+import { signIn } from "../lib/apiRequester";
+
 export class SignInDialog extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: "",
+            password: "",
+            staySignedIn: false
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(e) {
+        this.setState({...this.state, [e.target.name]: e.target.value.trim()})
+    }
+
+    handleSubmit(e) {
+        // TODO: Verify form
+        e.preventDefault();
+        signIn(this.state.email, this.state.password);
+    }
 
     render() {
 
-        return <form className={styles.form} method="post">
+        return <form className={styles.form} method="post" onSubmit={this.handleSubmit}>
 
             <div className={styles.container}>
-                <input className={styles.text} placeholder="Email" type="email"/>
+                <input className={styles.text} name="email" onChange={this.handleChange} placeholder="Email" autoComplete="email" type="email"/>
             </div>
             <div className={styles.container}>
-                <input className={styles.text} placeholder="Password" type="password"/>
+                <input className={styles.text} name="password" onChange={this.handleChange} placeholder="Password" autoComplete="current-password" type="password"/>
             </div>
 
             <div className={styles.checkBoxContainer}>
-                <input className={styles.checkbox} type="checkbox"/>
+                <input className={styles.checkbox} name="staySignedIn" onChange={this.handleChange} type="checkbox"/>
                 <label className={styles.span}>Stay signed in</label>
             </div>
 

@@ -7,7 +7,7 @@
  */
 
 import nextConnect from 'next-connect';
-import middleware from '../../middleware/ReadOnlydatabase';
+import middleware from '../../../middleware/ReadOnlydatabase';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
