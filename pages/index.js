@@ -37,6 +37,7 @@ const Home = ({data}) => {
         throw err; 
       });
       let user = await res.json(); 
+      console.log("HELLO");
       console.log(res);
       console.log(user);
     }catch(err){
@@ -58,8 +59,8 @@ const Home = ({data}) => {
     }
 
   }
-  //updateMacros();
-  getDataForPreviousDay();
+  updateMacros();
+  //getDataForPreviousDay();
   return (
   <div className="container">
     <Head>

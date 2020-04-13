@@ -1,8 +1,9 @@
 /**
  * @author Austin Bursey
  * @public
- * @summary [NOT WORKING] Get request for all categories for an overlay
+ * @summary Get request for all categories for an overlay
  * @argument gender that you would like to sort by. 
+ * @returns Array of strings for category names
  */
 import nextConnect from 'next-connect';
 import middleware from '../../middleware/ReadOnlydatabase';
