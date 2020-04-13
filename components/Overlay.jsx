@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import styles from "../css/Overlay.module.css";
 
+import { getOverlay } from "../lib/apiRequester";
+
 export class Overlay extends React.Component {
 
     constructor(props) {
@@ -36,6 +38,17 @@ export class Overlay extends React.Component {
             return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
         }
         return {pathname: link, query: {mainCategory: this.props.category}};
+    }
+
+    async componentDidMount() {
+
+        console.log("init");
+
+        let data = await getOverlay("male");
+
+        console.log(data);
+
+        this.setState({data: data});
     }
 
     render() {
