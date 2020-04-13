@@ -26,8 +26,8 @@ handler.post(async (req, res) => {
             
             res.json({"message": "this email is already registered to an account." })
             console.log("|"+res.status+"|");
-            res.status = "failed request, email already belongs to an account."
-            res.statusCode = 412 ;
+            res.status = 412;
+            res.statusText = "failed request, email already belongs to an account." ;
 
             console.log("|"+res.status+"|");
             console.log("|"+res.statusCode+"|");
