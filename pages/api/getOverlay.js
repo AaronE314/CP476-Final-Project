@@ -16,6 +16,8 @@ handler.use(middleware);
 handler.get(async (req, res) => {
     try{
         let doc = {}
+        console.log(req.query.gender)
+        console.log("========")
         doc = await req.db.collection('StoreProducts').find({ gender: req.query.gender }, {fields: {category: 1,_id:0 } }).toArray();
 
         let temp = [];

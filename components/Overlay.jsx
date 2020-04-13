@@ -42,7 +42,7 @@ export class Overlay extends React.Component {
 
     async componentDidMount() {
 
-        console.log("init");
+        await console.log("init");
 
         let data = await getOverlay("male");
 
