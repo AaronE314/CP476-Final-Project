@@ -48,7 +48,7 @@ export class Overlay extends React.Component {
 
         console.log(data);
 
-        this.setState({data: data});
+        this.setState({...this.state, data: data});
     }
 
     render() {
