@@ -16,17 +16,10 @@ handler.use(middleware);
 handler.get(async (req, res) => {
     try{
         let doc = {}
-        console.log(req.query.gender)
-        console.log("========")
-        doc = await req.db.collection('StoreProducts').find({ gender: req.query.gender }, {fields: {category: 1,_id:0 } }).toArray();
+        doc = await req.db.collection('Overlay').find({}).toArray();
 
-        let temp = [];
-        await doc.forEach(element => {
-           if (temp.indexOf(element.category) === -1){
-               temp.push(element.category)
-               
-           } 
-        });
+        let temp = await doc;
+        console.log(temp);
 
         res.json(temp)
     }catch(err){

@@ -41,14 +41,16 @@ export class Overlay extends React.Component {
     }
 
     async componentDidMount() {
+        if (this.state.data === undefined){
+            await console.log("init");
 
-        await console.log("init");
+            let data = await getOverlay("male");
+    
+            console.log(data);
+    
+            this.setState({...this.state, data: data});
+        }
 
-        let data = await getOverlay("male");
-
-        console.log(data);
-
-        this.setState({...this.state, data: data});
     }
 
     render() {
@@ -69,9 +71,7 @@ export class Overlay extends React.Component {
             <div>
                 <h4 className={styles.title}>Shop by Category</h4>
                 <ul className={styles.list}>
-                    {this.state.category.map((item, i) => {
-                        return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
-                    })}
+                    {this.state.data === undefined ? this.state.category.map((item, i) => {return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>}):this.state.data.map((item, i) => {return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>})}
                 </ul>
             </div>
 
