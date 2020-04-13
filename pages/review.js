@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router from "next/router";
+import fetch from "isomorphic-unfetch";
 
 import { countries } from '../public/countriesRegions'
 
@@ -56,6 +57,7 @@ export class Review extends React.Component {
         }
 
         this.getTotal = this.getTotal.bind(this);
+        this.goToCheckout = this.goToCheckout.bind(this);
     }
 
     getSubTotal(product) {
@@ -73,7 +75,9 @@ export class Review extends React.Component {
         return total;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        console.log("mounted");
 
         let value = this.getTotal();
 
@@ -83,15 +87,32 @@ export class Review extends React.Component {
 
         let total = value + shipping + tax;
 
+        const checkout = await fetch("/api/checkout/build-checkout").then((r) => r.json());
+
+
         this.setState({...this.state, total: total.toFixed(2), 
                                       value: value.toFixed(2), 
                                       tax: tax.toFixed(2), 
-                                      shipping: shipping.toFixed(2)})
+                                      shipping: shipping.toFixed(2),
+                                      stripe: window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY),
+                                      sessionID: checkout.id})
+    }
+
+    goToCheckout() {
+
+        // this.state.stripe.redirectToCheckout({
+        //     sessionId: this.state.sessionID
+        // })
+        // .then((result) => {
+        //     console.log(result.error.message);
+        // });
+        Router.push("/confirmation");
+
     }
 
     render() {
 
-        return <Layout fullPage={false}>
+        return <Layout fullPage={false} stripe={true}>
 
             <div className="mainContent">
 
@@ -131,7 +152,8 @@ export class Review extends React.Component {
                         <form className="shippingInfo" autoComplete="on" onSubmit={e => {
                             e.preventDefault();
                             // TODO: call stripe
-                            Router.push("/confirmation")
+                            this.goToCheckout();
+                            // Router.push("/confirmation")
                         }}>
                             <div className="formInputs">
                                 <input className="formLeft" type="text" placeholder="First name"/>

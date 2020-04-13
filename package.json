@@ -22,6 +22,7 @@
     "react-dom": "16.13.0",
     "react-flip-move": "^3.0.4",
     "react-to-print": "^2.6.3",
+    "stripe": "^8.39.2",
     "url-loader": "^4.0.0",
     "validator": "^13.0.0"
   }
