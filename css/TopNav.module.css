@@ -1,21 +1,19 @@
 
-.topNav {
-
+.topNavContainer {
     position: absolute;
     width: 100%;
-    height: 80px !important;
     left: 0;
     top: 0;
-    display: inline-flex;
-
-    background: #FFFFFF;
-
+    z-index: 5;
 }
 
-.topNav nav {
+.topNav {
 
-    padding: 0;
-    margin: 16px 0;
+    height: 80px !important;
+    width: 100%;
+    display: inline-flex;
+
+    background: var(--backgroundColor);
 
 }
 
@@ -24,11 +22,9 @@
     width: 48px;
     height: 48px;
 
-    margin: 16px;
-    margin-right: 16px;
-    margin-left: 48px;
+    margin: 16px 32px;
 
-    background: #FFF500;
+    background: var(--highlightColor);
 }
 
 .logo img {
@@ -37,22 +33,30 @@
     height: 36px;
     margin: 6px;
 
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+
 }
 
 .catagories {
 
+    margin: 16px 0;
     display: flex;
     flex-direction: row;
     padding: 0;
-    padding-top: 31px;
 
 }
 
 .right div {
     line-height: 19px;
-    padding-right: 26px;
     padding-top: 12px;
 }
+
 
 
 .topNav nav a, .right a {
@@ -61,7 +65,7 @@
     font-style: normal;
     font-weight: bold;
     line-height: 19px;
-    padding-right: 26px;
+    padding-right: 48px;
 
     letter-spacing: 0.1em;
 
@@ -69,12 +73,17 @@
 
     text-align: center;
 
-    color: #000000;
+    color: var(--foregroundColor);
+}
+
+.right a:last-child {
+    padding-right: 0;
 }
 
 .right {
 
     position: absolute;
+    display: inline-flex;
     
     margin-top: 16px;
     margin-bottom: 16px;
@@ -82,7 +91,26 @@
     height: 48px;
     right: 32px;
 
-    display: inline-flex;
+}
+
+.search {
+    padding-right: 26px;
+}
+
+.search input {
+    position: relative;
+    width: 218px;
+    background-color: rgba(0, 0, 0, 0.07);
+    border: none;
+    height: 24px;
+    padding: 0 8px;
+    top: -5px;
+
+}
+
+.search input:focus {
+    border-bottom: 0.5px solid black;
+    outline: none;
 }
 
 .right img {
@@ -90,5 +118,208 @@
     width: 17px;
     height: 17px;
     margin-right: 12px;
+
+}
+
+.search img {
+    position: relative;
+    cursor: pointer;
+    /* padding-top: ; */
+    width: 20px;
+    height: 20px;
+    background-color: var(--backgroundColor);
+}
+
+.clickableText {
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.clickableText span:hover {
+    /* color: #414141; */
+    background: var(--highlightColor);
+}
+
+.hamburger {
+    display: none;
+}
+
+.categoriesButton {
+    display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+ .search input {
+     width: 0;
+     opacity: 0;
+     transition: width .2s ease-in-out;
+ }
+
+ .search input:focus {
+    width: 218px;
+    opacity: 100;
+    z-index: 20;
+ }
+
+ .search {
+     background: var(--backgroundColor);
+ }
+
+}
+
+@media only screen and (max-width: 992px) {
+
+    .right {
+        right: 0;
+    }
+
+    .right div:not(:first-child) {
+        padding: 0;
+    }
+
+    .rightButtons {
+        position: absolute;
+        width: 160px;
+        display: grid;
+        height: 0;
+        z-index: 5;
+        padding: 0;
+        transition: height .2s ease-in-out, border-width .2s linear;
+        border: 0 solid var(--foregroundColor);
+        background-color: var(--backgroundColor);
+
+        top: 42px;
+        right: -6px;
+        overflow: hidden;
+    }
+
+    .rightButtons.open {
+        height: none;
+        height: 183px;
+        border: 1px solid var(--foregroundColor);
+        border-top: none;
+    }
+
+    .rightButtons a {
+        padding: 20px 5px;
+        background-color: var(--backgroundColor);
+    }
+
+    .rightButtons a:hover {
+        background: var(--highlightColor);
+    }
+
+    /* Hamburger */
+
+    .hamburger {
+        display: block;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        margin: 12px 26px 0 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .5s ease-in-out;
+        -moz-transition: .5s ease-in-out;
+        -o-transition: .5s ease-in-out;
+        transition: .5s ease-in-out;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: var(--foregroundColor);
+        /* border-radius: 9px; */
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .25s ease-in-out;
+        -moz-transition: .25s ease-in-out;
+        -o-transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
+    }
+
+    .hamburger span:nth-child(1) {
+        top: 0px;
+        -webkit-transform-origin: left center;
+        -moz-transform-origin: left center;
+        -o-transform-origin: left center;
+        transform-origin: left center;
+      }
+      
+      .hamburger span:nth-child(2) {
+        top: 8px;
+        -webkit-transform-origin: left center;
+        -moz-transform-origin: left center;
+        -o-transform-origin: left center;
+        transform-origin: left center;
+      }
+      
+      .hamburger span:nth-child(3) {
+        top: 16px;
+        -webkit-transform-origin: left center;
+        -moz-transform-origin: left center;
+        -o-transform-origin: left center;
+        transform-origin: left center;
+      }
+      
+      .hamburger.open span:nth-child(1) {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: 3px;
+        left: 3px;
+        /* top: -22px;
+        left: 10px; */
+      }
+      
+      .hamburger.open span:nth-child(2) {
+        width: 0%;
+        opacity: 0;
+      }
+      
+      .hamburger.open span:nth-child(3) {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        top: 17px;
+        left: 3px;
+      }
+
+}
+
+@media only screen and (max-width: 610px) {
+
+    .catagories {
+        position: absolute;
+        top: 64px;
+        padding: 0;
+        padding-left: 11px;
+        padding-bottom: 10px;
+        background: white;
+        width: calc(100% - 11px);
+        justify-content: space-between;
+    }
+
+    .topNav nav a {
+        padding-right: 19px;
+    }
+
+    .search input:focus {
+        width: calc(100vw - 154px);
+     }
 
 }

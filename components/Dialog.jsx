@@ -12,42 +12,58 @@ export class Dialog extends React.Component {
         super(props);
 
         this.state = {
-            signUp: true
+            signUp: false,
+            hidden: false,
         };
 
         this.setSignUp = this.setSignUp.bind(this);
         this.setSignIn = this.setSignIn.bind(this);
+        this.close = this.close.bind(this);
     }
 
     setSignUp() {
-        this.setState({signUp: true});
+        this.setState({...this.state, signUp: true});
     }
 
     setSignIn() {
-        this.setState({signUp: false});
+        this.setState({...this.state, signUp: false});
+    }
+
+    close() {
+
+        // this.setState({...this.state, hidden: true});
+
+        if (!this.state.hidden) {
+            if (this.props.close) {
+                this.props.close();
+            }
+        }
+
     }
 
     render() {
 
-        return <div className={
-            this.state.signUp ? styles.signUp : styles.signIn,
-            styles.dialog
-            }>
+        return <div className={styles.popUpBackground} onClick={this.close}>
+            <div className={
+                this.state.signUp ? styles.signUp : styles.signIn,
+                styles.dialog
+                } onClick={(event) => event.stopPropagation()}>
 
-            <img className={styles.close} src="/images/close.svg"/>
+                <img className={styles.close} onClick={this.close} src="/images/close.svg"/>
 
-            <div className={styles.mainSection}>
-                <span className={styles.signUpButton} onClick={this.toggleSignIn}>SIGN IN</span>
-                <span className={styles.signInButton} onClick={this.toggleSignUp}>SIGN UP</span>
-                <hr/>
+                <div className={styles.mainSection}>
+                    <span className={`${styles.signInButton} ${styles.clickableText}`} onClick={this.setSignIn}>SIGN IN</span>
+                    <span className={`${styles.signUpButton} ${styles.clickableText}`} onClick={this.setSignUp}>SIGN UP</span>
+                    <hr/>
 
-                { (this.state.signUp) ? <SignUpDialog></SignUpDialog> : <SignInDialog></SignInDialog>}
+                    { (this.state.signUp) ? <SignUpDialog></SignUpDialog> : <SignInDialog></SignInDialog>}
+                </div>
             </div>
-        </div>
+        </div>;
 
     }
 
 
 }
 
-export default SignInDialog
+export default Dialog

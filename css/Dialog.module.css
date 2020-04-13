@@ -1,27 +1,28 @@
-
-
-
 .close {
     float: right;
     margin: 13px;
     margin-right: 24px;
+    cursor: pointer;
+}
 
+.form {
+    text-align: center;
 }
 
 .span {
-    font-family: Open Sans;
+    font-family: 'Open Sans';
     font-weight: normal;
     text-transform: none;
     font-size: 12px;
     line-height: 16px;
-    color: #000000;
+    color: var(--foregroundColor);
 }
 
 .span a {
 
     text-transform: none;
-    font-family: Open Sans;
-    color: #000000;
+    font-family: 'Open Sans';
+    color: var(--foregroundColor);
 }
 
 .mainSection {
@@ -40,6 +41,7 @@
 
 .checkBoxContainer {
     position: relative;
+    text-align: left;
 }
 
 .checkbox {
@@ -47,6 +49,7 @@
     opacity: 0;
     top: 0;
     left: 0;
+    z-index: 2;
 }
 
 .checkbox + label {
@@ -63,11 +66,11 @@
     vertical-align: text-top;
     width: 15px;
     height: 15px;
-    background: white;
+    background: var(--backgroundColor);
 }
 
 .checkbox:hover + label:before {
-    background: #f35429;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .checkbox:focus + label:before {
@@ -75,7 +78,7 @@
 }
 
 .checkbox:checked + label:before {
-    background: #f35429;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .checkbox:disabled + label {
@@ -91,24 +94,26 @@
 .checkbox:checked + label:after {
     content: '';
     position: absolute;
-    left: 5px;
-    top: 9px;
-    background: white;
+    left: 4px;
+    top: 8px;
+    background: var(--backgroundColor);
     width: 2px;
     height: 2px;
     box-shadow: 
-        2px 0 0 white,
-        4px 0 0 white,
-        4px -2px 0 white,
-        4px -4px 0 white,
-        4px -6px 0 white,
-        4px -8px 0 white;
+        2px 0 0 var(--backgroundColor),
+        4px 0 0 var(--backgroundColor),
+        4px -2px 0 var(--backgroundColor),
+        4px -4px 0 var(--backgroundColor),
+        4px -6px 0 var(--backgroundColor),
+        4px -8px 0 var(--backgroundColor);
     transform: rotate(45deg);
 }
 
 
 .submit:hover {
-    background: #ffeb00;
+    /* background: #ffeb00; */
+    filter: brightness(95%);
+    cursor: pointer;
 }
 
 .submit {
@@ -122,7 +127,7 @@
 
     left: calc(50% - 264px/2);
 
-    background: #FFF500;
+    background: var(--highlightColor);
 
 }
 
@@ -150,13 +155,29 @@
     float: right;    
 }
 
+/* body:not(.dialog), body:not(.dialog) * {
+    -webkit-filter: blur(2px);
+    filter: blur(2px);   
+} */
+
+.popUpBackground {
+    background: rgba(255, 255, 255, 0.418);
+    position: absolute;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+}
+
 .dialog {
     position: absolute;
     top: 20%;
-    left: 50%;
+    left: calc(50% - 312px/2); /*50%;*/
     width: 312px;
-    background: #FFFFFF;
-    border: 0.5px solid #000000;
+    background: var(--backgroundColor);
+    border: 0.5px solid var(--foregroundColor);
     box-sizing: border-box;
 }
 
@@ -191,5 +212,18 @@
 .text:focus {
     outline: none;
     height: 15px;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid var(--foregroundColor);
+}
+
+.clickableText {
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.clickableText:hover {
+    /* color: #414141; */
+    background: var(--highlightColor);
 }
