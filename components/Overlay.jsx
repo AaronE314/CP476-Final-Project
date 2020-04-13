@@ -52,7 +52,9 @@ export class Overlay extends React.Component {
             if (!data) {
                 console.log("fetching data");
                 data = await getOverlay("male");
-                sessionStorage.setItem("overlay", data);
+                sessionStorage.setItem("overlay", JSON.stringify(data));
+            } else {
+                JSON.parse(data);
             }
 
             console.log(data);
