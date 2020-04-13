@@ -48,7 +48,6 @@ export class Overlay extends React.Component {
         if (sessionStorage !== undefined) {
 
             console.log("session Active");
-            console.log(sessionStorage.getItem("overlay"));
             let data = sessionStorage.getItem("overlay");
             
             if (!data) {
