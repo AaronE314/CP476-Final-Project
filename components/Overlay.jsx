@@ -42,23 +42,24 @@ export class Overlay extends React.Component {
 
     async componentDidMount() {
 
-
         console.log("init");
         
         if (sessionStorage !== undefined) {
 
             console.log("session Active");
             let data = sessionStorage.getItem("overlay");
-            
+
             if (!data) {
                 console.log("fetching data");
-                data = await getOverlay("male");
+                data = await getOverlay();
                 sessionStorage.setItem("overlay", JSON.stringify(data));
+            } else {
+                data = JSON.parse(data);
             }
 
             console.log(data);
     
-            this.setState({...this.state, data: data});
+            this.setState({...this.state, category: data});
         }
 
     }
@@ -81,7 +82,9 @@ export class Overlay extends React.Component {
             <div>
                 <h4 className={styles.title}>Shop by Category</h4>
                 <ul className={styles.list}>
-                    {this.state.data === undefined ? this.state.category.map((item, i) => {return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>}):this.state.data.map((item, i) => {return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>})}
+                    {this.state.category.map((item, i) => {
+                        return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
+                    })}
                 </ul>
             </div>
 
