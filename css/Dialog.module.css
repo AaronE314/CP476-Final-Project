@@ -15,6 +15,25 @@
     text-align: center;
 }
 
+.container .text.error {
+    border-bottom: 1px solid #F44336;
+}
+
+.container p.error, p.error {
+    color: #F44336;
+    font-size: 12px;
+    line-height: 16px;
+    font-family: "Open Sans";
+    font-weight: normal;
+    margin-top: 6px;
+    margin-bottom: 0;
+    padding-left: 8px;
+}
+
+p.error {
+    padding-left: 0;
+}
+
 .span {
     font-family: 'Open Sans';
     font-weight: normal;
@@ -22,6 +41,7 @@
     font-size: 12px;
     line-height: 16px;
     color: var(--foregroundColor);
+    margin-top: 8px;
 }
 
 .span a {
@@ -39,8 +59,9 @@
 
     position: relative;
     width: 256px;
-    height: 24px;
-    margin: 16px 0;
+    /* height: 24px; */
+    margin: 16px 0 0 0;
+    text-align: left;
     
 
 }
@@ -48,6 +69,7 @@
 .checkBoxContainer {
     position: relative;
     text-align: left;
+    margin-top: 16px;
 }
 
 .checkbox {
