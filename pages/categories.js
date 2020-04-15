@@ -61,22 +61,44 @@ export class Categories extends React.Component {
          console.log(productArray);
         this.setState({...this.state, products: productArray});
     }
-    async componentDidUpdate(){
-       
+    async componentDidUpdate(prevProps){
+        let prevRouter = prevProps.router; 
+        console.log("PrevRouter")
+       console.log(prevRouter);
         console.log("component did update here");
+        
         const { router } = this.props;
-        console.log(router);
-        let gender = router.query.mainCategory;
-        let subCategory;
-        if (router.query.subCategory) {
-            console.log("|"+router.query.subCategory+"|");
-            subCategory = router.query.subCategory;
-        }
+        if (prevRouter !== undefined){
+            if (router.query.mainCategory !== prevRouter.query.mainCategory || router.query.subCategory !== prevRouter.query.subCategory){
+                console.log(router);
+                let gender = router.query.mainCategory;
+                let subCategory;
+                if (router.query.subCategory) {
+                    console.log("|"+router.query.subCategory+"|");
+                    subCategory = router.query.subCategory;
+                }
 
-        document.documentElement.style.setProperty("--showMore", 1);
-        let productArray  = await getProducts(gender, subCategory);
-         console.log(productArray);
-        this.setState({...this.state, products: productArray});
+                document.documentElement.style.setProperty("--showMore", 1);
+                let productArray  = await getProducts(gender, subCategory);
+                console.log(productArray);
+                this.setState({...this.state, products: productArray});
+            }else{
+                console.log("NOTHING HAPPENED")
+            }
+        }else {
+            console.log(router);
+            let gender = router.query.mainCategory;
+            let subCategory;
+            if (router.query.subCategory) {
+                console.log("|"+router.query.subCategory+"|");
+                subCategory = router.query.subCategory;
+            }
+
+            document.documentElement.style.setProperty("--showMore", 1);
+            let productArray  = await getProducts(gender, subCategory);
+            console.log(productArray);
+            this.setState({...this.state, products: productArray});
+        }
     }
     getLink(item) {
 
