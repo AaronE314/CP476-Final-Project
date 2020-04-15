@@ -2,6 +2,7 @@ import React from 'react'
 
 import styles from "../css/Dialog.module.css";
 import { signUp } from "../lib/apiRequester";
+import { setToken } from '../lib/userAuth'
 
 export class SignUpDialog extends React.Component {
 
@@ -40,7 +41,25 @@ export class SignUpDialog extends React.Component {
     handleSubmit(e) {
         // TODO: Verify form
         e.preventDefault();
-        signUp(this.state.email, this.state.password);
+        signUp(this.state.email, this.state.password)
+        .then((data) => {
+            
+            console.log(data);
+            
+            if (data.status === "ok") {
+                
+                setToken(!this.state.staySignedIn, data);
+                
+                this.props.login();
+                
+                this.props.close();
+
+                
+            } else {
+                // Error.
+            }
+            
+        });;
     }
 
     render() {

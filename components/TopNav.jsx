@@ -5,6 +5,9 @@ import Link from 'next/link';
 import Dialog from './Dialog';
 import { Overlay } from './Overlay';
 
+import { getUserEmailName, isSignedIn } from '../lib/userAuth'
+import { signOut } from '../lib/apiRequester'
+
 export class TopNav extends React.Component {
 
     constructor(props) {
@@ -16,6 +19,7 @@ export class TopNav extends React.Component {
             hoveredIndex: -1,
             menuOpen: false,
             shiftMenu: false,
+            userOpen: false,
 
             categories: [
                 "MEN",
@@ -23,7 +27,9 @@ export class TopNav extends React.Component {
                 "KIDS",
                 "HOME"
             ],
-            category: null
+            category: null,
+            loggedIn: false,
+            userName: ""
         };
 
         this.showSignUp = this.showSignUp.bind(this);
@@ -32,6 +38,25 @@ export class TopNav extends React.Component {
         this.mouseOver = this.mouseOver.bind(this);
         this.toggleMenu = this.toggleMenu.bind(this);
         this.focusId = this.focusId.bind(this);
+        this.userClick = this.userClick.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+    }
+
+    componentDidMount() {
+
+        if (isSignedIn()) {
+
+            let email = getUserEmailName()
+
+            if (email) {
+    
+                this.setState({...this.state, loggedIn: true, userName: email})
+    
+            }
+
+        }
+
     }
 
     mouseOver(i) {
@@ -46,15 +71,23 @@ export class TopNav extends React.Component {
             }
         }
 
-        this.setState({...this.state, hover: true, hoveredIndex: offset, menuOpen: false, category: this.state.categories[i]});
+        this.setState({...this.state, userOpen: false, hover: true, hoveredIndex: offset, menuOpen: false, category: this.state.categories[i]});
     }
 
     mouseOut() {
-        this.setState({...this.state, hover: false, category: null});
+        this.setState({...this.state, userOpen: false, menuOpen: false, hover: false, category: null});
+    }
+
+    userClick() {
+        if (this.state.loggedIn) {
+            this.setState({...this.state, userOpen: !this.state.userOpen});
+        } else {
+            this.showSignUp();
+        }
     }
 
     showSignUp() {
-        this.setState({...this.state, signupShown: true, menuOpen: false, hover:false, category: null});
+        this.setState({...this.state, userOpen: false, signupShown: true, menuOpen: false, hover:false, category: null});
     }
 
     hideSignUp() {
@@ -62,15 +95,40 @@ export class TopNav extends React.Component {
     }
 
     toggleMenu() {
-        this.setState({...this.state, menuOpen: !this.state.menuOpen, hover:false, category: null})
+        this.setState({...this.state, userOpen: false, menuOpen: !this.state.menuOpen, hover:false, category: null})
     }
 
     focusId(id) {
-        this.setState({...this.state, menuOpen: false, hover:false, category: null})
+        this.setState({...this.state, userOpen: false, menuOpen: false, hover:false, category: null})
         let element = document.getElementById(id);
         if (element) {
             element.focus();
         }
+    }
+
+    login() {
+
+        if (isSignedIn()) {
+
+            let email = getUserEmailName();
+
+            console.log(email);
+
+            if (email) {
+    
+                this.setState({...this.state, loggedIn: true, userName: email});
+    
+            }
+
+        }
+
+    }
+
+    logout() {
+
+        signOut();
+        this.setState({...this.state, userOpen: false, menuOpen: false, loggedIn: false, userName: ""});
+
     }
 
     render() {
@@ -101,10 +159,19 @@ export class TopNav extends React.Component {
                             <span></span>
                         </div>
                         <div className={`${styles.rightButtons} ${(this.state.menuOpen) ? styles.open : ""}`}>
-                            <a onClick={this.showSignUp} className={styles.clickableText}>
-                                <img src="/images/user.svg" width="16px" height="16px" id="userImage"></img>
-                                <span>SIGN IN</span>
-                            </a>
+                            <div className={styles.user}>
+                                <a onClick={this.userClick} className={styles.clickableText}>
+                                    <img src="/images/user.svg" width="16px" height="16px" id="userImage"></img>
+                                    <span>{(this.state.loggedIn) 
+                                            ? "HI, " + this.state.userName.toUpperCase() 
+                                            : "SIGN IN"}</span>
+                                </a>
+                                <div className={`${styles.userDropdown} ${(this.state.userOpen) ? styles.userOpen : ""}`}>
+                                    <span className={styles.clickableText}><img src="/images/clock.svg"/><span>ORDERS</span></span>
+                                    <span className={styles.clickableText}><img src="/images/card.svg"/><span>SAVED INFO</span></span>
+                                    <span onClick={this.logout} className={styles.clickableText}><img src="/images/signout.svg"/><span>SIGN OUT</span></span>
+                                </div>
+                            </div>
 
                             <a className={styles.clickableText}>
                                 <img src="/images/heart.svg" id="heart"></img>
@@ -121,7 +188,7 @@ export class TopNav extends React.Component {
 
                     </div>
                     
-                    {(this.state.signupShown) ? <Dialog close={this.hideSignUp}></Dialog> : null}
+                    {(this.state.signupShown) ? <Dialog close={this.hideSignUp} login={this.login}></Dialog> : null}
                 </div>
                 {(this.state.hover) ? <Overlay category={this.state.category} offset={this.state.hoveredIndex}></Overlay>: null}
             </div>;

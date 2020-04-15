@@ -10,8 +10,10 @@
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "argon2": "^0.26.1",
+    "dotenv": "^8.2.0",
     "file-loader": "^6.0.0",
     "isomorphic-unfetch": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.5",
     "next": "9.2.2",
     "next-connect": "^0.6.0",

@@ -8,12 +8,17 @@ import nextConnect from 'next-connect';
 import middleware from '../../../middleware/database';
 import * as argon2 from 'argon2';
 
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 const handler = nextConnect();
 
 handler.use(middleware);
 
 
 handler.post(async (req, res) => {
+
+    console.log("signIn");
 
     let body = req.body
     let { email, password } = JSON.parse(body);
@@ -34,9 +39,14 @@ handler.post(async (req, res) => {
         })
         .then((user) => {
             req.session.userId = user._id;
+            const token = jwt.sign({ username: user.email}, process.env.jwtSecret, {expiresIn: 604800});
             return res.send({
                 status: 'ok',
-                message: 'login Successfull'
+                message: 'login Successfull',
+                token: token,
+                userInfo: {email: user.email, 
+                           wishlist: user.wishlist,
+                           shoppingCart: user.shoppingCart}
             });
         })
         .catch(error => res.send({
