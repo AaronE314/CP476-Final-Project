@@ -57,7 +57,7 @@ export class Overlay extends React.Component {
                 data = JSON.parse(data);
             }
 
-            console.log(data);
+            
     
             this.setState({...this.state, category: data});
         }

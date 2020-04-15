@@ -6,22 +6,8 @@ export class ItemDisplayBox extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            productId: "0850318003",
-            productName: "Product Name",
-            price: 3.99,
-            discount: 0.1,
-            colours: [
-                {name:"Default", hex:"#F0F0F0", link:""},
-                {name:"Black", hex:"#000000", link: ""},
-                {name:"Yellow", hex:"#FFF500", link: ""}
-            ],
-            displayImageIndex: 0,
-            displayColorIndex: 0,
-            highlightColor: "#FFF500",
-            wishlisted: false
-        };
-        
+        this.state = this.props.value;
+        console.log(this.state)
         this.getAdjustedPrice = this.getAdjustedPrice.bind(this);
         this.hoverOn = this.hoverOn.bind(this);
         this.hoverOff = this.hoverOff.bind(this);

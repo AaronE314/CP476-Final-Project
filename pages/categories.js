@@ -3,14 +3,14 @@ import Layout from '../components/layout';
 import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
-
+import { getProducts } from "../lib/apiRequester";
 export class Categories extends React.Component {
 
     constructor(props) {
         super(props);
 
         const { router } = this.props;
-
+        console.log(this.props);
         this.state = {
 
             arivals: [
@@ -27,7 +27,8 @@ export class Categories extends React.Component {
                 {name: "Joggers", link: "/categories", filter: "joggers"}
             ],
             showMore: 1,
-            query: router.query
+            query: router.query, 
+            products : []
         }
 
         this.showMore = this.showMore.bind(this);
@@ -45,11 +46,38 @@ export class Categories extends React.Component {
 
             return title;
     }
+    async componentDidMount() {
+        const { router } = this.props;
+        console.log(this.state);
+        let gender = router.query.mainCategory;
+        let subCategory;
+        if (router.query.subCategory) {
+            console.log("|"+router.query.subCategory+"|");
+            subCategory = router.query.subCategory;
+        }
 
-    componentDidMount() {
         document.documentElement.style.setProperty("--showMore", 1);
+        let productArray  = await getProducts(gender, subCategory);
+         console.log(productArray);
+        this.setState({...this.state, products: productArray});
     }
-  
+    async componentDidUpdate(){
+       
+        console.log("component did update here");
+        const { router } = this.props;
+        console.log(router);
+        let gender = router.query.mainCategory;
+        let subCategory;
+        if (router.query.subCategory) {
+            console.log("|"+router.query.subCategory+"|");
+            subCategory = router.query.subCategory;
+        }
+
+        document.documentElement.style.setProperty("--showMore", 1);
+        let productArray  = await getProducts(gender, subCategory);
+         console.log(productArray);
+        this.setState({...this.state, products: productArray});
+    }
     getLink(item) {
 
         const { router } = this.props;
@@ -72,8 +100,8 @@ export class Categories extends React.Component {
 
         let products = [];
 
-        for (let i = 0; i < 100; i++) {
-            products.push(<ItemDisplayBox key={i}/>);
+        for (let i = 0; i < this.state.products.length; i++) {
+            products.push(<ItemDisplayBox key={i} value={this.state.products[i]}/>);
         }
 
         return <Layout>
