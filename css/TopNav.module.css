@@ -54,9 +54,9 @@
 
 .right div {
     line-height: 19px;
-    padding-top: 12px;
+    /* padding-top: 12px; */
+    display: flex;
 }
-
 
 
 .topNav nav a, .right a {
@@ -95,6 +95,7 @@
 
 .search {
     padding-right: 26px;
+    padding-top: 17px;
 }
 
 .search input {
@@ -128,6 +129,36 @@
     width: 20px;
     height: 20px;
     background-color: var(--backgroundColor);
+}
+
+.user {
+    position: relative;
+}
+
+.user .userDropdown span {
+    margin-top: 16px;
+
+}
+
+.user .userDropdown {
+    position: absolute;
+    display: grid;
+    top: 35px;
+    left: -6px;
+    /* width: 121px; */
+    /* max-height: 0; */
+    height: 0;
+    /* display: none; */
+    padding: 0 6px;
+    z-index: 5;
+    overflow: hidden;
+    padding-bottom: 10px;
+    background-color: var(--backgroundColor);
+    transition:  height .2s ease-in-out;
+}
+
+.userDropdown.userOpen {
+    height: 112px;
 }
 
 .clickableText {
@@ -180,6 +211,17 @@
         padding: 0;
     }
 
+    .right div {
+        padding: 0;
+        display: grid;
+    }
+
+    .right .search {
+        display: block;
+        padding-top: 12px;
+        padding-right: 12px;
+    }
+
     .rightButtons {
         position: absolute;
         width: 160px;
@@ -201,6 +243,7 @@
         height: 183px;
         border: 1px solid var(--foregroundColor);
         border-top: none;
+        overflow: visible;
     }
 
     .rightButtons a {
@@ -211,6 +254,32 @@
     .rightButtons a:hover {
         background: var(--highlightColor);
     }
+
+    .user .userDropdown {
+
+        left: 0px;
+        top: 0px;
+        border: 1px solid black;
+        padding: 0 6px;
+        padding-bottom: 10px;
+        transition:  left .2s ease-in-out;
+        height: 112px;
+        z-index: -1;
+    }
+
+    .user .userDropdown span {
+        padding: 8px 5px;
+        margin-top: 0px;
+    }
+
+    .user .userDropdown span:hover {
+        background: var(--highlightColor);
+    }
+
+    .userDropdown.userOpen {
+        left: -156px;
+    }
+
 
     /* Hamburger */
 

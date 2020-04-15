@@ -11,11 +11,16 @@ import middleware from '../../../middleware/database';
 import * as argon2 from 'argon2';
 import isEmail from 'validator/lib/isEmail';
 
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 const handler = nextConnect();
 
 handler.use(middleware);
 
 handler.post(async (req, res) => {
+
+    console.log("signUp");
 
     let body = JSON.parse(req.body);
 
@@ -44,9 +49,15 @@ handler.post(async (req, res) => {
         }))
         .then((user) => {
             req.session.userId = user.insertedId;
+            const addedUser = user.ops[0]
+            const token = jwt.sign({ username: addedUser.email}, process.env.jwtSecret, {expiresIn: 604800});
             res.status(201).send({
                 status: 'ok',
-                message: 'User signed up seccessfully'
+                message: 'User signed up seccessfully',
+                token: token,
+                userInfo: {email: addedUser.email, 
+                           wishlist: addedUser.wishlist,
+                           shoppingCart: addedUser.shoppingCart}
             });
         })
         .catch(error => res.send({
