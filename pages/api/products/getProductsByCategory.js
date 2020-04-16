@@ -16,9 +16,12 @@ handler.use(middleware);
 
 handler.get(async (req, res) => {
     try{
+        console.log("GWLRFEWSRGREWGERSTGRFESDTGEWRSTGWRASGTESRZHGEDGEDZSHGBWSRGWSRGFESRGFESR GVESSG")
         let doc = {}
-        doc = await req.db.collection('StoreProducts').find({"category":req.query.category, "gender": req.query.gender}).toArray();
-        
+        console.log("category");
+        console.log(req.query.category);
+        doc = await req.db.collection('StoreProducts').find({"Category":req.query.category, "gender": req.query.gender}).toArray();
+        console.log(doc)
         res.json(doc)
     }catch(err){
         throw err; 
