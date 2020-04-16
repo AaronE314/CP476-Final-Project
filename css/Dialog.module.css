@@ -239,7 +239,7 @@ p.error {
 
 .text:focus {
     outline: none;
-    height: 15px;
+    padding-bottom: 3px;
     border-bottom: 1px solid var(--foregroundColor);
 }
 
