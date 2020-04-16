@@ -61,22 +61,25 @@ export class Categories extends React.Component {
          console.log(productArray);
         this.setState({...this.state, products: productArray});
     }
-    async componentDidUpdate(){
+    async componentDidUpdate(prevProps, prevState){
        
         console.log("component did update here");
         const { router } = this.props;
         console.log(router);
         let gender = router.query.mainCategory;
-        let subCategory;
-        if (router.query.subCategory) {
-            console.log("|"+router.query.subCategory+"|");
-            subCategory = router.query.subCategory;
-        }
 
-        document.documentElement.style.setProperty("--showMore", 1);
-        let productArray  = await getProducts(gender, subCategory);
-         console.log(productArray);
-        this.setState({...this.state, products: productArray});
+        if (gender !== prevProps.router.query.mainCategory) {
+            let subCategory;
+            if (router.query.subCategory) {
+                console.log("|"+router.query.subCategory+"|");
+                subCategory = router.query.subCategory;
+            }
+
+            document.documentElement.style.setProperty("--showMore", 1);
+            let productArray  = await getProducts(gender, subCategory);
+            console.log(productArray);
+            this.setState({...this.state, products: productArray});
+        }
     }
     getLink(item) {
 

@@ -154,8 +154,7 @@ export class Checkout extends React.Component {
     }
 
     handleSubmit = (e) => {
-        // Want default to happen, otherwise form on next page is fulled out still.
-        // e.preventDefault();
+        e.preventDefault();
 
         let formData = {
             firstName: this.state.firstName,
@@ -207,7 +206,7 @@ export class Checkout extends React.Component {
 
                         <p>Been here before? <a href="#">Sign in</a>, or <a href="#">Sign up</a> to checkout faster in the future.</p>
                         
-                        <form className="shippingInfo" autoComplete="on" onSubmit={this.handleSubmit}>
+                        <form className="shippingInfo" autoComplete="on" method="post" onSubmit={this.handleSubmit}>
                             <div className="formInputs">
                                 <div className="container formLeft">
                                     <label htmlFor="firstName" className={`${(this.state.firstName !== "") ? "text": ""}`}>First Name</label>

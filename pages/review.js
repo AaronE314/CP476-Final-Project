@@ -61,16 +61,16 @@ export class Review extends React.Component {
 
             sameAsShipping: false,
 
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            address: "",
-            unit: "",
-            city: "",
-            zip: "",
-            country: "",
-            province: "",
+            billingfirstName: "",
+            billinglastName: "",
+            billingemail: "",
+            billingphone: "",
+            billingaddress: "",
+            billingunit: "",
+            billingcity: "",
+            billingzip: "",
+            billingcountry: "",
+            billingprovince: "",
 
             errors: {
                 firstNameError: "",
@@ -267,72 +267,70 @@ export class Review extends React.Component {
                     <div className="shipping">
                         
                         <h1>Billing Information</h1>
-
-                        <p>Been here before? <a href="#">Sign in</a>, or <a href="#">Sign up</a> to checkout faster in the future.</p>
                         
                         <form className="shippingInfo" autoComplete="on" onSubmit={this.handleSubmit}>
                             <div className="formInputs">
                                 <div className="container formLeft">
-                                    <label htmlFor="firstName" className={`${(this.state.firstName !== "") ? "text": ""}`}>First Name</label>
+                                    <label htmlFor="billingfirstName" className={`${(this.state.billingfirstName !== "") ? "text": ""}`}>First Name</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.firstNameError) ? "error" : ""} ${(this.state.firstName !== "") ? "text": ""}`} 
-                                        name="firstName" type="text" placeholder="First name" autoComplete="given-name"/>
+                                        className={`${(this.state.errors.firstNameError) ? "error" : ""} ${(this.state.billingfirstName !== "") ? "text": ""}`} 
+                                        name="billingfirstName" type="text" placeholder="First name" autoComplete="given-name"/>
                                     <p className="error">{this.state.errors.firstNameError}</p>
                                 </div>
                                 <div className="container formRight">
-                                    <label htmlFor="lastName" className={`${(this.state.lastName !== "") ? "text": ""}`}>Last name</label>
+                                    <label htmlFor="billinglastName" className={`${(this.state.billinglastName !== "") ? "text": ""}`}>Last name</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.lastNameError) ? "error" : ""} ${(this.state.lastName !== "") ? "text": ""}`}  
-                                        name="lastName" type="text" placeholder="Last name" autoComplete="family-name"/>
+                                        className={`${(this.state.errors.lastNameError) ? "error" : ""} ${(this.state.billinglastName !== "") ? "text": ""}`}  
+                                        name="billinglastName" type="text" placeholder="Last name" autoComplete="family-name"/>
                                     <p className="error">{this.state.errors.lastNameError}</p>
                                 </div>
                                 <div className="container formLeft">
-                                    <label htmlFor="email" className={`${(this.state.email !== "") ? "text": ""}`}>Email address</label>
+                                    <label htmlFor="billingemail" className={`${(this.state.billingemail !== "") ? "text": ""}`}>Email address</label>
                                     <input onChange={this.handleChange}
-                                        className={`${(this.state.errors.emailError) ? "error" : ""} ${(this.state.email !== "") ? "text": ""}`}  
-                                        name="email" type="email" placeholder="Email address" autoComplete="email"/>
+                                        className={`${(this.state.errors.emailError) ? "error" : ""} ${(this.state.billingemail !== "") ? "text": ""}`}  
+                                        name="billingemail" type="email" placeholder="Email address" autoComplete="email"/>
                                     <p className="error">{this.state.errors.emailError}</p>
                                 </div>
                                 <div className="container formRight">
-                                    <label htmlFor="phone" className={`${(this.state.phone !== "") ? "text": ""}`}>Phone number</label>
+                                    <label htmlFor="billingphone" className={`${(this.state.billingphone !== "") ? "text": ""}`}>Phone number</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.phoneError) ? "error" : ""} ${(this.state.phone !== "") ? "text": ""}`} 
-                                        name="phone" type="tel" placeholder="Phone number" autoComplete="tel-national"/>
+                                        className={`${(this.state.errors.phoneError) ? "error" : ""} ${(this.state.billingphone !== "") ? "text": ""}`} 
+                                        name="billingphone" type="tel" placeholder="Phone number" autoComplete="tel-national"/>
                                     <p className="error">{this.state.errors.phoneError}</p>
                                 </div>
                                 <div className="container formLeftLong">
-                                    <label htmlFor="address" className={`${(this.state.address !== "") ? "text": ""}`}>Address</label>
+                                    <label htmlFor="billingaddress" className={`${(this.state.billingaddress !== "") ? "text": ""}`}>Address</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.addressError) ? "error" : ""} ${(this.state.address !== "") ? "text": ""}`} 
-                                        name="address" type="text" placeholder="Address" autoComplete="street-address"/>
+                                        className={`${(this.state.errors.addressError) ? "error" : ""} ${(this.state.billingaddress !== "") ? "text": ""}`} 
+                                        name="billingaddress" type="text" placeholder="Address" autoComplete="street-address"/>
                                     <p className="error">{this.state.errors.addressError}</p>
                                 </div>
                                 <div className="container formRightShort">
-                                    <label htmlFor="unit" className={`${(this.state.unit !== "") ? "text": ""}`}>Unit, suite, etc.</label>
+                                    <label htmlFor="billingunit" className={`${(this.state.billingunit !== "") ? "text": ""}`}>Unit, suite, etc.</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.unitError) ? "error" : ""} ${(this.state.unit !== "") ? "text": ""}`} 
-                                        name="unit" type="text" placeholder="Unit, suite, etc." autoComplete="on"/>
+                                        className={`${(this.state.errors.unitError) ? "error" : ""} ${(this.state.billingunit !== "") ? "text": ""}`} 
+                                        name="billingunit" type="text" placeholder="Unit, suite, etc." autoComplete="on"/>
                                     <p className="error">{this.state.errors.unitError}</p>
                                 </div>
                                 <div className="container formLeftLong">
-                                    <label htmlFor="city" className={`${(this.state.city !== "") ? "text": ""}`}>City</label>
+                                    <label htmlFor="billingcity" className={`${(this.state.billingcity !== "") ? "text": ""}`}>City</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.cityError) ? "error" : ""} ${(this.state.city !== "") ? "text": ""}`} 
-                                        name="city" type="text" placeholder="City" autoComplete="address-level2"/>
+                                        className={`${(this.state.errors.cityError) ? "error" : ""} ${(this.state.billingcity !== "") ? "text": ""}`} 
+                                        name="billingcity" type="text" placeholder="City" autoComplete="address-level2"/>
                                     <p className="error">{this.state.errors.cityError}</p>
                                 </div>
                                 <div className="container formRightShort">
-                                    <label htmlFor="zip" className={`${(this.state.zip !== "") ? "text": ""}`}>Postal / ZIP code</label>
+                                    <label htmlFor="billingzip" className={`${(this.state.billingzip !== "") ? "text": ""}`}>Postal / ZIP code</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.zipError) ? "error" : ""} ${(this.state.zip !== "") ? "text": ""}`} 
-                                        name="zip" type="text" placeholder="Postal / ZIP code" autoComplete="postal-code"/>
+                                        className={`${(this.state.errors.zipError) ? "error" : ""} ${(this.state.billingzip !== "") ? "text": ""}`} 
+                                        name="billingzip" type="text" placeholder="Postal / ZIP code" autoComplete="postal-code"/>
                                     <p className="error">{this.state.errors.zipError}</p>
                                 </div>
                                 <div className="container formLeft">
-                                    <label htmlFor="country" className={`${(this.state.country !== "") ? "text": ""}`}>County / Region</label>
+                                    <label htmlFor="billingcountry" className={`${(this.state.billingcountry !== "") ? "text": ""}`}>County / Region</label>
                                     <select onChange={this.handleChange} name="country" 
-                                        className={`CountyRegion ${(this.state.errors.countryError) ? "error" : ""} ${(this.state.country !== "") ? "text": ""}`}
-                                        autoComplete="country">
+                                        className={`CountyRegion ${(this.state.errors.countryError) ? "error" : ""} ${(this.state.billingcountry !== "") ? "text": ""}`}
+                                        autoComplete="billingcountry">
                                         <option value="" defaultChecked>County / Region</option>
                                         {countries.countries.map((item, i) => {
                                             return <option key={i} value={item.name}>{item.name}</option>
@@ -341,10 +339,10 @@ export class Review extends React.Component {
                                     <p className="error">{this.state.errors.countryError}</p>
                                 </div>
                                 <div className="container formRight">
-                                    <label htmlFor="province" className={`${(this.state.province !== "") ? "text": ""}`}>Province / State</label>
+                                    <label htmlFor="billingprovince" className={`${(this.state.billingprovince !== "") ? "text": ""}`}>Province / State</label>
                                     <input onChange={this.handleChange} 
-                                        className={`${(this.state.errors.provinceError) ? "error" : ""} ${(this.state.province !== "") ? "text": ""}`} 
-                                        name="province" type="text" placeholder="Province / State" autoComplete="address-level1"/>
+                                        className={`${(this.state.errors.provinceError) ? "error" : ""} ${(this.state.billingprovince !== "") ? "text": ""}`} 
+                                        name="billingprovince" type="text" placeholder="Province / State" autoComplete="address-level1"/>
                                     <p className="error">{this.state.errors.provinceError}</p>
                                 </div>
                             </div>
@@ -494,7 +492,7 @@ export class Review extends React.Component {
 
                 .formInputs {
                     display: grid;
-                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    grid-template-columns: 1fr 1fr 0.5fr 1.5fr;
                     grid-gap: 16px;
                 }
 
