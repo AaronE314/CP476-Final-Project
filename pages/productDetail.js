@@ -4,6 +4,7 @@ import { withRouter } from 'next/router';
 import Link from 'next/link';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
 
+import {  getDetailedProduct } from "../lib/apiRequester";
 export class ProductDetail extends React.Component {
 
     constructor(props) {
@@ -12,9 +13,9 @@ export class ProductDetail extends React.Component {
         this.state = {
 
             productDetails: {
-                name: "Product Name",
+                productName: "Product Name",
                 price: "$3.99",
-                colors: ["red", "black", "grey", "white", "yellow"],
+                colours: ["red", "black", "grey", "white", "yellow"],
                 sizes: ["S", "M", "L", "XL"],
                 
                 images: ["/images/tempImages/tempImg1_1.jpg",
@@ -67,11 +68,36 @@ export class ProductDetail extends React.Component {
 
         this.setState({...this.state, size: size});
     }
+    async componentDidMount(){
+        const { router } = this.props;
+        let id = router.query.id;
+
+        console.log("ROUTER")
+        console.log(this.props)
+        console.log(router.asPath)
+        if (id !== undefined){
+            
+            
+            let productDetails = await  getDetailedProduct(id)
+
+            this.setState({...this.state,productDetails: productDetails[0]})
+        }else {
+            let arr = router.asPath.split("="); 
+            console.log(arr); 
+            id = arr[1]; 
+            console.log(id);
+            let productDetails = await  getDetailedProduct(id)
+
+            this.setState({...this.state,productDetails: productDetails[0]})
+        }
+
+    }
 
     render() {
 
         const { router } = this.props;
-
+        console.log("STATE IS")
+        console.log(this.state);
         return <Layout>
             <div className="container">
                 {/* 12.6% */}
@@ -80,7 +106,7 @@ export class ProductDetail extends React.Component {
                         {this.state.productDetails.images.map((item, i) => {
                             return <AnchorLink key={i} href={`#img${i}`}>
                                 <div className="smallImage" style={{background: this.state.tempBackground[i]}}>
-                                    <img src={item}/>
+                                    <img src={`data:image/png;base64, ${item}`}/>
                                 </div>
                             </AnchorLink>
                         })}
@@ -91,22 +117,22 @@ export class ProductDetail extends React.Component {
                 <div className="largePictures">
                     {this.state.productDetails.images.map((item, i) => {
                         return <div key={i} className="largeImage" id={`img${i}`} style={{background: this.state.tempBackground[i]}} >
-                            <img src={item}/>
+                            <img src={`data:image/png;base64, ${item}`}/>
                         </div>
                     })}
                 </div>
 
                 {/* 43% */}
                 <div className="details sticky">
-                    <h2>{this.state.productDetails.name}</h2>
+                    <h2>{this.state.productDetails.productName}</h2>
 
                     <h2>{this.state.productDetails.price}</h2>
 
                     <div className="colors">
                         <p>Colour</p>
                         <div className="box">
-                            {this.state.productDetails.colors.map((item, i) => {
-                                return <div key={i} style={{backgroundColor: item, border: ((this.state.color === i) ? "5px" : "0.5px") + " solid black"}} onClick={() => {this.setColor(i)}}> 
+                            {this.state.productDetails.colours.map((item, i) => {
+                                return <div key={i} style={{backgroundColor: item.hex, border: ((this.state.color === i) ? "5px" : "0.5px") + " solid black"}} onClick={() => {this.setColor(i)}}> 
                                 </div>
                             })}
                         </div>

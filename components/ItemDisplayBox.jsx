@@ -6,12 +6,12 @@ export class ItemDisplayBox extends React.Component{
     constructor(props){
         super(props);
 
-        
+        console.log(this.props.value)
         this.getAdjustedPrice = this.getAdjustedPrice.bind(this);
         this.hoverOn = this.hoverOn.bind(this);
         this.hoverOff = this.hoverOff.bind(this);
         this.updateWishlist = this.updateWishlist.bind(this);
-        console.log(this.props.value.displayImg)
+        
     }
 
     getAdjustedPrice(){
@@ -44,7 +44,7 @@ export class ItemDisplayBox extends React.Component{
 
         return <div className={styles.DisplayItem}>
             <div className={styles.DisplayImage} id="displayTemp" style={{background: this.props.value.colours[this.props.value.displayImageIndex].hex}}>
-            <Link href={{pathname: "/productDetail", query: {id: this.props.value.productId}}}><img className={styles.img} src={`data:image/png;base64, ${this.props.value.displayImg}`} id="displayImage"></img></Link>
+            <Link href={{pathname: "/productDetail", query: {id: this.props.value.productID}}}><img className={styles.img} src={`data:image/png;base64, ${this.props.value.displayImg}`} id="displayImage"></img></Link>
             <img onClick={this.updateWishlist} className={styles.DisplayWishlist} src="/images/heart.svg"></img>
                 {(this.props.value.wishlisted) ? 
                     <svg className={styles.DisplayWishlistInner} width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
