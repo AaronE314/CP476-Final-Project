@@ -2,6 +2,8 @@ import React from 'react';
 import styles from "../css/ItemDisplayBox.module.css";
 import Link from 'next/link';
 
+import { updateWishList as updateUserWishList} from '../lib/userAuth';
+
 export class ItemDisplayBox extends React.Component{
     constructor(props){
         super(props);
@@ -33,6 +35,7 @@ export class ItemDisplayBox extends React.Component{
     }
 
     updateWishlist(){
+        updateUserWishList(this.props.value, this.state.wishlisted)
         this.setState({...this.state, wishlisted: !this.state.wishlisted});
     }
     

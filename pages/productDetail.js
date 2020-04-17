@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
+import { updateCart, updateWishList } from '../lib/userAuth';
 
 export class ProductDetail extends React.Component {
 
@@ -128,8 +129,8 @@ export class ProductDetail extends React.Component {
                     </div>
 
                     <div className="buttons">
-                        <button>ADD TO CART</button>
-                        <img src="/images/blackWhiteHeart.svg"/>
+                        <button onClick={e => {updateCart(this.state.productDetails); router.push('/cart');}}>ADD TO CART</button>
+                        <img onClick={e => {updateWishList(this.state.productDetails); router.push('/wishlist');}} src="/images/blackWhiteHeart.svg"/>
                     </div>
 
                     <p className="desc">{this.state.productDetails.description.split('\n').map((item, key) => {

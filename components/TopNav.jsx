@@ -53,6 +53,8 @@ export class TopNav extends React.Component {
     
                 this.setState({...this.state, loggedIn: true, userName: email})
     
+            } else {
+                signOut();
             }
 
         }
