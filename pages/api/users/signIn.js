@@ -1,27 +1,28 @@
 /**
- * @author Austin Bursey
+ * @author Aaron Exley
  * @public
  * @summary Post request Signs a user in given email
- * @argument email [in body] that you would like to add to collection. 
+ * @argument email [in body] user email.
+ * @argument password [in body] user password. 
  */
 import nextConnect from 'next-connect';
 import middleware from '../../../middleware/database';
 import * as argon2 from 'argon2';
+import cookies from '../../../lib/cookies';
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const handler = nextConnect();
+let handler = nextConnect();
 
 handler.use(middleware);
-
 
 handler.post(async (req, res) => {
 
     console.log("signIn");
 
     let body = req.body
-    let { email, password } = JSON.parse(body);
+    let { email, password, expires } = JSON.parse(body);
 
     return req.db.collection('Users').findOne({ email })
         .then((user) => {
@@ -39,11 +40,15 @@ handler.post(async (req, res) => {
         })
         .then((user) => {
             req.session.userId = user._id;
-            const token = jwt.sign({ username: user.email}, process.env.jwtSecret, {expiresIn: 604800});
+            const token = jwt.sign({ username: user.email, admin: user.admin}, process.env.jwtSecret, {expiresIn: '7d'});
+            let options = { httpOnly: true};
+            if (expires) {
+                options = { httpOnly: true, maxAge: 604800}
+            }
+            res.cookie('token', token, options);
             return res.send({
                 status: 'ok',
                 message: 'login Successfull',
-                token: token,
                 userInfo: {email: user.email, 
                            wishlist: user.wishlist,
                            shoppingCart: user.shoppingCart}
@@ -56,4 +61,4 @@ handler.post(async (req, res) => {
 
 });
 
-export default (req, res) => handler.apply(req, res);
+export default cookies((req, res) => handler.apply(req, res));

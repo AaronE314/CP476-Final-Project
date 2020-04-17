@@ -3,7 +3,8 @@ import Layout from '../components/layout';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
-
+import { updateCart, updateWishList } from '../lib/userAuth';
+import {isNumeric} from "../lib/validators";
 import {  getDetailedProduct } from "../lib/apiRequester";
 export class ProductDetail extends React.Component {
 
@@ -13,26 +14,14 @@ export class ProductDetail extends React.Component {
         this.state = {
 
             productDetails: {
-                productName: "Product Name",
-                price: "$3.99",
-                colours: ["red", "black", "grey", "white", "yellow"],
-                sizes: ["S", "M", "L", "XL"],
+                productName: "",
+                price: "",
+                colours: [],
+                sizes: [],
                 
-                images: ["/images/tempImages/tempImg1_1.jpg",
-                         "/images/tempImages/tempImg1_2.jpg", 
-                         "/images/tempImages/tempImg1_3.jpg", 
-                         "/images/tempImages/tempImg2_1.jpg", 
-                         "/images/tempImages/tempImg2_2.jpg"],
+                images: [],
                 
-                description: `Casual modernity. Designed from pure cotton, this jacket is reimagined with a waist belt and a cropped length.\n
-                \n
-                - A-line fit\n
-                - Pointed collar\n
-                - Zip-up front\n
-                - Long sleeves\n
-                - Two side pockets 100% Cotton / Machine washable\n
-                \n
-                Back length of size S is 66.5cm / Model is 180cm tall and wearing a size S`,
+                description: ""
             },    
 
             tempBackground: ["#F0F0F0", "#D4F6C8", "#B4D5F3", "#CFC3EB", "#DE9CCC"],
@@ -77,18 +66,23 @@ export class ProductDetail extends React.Component {
         console.log(router.asPath)
         if (id !== undefined){
             
-            
-            let productDetails = await  getDetailedProduct(id)
+            if (isNumeric(id)){
+                let productDetails = await  getDetailedProduct(id)
 
-            this.setState({...this.state,productDetails: productDetails[0]})
+                this.setState({...this.state,productDetails: productDetails[0]})
+            }
+
         }else {
             let arr = router.asPath.split("="); 
             console.log(arr); 
             id = arr[1]; 
             console.log(id);
-            let productDetails = await  getDetailedProduct(id)
+            if (isNumeric(id)){
+                let productDetails = await  getDetailedProduct(id)
 
-            this.setState({...this.state,productDetails: productDetails[0]})
+                this.setState({...this.state,productDetails: productDetails[0]})
+            }
+
         }
 
     }
@@ -153,8 +147,8 @@ export class ProductDetail extends React.Component {
                     </div>
 
                     <div className="buttons">
-                        <button>ADD TO CART</button>
-                        <img src="/images/blackWhiteHeart.svg"/>
+                        <button onClick={e => {updateCart(this.state.productDetails); router.push('/cart');}}>ADD TO CART</button>
+                        <img onClick={e => {updateWishList(this.state.productDetails); router.push('/wishlist');}} src="/images/blackWhiteHeart.svg"/>
                     </div>
 
                     <p className="desc">{this.state.productDetails.description.split('\n').map((item, key) => {

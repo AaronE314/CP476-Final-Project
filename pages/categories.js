@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
 import { getProducts } from "../lib/apiRequester";
+import { isLetter,isValidTitle} from "../lib/validators";
 export class Categories extends React.Component {
 
     constructor(props) {
@@ -43,8 +44,8 @@ export class Categories extends React.Component {
             if (router.query.subCategory) {
                 title += " " + router.query.subCategory;
             }
-
             return title;
+            
     }
     async componentDidMount() {
         const { router } = this.props;
@@ -56,9 +57,14 @@ export class Categories extends React.Component {
         }
 
         document.documentElement.style.setProperty("--showMore", 1);
-        let productArray  = await getProducts(gender, subCategory);
+        console.log("gender = " + isLetter(gender)); 
+        console.log("subCategory = " + isLetter(subCategory)); 
+        if (isLetter(gender) && isLetter(subCategory)){
+            let productArray  = await getProducts(gender, subCategory);
         
-        this.setState({...this.state, products: productArray});
+            this.setState({...this.state, products: productArray});
+        }
+
     }
     async componentDidUpdate(prevProps, prevState){
        
@@ -74,13 +80,15 @@ export class Categories extends React.Component {
         }
         if (gender !== prevProps.router.query.mainCategory  || subCategory !== prevProps.router.query.subCategory) {
 
-
+            console.log("gender = " + isLetter(gender)); 
+            console.log("subCategory = " + isLetter(subCategory)); 
             document.documentElement.style.setProperty("--showMore", 1);
-            let productArray  = await getProducts(gender, subCategory);
+            if (isLetter(gender) && isLetter(subCategory)){
+                let productArray  = await getProducts(gender, subCategory);
+                this.state.products.length = 0 ;
+                this.setState({...this.state, products: productArray});
+            }
 
-            this.state.products.length = 0 ;
-
-            this.setState({...this.state, products: productArray});
         }
     }
     getLink(item) {

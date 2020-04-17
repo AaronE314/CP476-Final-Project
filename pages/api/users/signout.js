@@ -1,6 +1,7 @@
 
 import nextConnect from 'next-connect';
 import middleware from '../../../middleware/database';
+import cookies from '../../../lib/cookies';
 
 const handler = nextConnect();
 
@@ -10,6 +11,7 @@ handler.post(async (req, res) => {
 
     if (req.session.userId) {
         req.session.userId = undefined;
+        res.cookie('token', "", { httpOnly: true, maxAge: 0});
         res.send({
             status: 'ok',
             message: "User sucessfully signed out"
@@ -21,3 +23,6 @@ handler.post(async (req, res) => {
         });
     }
 });
+
+
+export default cookies((req, res) => handler.apply(req, res));

@@ -11,6 +11,8 @@ export class Overlay extends React.Component {
     constructor(props) {
         super(props);
 
+        this.mounted = false;
+
         this.state = {
 
             arivals: [
@@ -42,6 +44,8 @@ export class Overlay extends React.Component {
 
     async componentDidMount() {
 
+        this.mounted = true;
+
         console.log("init");
         
         if (sessionStorage !== undefined) {
@@ -58,10 +62,15 @@ export class Overlay extends React.Component {
             }
 
             
-    
-            this.setState({...this.state, category: data});
+            if (this.mounted) {
+                this.setState({...this.state, category: data});
+            }
         }
 
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     render() {

@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from "../css/Dialog.module.css";
 import { signUp } from "../lib/apiRequester";
-import { setToken } from '../lib/userAuth'
+import { setUser } from '../lib/userAuth'
 import isEmail from 'validator/lib/isEmail';
 
 export class SignUpDialog extends React.Component {
@@ -79,7 +79,7 @@ export class SignUpDialog extends React.Component {
                 
                 if (data.status === "ok") {
                     
-                    setToken(!this.state.staySignedIn, data);
+                    setUser(!this.state.staySignedIn, data);
                     
                     this.props.login();
                     

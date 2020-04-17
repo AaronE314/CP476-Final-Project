@@ -3,7 +3,7 @@ import React from 'react'
 import styles from "../css/Dialog.module.css";
 
 import { signIn } from "../lib/apiRequester";
-import { setToken } from '../lib/userAuth'
+import { setUser } from '../lib/userAuth'
 import isEmail from 'validator/lib/isEmail';
 
 export class SignInDialog extends React.Component {
@@ -53,15 +53,17 @@ export class SignInDialog extends React.Component {
 
         if (this.validate()) {
 
-            signIn(this.state.email, this.state.password)
+            signIn(this.state.email, this.state.password, this.state.staySignedIn)
             .then((data) => {
                 
                 console.log(data);
                 
                 if (data.status === "ok") {
                     
-                    setToken(!this.state.staySignedIn, data);
+                    setUser(!this.state.staySignedIn, data);
                     
+                    console.log("setUser");
+
                     this.props.login();
                     
                     this.props.close();
