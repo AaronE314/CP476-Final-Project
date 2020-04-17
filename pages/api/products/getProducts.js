@@ -16,8 +16,23 @@ handler.get(async (req, res) => {
     try{
         
         let doc = {}
-        doc = await req.db.collection('StoreProducts').find({ "gender": req.query.gender}).toArray();
+        console.log("HERE NOW");
+        let findQuery = {gender: req.query.gender}; 
+        let sortQuery = {}; 
+        
 
+        if (req.query.category !== 'undefined'){
+          
+            
+            if (req.query.category ===  'new'){
+                findQuery.newArrival = true;
+            }else {
+                findQuery.Category  = req.query.category; 
+            }
+           
+        }
+        console.log(findQuery);
+        doc = await req.db.collection('StoreProducts').find(findQuery).sort(sortQuery).toArray();
         res.json(doc)
     }catch(err){
         throw err; 
