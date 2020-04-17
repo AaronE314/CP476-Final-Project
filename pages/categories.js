@@ -10,7 +10,7 @@ export class Categories extends React.Component {
         super(props);
 
         const { router } = this.props;
-        console.log(this.props);
+        
         this.state = {
 
             arivals: [
@@ -48,7 +48,6 @@ export class Categories extends React.Component {
     }
     async componentDidMount() {
         const { router } = this.props;
-        console.log(this.state);
         let gender = router.query.mainCategory;
         let subCategory;
         if (router.query.subCategory) {
@@ -61,42 +60,28 @@ export class Categories extends React.Component {
          console.log(productArray);
         this.setState({...this.state, products: productArray});
     }
-    async componentDidUpdate(prevProps){
-        let prevRouter = prevProps.router; 
-        console.log("PrevRouter")
-       console.log(prevRouter);
+    async componentDidUpdate(prevProps, prevState){
+       
         console.log("component did update here");
         
         const { router } = this.props;
-        if (prevRouter !== undefined){
-            if (router.query.mainCategory !== prevRouter.query.mainCategory || router.query.subCategory !== prevRouter.query.subCategory){
-                console.log(router);
-                let gender = router.query.mainCategory;
-                let subCategory;
-                if (router.query.subCategory) {
-                    console.log("|"+router.query.subCategory+"|");
-                    subCategory = router.query.subCategory;
-                }
+        console.log(router);
+        let gender = router.query.mainCategory;
+        let subCategory;
+        if (router.query.subCategory) {
+            console.log("|"+router.query.subCategory+"|");
+            subCategory = router.query.subCategory;
+        }
+        if (gender !== prevProps.router.query.mainCategory  || subCategory !== prevProps.router.query.subCategory) {
 
-                document.documentElement.style.setProperty("--showMore", 1);
-                let productArray  = await getProducts(gender, subCategory);
-                console.log(productArray);
-                this.setState({...this.state, products: productArray});
-            }else{
-                console.log("NOTHING HAPPENED")
-            }
-        }else {
-            console.log(router);
-            let gender = router.query.mainCategory;
-            let subCategory;
-            if (router.query.subCategory) {
-                console.log("|"+router.query.subCategory+"|");
-                subCategory = router.query.subCategory;
-            }
 
             document.documentElement.style.setProperty("--showMore", 1);
             let productArray  = await getProducts(gender, subCategory);
+            console.log("PRODUCT ARRAY");
             console.log(productArray);
+            this.state.products.length = 0 ;
+            console.log("THIS.STATE.PRODTCS")
+            console.log(this.state.products);
             this.setState({...this.state, products: productArray});
         }
     }

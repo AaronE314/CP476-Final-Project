@@ -3,6 +3,8 @@ import React from 'react'
 import styles from "../css/Dialog.module.css";
 
 import { signIn } from "../lib/apiRequester";
+import { setToken } from '../lib/userAuth'
+import isEmail from 'validator/lib/isEmail';
 
 export class SignInDialog extends React.Component {
 
@@ -12,7 +14,11 @@ export class SignInDialog extends React.Component {
         this.state = {
             email: "",
             password: "",
-            staySignedIn: false
+            staySignedIn: false,
+
+            emailError: "",
+            passwordError: "",
+            userError: ""
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,21 +29,65 @@ export class SignInDialog extends React.Component {
         this.setState({...this.state, [e.target.name]: e.target.value.trim()})
     }
 
+    validate = () => {
+
+        let emailError = ""
+        let passwordError = ""
+
+        if (this.state.email === "" || !isEmail(this.state.email)) {
+            emailError = "Please enter a valid email."
+        }
+
+        if (this.state.password === "") {
+            passwordError = "Please enter your password."
+        }
+
+        this.setState({...this.state, emailError, passwordError});
+
+        return emailError === "" && passwordError === "";
+
+    }
+
     handleSubmit(e) {
-        // TODO: Verify form
         e.preventDefault();
-        signIn(this.state.email, this.state.password);
+
+        if (this.validate()) {
+
+            signIn(this.state.email, this.state.password)
+            .then((data) => {
+                
+                console.log(data);
+                
+                if (data.status === "ok") {
+                    
+                    setToken(!this.state.staySignedIn, data);
+                    
+                    this.props.login();
+                    
+                    this.props.close();
+                    
+                } else {
+                    
+                    this.setState({...this.state, userError: data.message.split(":")[1]});
+
+                }
+                
+            });
+        }
+        
     }
 
     render() {
 
-        return <form className={styles.form} method="post" onSubmit={this.handleSubmit}>
+        return <form className={styles.form} method="post" onSubmit={this.handleSubmit} noValidate>
 
             <div className={styles.container}>
-                <input className={styles.text} name="email" onChange={this.handleChange} placeholder="Email" autoComplete="email" type="email"/>
+                <input className={`${styles.text} ${(this.state.emailError !== "") ? styles.error: ""}`} name="email" onChange={this.handleChange} placeholder="Email" autoComplete="email" type="email"/>
+                <p className={styles.error}>{this.state.emailError}</p>
             </div>
             <div className={styles.container}>
-                <input className={styles.text} name="password" onChange={this.handleChange} placeholder="Password" autoComplete="current-password" type="password"/>
+                <input className={`${styles.text} ${(this.state.passwordError !== "") ? styles.error: ""}`} name="password" onChange={this.handleChange} placeholder="Password" autoComplete="current-password" type="password"/>
+                <p className={styles.error}>{this.state.passwordError}</p>
             </div>
 
             <div className={styles.checkBoxContainer}>
@@ -47,7 +97,9 @@ export class SignInDialog extends React.Component {
 
             <button className={styles.submit} type="submit">SIGN IN</button>
 
-            <label className={styles.span}><a href="#">Forgot your password?</a></label>
+            <p className={styles.error}>{this.state.userError}</p>
+
+            <p className={styles.span}><a href="#">Forgot your password?</a></p>
 
         </form>
 
