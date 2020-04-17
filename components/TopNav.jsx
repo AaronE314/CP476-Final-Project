@@ -43,9 +43,9 @@ export class TopNav extends React.Component {
         this.logout = this.logout.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
-        if (isSignedIn()) {
+        if (await isSignedIn()) {
 
             let email = getUserEmailName()
 
@@ -106,13 +106,13 @@ export class TopNav extends React.Component {
         }
     }
 
-    login() {
+   async login() {
 
-        if (isSignedIn()) {
+        if (await isSignedIn()) {
 
             let email = getUserEmailName();
 
-            console.log(email);
+            console.log("Email: " + email);
 
             if (email) {
     

@@ -21,6 +21,7 @@ export class ProductDetail extends React.Component {
                          "/images/tempImages/tempImg1_2.jpg", 
                          "/images/tempImages/tempImg1_3.jpg", 
                          "/images/tempImages/tempImg2_1.jpg", 
+                         "/images/tempImages/tempImg2_2.jpg",
                          "/images/tempImages/tempImg2_2.jpg"],
                 
                 description: `Casual modernity. Designed from pure cotton, this jacket is reimagined with a waist belt and a cropped length.\n

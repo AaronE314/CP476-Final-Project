@@ -2,7 +2,8 @@ import { MongoClient } from 'mongodb';
 import nextConnect from 'next-connect';
 import { session } from 'next-session';
 import auth from './auth';
-import headerSet from './headerSet';
+
+const cookieParser = require('cookie-parser');
 
 const client = new MongoClient(process.env.MONGODB_URI_READONLY, {
   useNewUrlParser: true,
@@ -24,6 +25,7 @@ export async function database(req, res, next) {
 const middleware = nextConnect();
 
 // middleware.use(headerSet);
+middleware.use(cookieParser());
 middleware.use(auth);
 
 middleware.use(database);
