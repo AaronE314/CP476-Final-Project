@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
+import { updateCart, updateWishList } from '../lib/userAuth';
 
 export class ProductDetail extends React.Component {
 
@@ -21,6 +22,7 @@ export class ProductDetail extends React.Component {
                          "/images/tempImages/tempImg1_2.jpg", 
                          "/images/tempImages/tempImg1_3.jpg", 
                          "/images/tempImages/tempImg2_1.jpg", 
+                         "/images/tempImages/tempImg2_2.jpg",
                          "/images/tempImages/tempImg2_2.jpg"],
                 
                 description: `Casual modernity. Designed from pure cotton, this jacket is reimagined with a waist belt and a cropped length.\n
@@ -127,8 +129,8 @@ export class ProductDetail extends React.Component {
                     </div>
 
                     <div className="buttons">
-                        <button>ADD TO CART</button>
-                        <img src="/images/blackWhiteHeart.svg"/>
+                        <button onClick={e => {updateCart(this.state.productDetails); router.push('/cart');}}>ADD TO CART</button>
+                        <img onClick={e => {updateWishList(this.state.productDetails); router.push('/wishlist');}} src="/images/blackWhiteHeart.svg"/>
                     </div>
 
                     <p className="desc">{this.state.productDetails.description.split('\n').map((item, key) => {

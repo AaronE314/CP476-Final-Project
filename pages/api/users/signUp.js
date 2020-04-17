@@ -10,6 +10,7 @@ import middleware from '../../../middleware/database';
 
 import * as argon2 from 'argon2';
 import isEmail from 'validator/lib/isEmail';
+import cookies from '../../../lib/cookies';
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -50,11 +51,11 @@ handler.post(async (req, res) => {
         .then((user) => {
             req.session.userId = user.insertedId;
             const addedUser = user.ops[0]
-            const token = jwt.sign({ username: addedUser.email}, process.env.jwtSecret, {expiresIn: 604800});
+            const token = jwt.sign({ username: addedUser.email, admin: addedUser.admin}, process.env.jwtSecret, {expiresIn: '7d'});
+            res.cookie('token', token, { httpOnly: true, maxAge: 604800});
             res.status(201).send({
                 status: 'ok',
                 message: 'User signed up seccessfully',
-                token: token,
                 userInfo: {email: addedUser.email, 
                            wishlist: addedUser.wishlist,
                            shoppingCart: addedUser.shoppingCart}
@@ -67,4 +68,4 @@ handler.post(async (req, res) => {
 
 });
 
-export default (req, res) => handler.apply(req, res) 
+export default cookies((req, res) => handler.apply(req, res));

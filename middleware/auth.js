@@ -3,26 +3,33 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const securePaths = [""];
+const securePaths = [];
 
 const auth = (req, res, next) => {
 
-    console.log("auth");
+    const token = req.cookies.token;
 
-    // for secure requests
-    if (securePaths.includes(req.path)) {
-        
-        const token = req.headers.authorization
-
-        try {
-            jwt.verify(token, process.env.jwtSecret)
-        } catch (err) {
-            return res.status(401).json({message: err.message})
-        }
+    if (!securePaths.includes(req.url)) {
+        return next();
     }
 
-    return next();
+    if (!token) {
+        console.log("no token");
+        res.status(401).send('Unauthorized: No token provided');
+    } else {
 
+        try {
+            let decoded = jwt.verify(token, process.env.jwtSecret);
+            console.log("valid");
+            req.email = decoded.email;
+            req.admin = decoded.admin;
+            return next();
+        } catch(err) {
+            console.log("not valid");
+            res.status(401).send('Unauthorized: Invalid token');
+        }
+
+    }
 }
 
 export default auth;
