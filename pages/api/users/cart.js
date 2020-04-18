@@ -48,8 +48,11 @@ handler.post(async (req, res) => {
         
         
         shoppingCart.push(product);
-        let doc = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{shoppingCart:shoppingCart}}, {upsert: false}).catch(function(err){throw err; })
-        return 
+        let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{shoppingCart:shoppingCart}}, {upsert: false}).catch(function(err){throw err; })
+        res.status(200).send({
+            status: 'ok',
+            message: 'Item added to shopping cart seccessfully',
+        }); 
         
     }
     

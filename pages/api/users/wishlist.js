@@ -22,7 +22,6 @@ handler.get(async (req, res) => {
             console.log(doc);
             res.json(doc)
         }
-
     }catch(err){
         throw err; 
     }

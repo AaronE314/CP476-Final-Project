@@ -102,7 +102,6 @@ export class Cart extends React.Component {
 
         return items;
     }
-
     render() {
 
         return <Layout fullPage={false}>
