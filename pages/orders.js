@@ -49,11 +49,9 @@ const Orders = ({orders}) => {
 
 Orders.getInitialProps = async (ctx) => {
 
-    console.log("init orders");
-
     if (await isSignedIn()) {
 
-        // TODO: get orders for user
+        // TODO: get orders for db
         return {
             orders: [
             {
@@ -96,9 +94,7 @@ Orders.getInitialProps = async (ctx) => {
             }
         ]};
     } else {
-        console.log("oops");
         if (ctx.res) {
-            console.log("server");
             ctx.res.writeHead(302, {
                 Location: "/",
                 'Content-Type': 'text/html; charset=utf-8',

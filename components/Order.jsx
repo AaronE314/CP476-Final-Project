@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from "../css/Order.module.css";
 import Link from 'next/link';
+import Router from 'next/router';
 
 export default class Order extends React.Component {
 
@@ -40,6 +41,10 @@ export default class Order extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize)
     }
+    
+    openOrder = () => {
+        Router.push(`/orderReview?orderNumber=${this.props.order.orderId}`);
+    }
 
     render() {
 
@@ -60,13 +65,14 @@ export default class Order extends React.Component {
                         <img src={item}/>
                     </div>
                 })}
-                {(this.props.order.productImages.length > this.state.numberShown) ? <div className={styles.showMore}>
+                {(this.props.order.productImages.length > this.state.numberShown) 
+                ? <div onClick={this.openOrder} className={styles.showMore}>
                 <p>{`+${this.props.order.productImages.length - this.state.numberShown}`}</p>
                 </div> : null}
             </div>
 
             <div className={styles.buttons}>
-                <button className={styles.details}>DETAILS</button>
+                <button onClick={this.openOrder} className={styles.details}>DETAILS</button>
                 <button className={styles.track}>TRACK</button>
             </div>
 
