@@ -1,6 +1,6 @@
 
 import nextConnect from 'next-connect';
-import middleware from '../../middleware/ReadOnlydatabase';
+import middleware from '../../../middleware/databaseUpdater';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
@@ -17,14 +17,11 @@ handler.get(async (req, res) => {
     try{
         if (req.session.userId !== undefined){
             let doc = {}
-            doc = await req.db.collection('Users').find({_id : req.session.userId },{_id : 0,shoppingCart:1}).toArray();
+            doc = await req.db.collection('Users').find({_id : req.session.userId },{projection:{_id : 0,shoppingCart:1}}).toArray();
     
             console.log(doc);
             res.json(doc)
-        }else {
-            //DO LOCAL STORAGE HERE 
         }
-
     }catch(err){
         throw err; 
     }
@@ -45,13 +42,15 @@ handler.post(async (req, res) => {
     if (userID !== undefined){
 
 
-        let doc = await req.db.collection('Users').find({"_id" : req.session.userId },{_id : 0,shoppingCart:1}).toArray();
-        doc.push(product);
-        let doc = await req.db.collection('Users').updateOne({"_id" : req.session.userId }, {$set:{shoppingCart:doc}}, {upsert: false}).catch(function(err){throw err; })
+        let doc = await req.db.collection('Users').find({"email" : userID },{projection:{_id : 0,shoppingCart:1}}).toArray();
+        let shoppingCart = doc[0].shoppingCart
+ 
+        
+        
+        shoppingCart.push(product);
+        let doc = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{shoppingCart:shoppingCart}}, {upsert: false}).catch(function(err){throw err; })
         return 
         
-    }else {
-        //add product to local storage wish list
     }
     
 

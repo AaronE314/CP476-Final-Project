@@ -5,13 +5,14 @@ import auth from './auth';
 
 const cookieParser = require('cookie-parser');
 
-const client = new MongoClient(process.env.MONGODB_URI, {
+const client = new MongoClient(process.env.MONGODB_URI_WRITER, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 export async function database(req, res, next) {
   try {
+   
     if (!client.isConnected()) await client.connect().catch(function(err){throw err; });
     req.dbClient = client;
     req.db = client.db('CP476Main');

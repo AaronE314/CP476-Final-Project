@@ -1,6 +1,6 @@
 
 import nextConnect from 'next-connect';
-import middleware from '../../middleware/ReadOnlydatabase';
+import middleware from '../../../middleware/databaseUpdater';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
@@ -17,12 +17,10 @@ handler.get(async (req, res) => {
     try{
         if (req.session.userId !== undefined){
             let doc = {}
-            doc = await req.db.collection('Users').find({_id : req.session.userId },{_id : 0,wishlist:1}).toArray();
+            doc = await req.db.collection('Users').find({_id : req.session.userId },{projection:{_id : 0,wishlist:1}}).toArray();
     
             console.log(doc);
             res.json(doc)
-        }else {
-            //DO LOCAL STORAGE HERE 
         }
 
     }catch(err){
@@ -44,14 +42,24 @@ handler.post(async (req, res) => {
     let { userID, product } = JSON.parse(body);
     if (userID !== undefined){
 
-
-        let doc = await req.db.collection('Users').find({"_id" : req.session.userId },{_id : 0,wishlist:1}).toArray();
-        doc.push(product);
-        await req.db.collection('Users').updateOne({"_id" : req.session.userId}, {$set:{wishlist:doc}}, {upsert: false}).catch(function(err){throw err; })
-        return 
         
-    }else {
-        //add product to local storage wish list
+        let doc = await req.db.collection('Users').find({"email" :userID },{projection:{_id : 0,wishlist:1}}).toArray();
+        let wishlist = doc[0].wishlist
+ 
+        let index = wishlist.indexOf(product);
+        if (index === -1){
+            wishlist.push(product);
+        }else {
+            wishlist.splice(index,1);
+        }
+        let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{wishlist:wishlist}}, {upsert: false}).catch(function(err){throw err; })
+    
+
+    
+        res.status(200).send({
+            status: 'ok',
+            message: 'Item added seccessfully',
+        });
     }
     
 
