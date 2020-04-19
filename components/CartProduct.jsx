@@ -70,11 +70,11 @@ export class CartProduct extends React.Component{
                     <tbody>
                         <tr>
                             <td>Item no:</td>
-                            <td>{this.props.product.orderNumber}</td>
+                            <td>{this.props.product.productID}</td>
                         </tr>
                         <tr>
                             <td>Colour:</td>
-                            <td>{this.props.product.colour}</td>
+                            <td>{this.props.product.color.name}</td>
                         </tr>
                         <tr>
                             <td>Size:</td>
@@ -82,7 +82,7 @@ export class CartProduct extends React.Component{
                         </tr>
                         <tr>
                             <td>Subtotal:</td>
-                            <td>${this.getSubtotal().toFixed(2)}</td>
+                            <td>${this.getAdjustedPrice()}</td>
                         </tr>
                     </tbody>
                 </table>

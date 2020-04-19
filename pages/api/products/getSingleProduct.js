@@ -19,6 +19,7 @@ handler.get(async (req, res) => {
         let findQuery = {productID: req.query.id}; 
         let returnQuery = {
             _id: 0, 
+            productID:1,
             productName:1,
             price:1,
             discount:1,

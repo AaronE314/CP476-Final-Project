@@ -4,29 +4,7 @@ import middleware from '../../../middleware/databaseUpdater';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
-
 handler.use(middleware);
-/**
- * @author Austin Bursey
- * @public
- * @summary Get request for the shopping cart of a user, if the user is a guest shopper, get the shopping cart from local storage. 
- * @argument userId belonging to the user, undefined if the user is a guest.  
- * @returns Array of products. 
- */
-handler.get(async (req, res) => {
-    try{
-        if (req.session.userId !== undefined){
-            let doc = {}
-            doc = await req.db.collection('Users').find({"email" : req.session.userID },{projection:{_id : 0,shoppingCart:1}}).toArray();
-    
-            console.log(doc[0]);
-            res.json(doc[0])
-        }
-    }catch(err){
-        throw err; 
-    }
-
-})
 /**
  * @author Austin Bursey
  * @public
@@ -38,29 +16,40 @@ handler.get(async (req, res) => {
 handler.post(async (req, res) => {
 
     let body = req.body
-    let { userID, product } = JSON.parse(body);
+    let { userID, product,amount } = JSON.parse(body);
     if (userID !== undefined){
 
-
-        let doc = await req.db.collection('Users').find({"email" : userID },{projection:{_id : 0,shoppingCart:1}}).toArray();
+        // console.log("product = ", product);
+        console.log("amount = ", amount);
+        console.log("userID = ", userID);
+         let doc = await req.db.collection('Users').find({"email" : userID },{projection:{_id : 0,shoppingCart:1}}).toArray();
         let shoppingCart = doc[0].shoppingCart
-        let index = -1 ; 
-        shoppingCart.map((item,i )=>{
+        let quantity ; 
+        let index; 
+        shoppingCart.map((item,i)=>{
             if (item.productID === product.productID && item.size === product.size && item.color.hex === product.color.hex){
-                item.quantity +=1; 
-                index = i; 
+                if (amount === "single"){
+                    item.quantity -=1; 
+                    quantity = item.quantity;
+                    index  = i 
+                }else if (amount == "all"){
+                    item.quantity = 0 
+                    quantity = item.quantity;
+                    index  = i 
+                }
+;   
             }
         })
-        if (index  === -1 ){
-            product.quantity = 1; 
-            shoppingCart.push(product);
+        if (index !== undefined &&  quantity  <= 0 ){
+
+            shoppingCart.splice(index,1);
         }
         
         
         let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{shoppingCart:shoppingCart}}, {upsert: false}).catch(function(err){throw err; })
         res.status(200).send({
             status: 'ok',
-            message: 'Item added to shopping cart seccessfully',
+            message: 'Item removed from shopping cart seccessfully',
         }); 
         
     }

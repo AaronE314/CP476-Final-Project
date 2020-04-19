@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import Link from 'next/link'
 import CartProduct from '../components/CartProduct';
 import FlipMove from 'react-flip-move';
+import { updateCart,updateWishList,getShoppingCart, getUserCart} from '../lib/userAuth';
 
 export class Cart extends React.Component {
 
@@ -14,39 +15,7 @@ export class Cart extends React.Component {
             numberOfItems: 8,
             total: 0,
             products: [
-                {
-                    productName: "Product Name",
-                    quantity: 1,
-                    price: 3.99,
-                    discount: 0,
-                    size: "S",
-                    colour: "Black",
-                    orderNumber: "0850318003",
-                    imageLink: "/images/tempImages/tempImg1_1.jpg",
-                    wishlisted: true,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 2,
-                    price: 3.99,
-                    discount: 0.2,
-                    size: "M",
-                    colour: "Black",
-                    orderNumber: "0850318004",
-                    imageLink: "/images/tempImages/tempImg1_2.jpg",
-                    wishlisted: false,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 4,
-                    price: 3.99,
-                    discount: 0.4,
-                    size: "XL",
-                    colour: "Blue",
-                    orderNumber: "0850318005",
-                    imageLink: "/images/tempImages/tempImg1_3.jpg",
-                    wishlisted: false,
-                },
+
             ]
         }
 
@@ -57,21 +26,29 @@ export class Cart extends React.Component {
 
     updateProduct(property, value, i) {
 
-        //TODO: update db
+        
 
         let products = this.state.products;
 
+        if (property === "quantity"){
+            
+            updateCart(products[i],products[i].quantity > value, "single");
+            
+        }else if (property === "wishlisted"){
+            updateWishList(products[i]);
+        }
         products[i][property] = value;
 
         this.setState({...this.state, products: products, total: this.getTotal(), numberOfItems: this.getItemsSold()});
     }
 
-    removeProduct(i) {
+    async removeProduct(i) {
 
-        //TODO: update db
+        
 
         let products = [...this.state.products];
-
+        updateCart(products[i], true,"all"); 
+        console.log("Removing all of the product");
         products.splice(i, 1);
 
         this.setState({...this.state, products: products, total: this.getTotal(), numberOfItems: this.getItemsSold()});
@@ -102,8 +79,14 @@ export class Cart extends React.Component {
 
         return items;
     }
+    async componentDidMount() {
+        document.documentElement.style.setProperty("--showMore", 1);
+        let cart = await getUserCart();
+        console.log(cart);
+        this.setState({...this.state, products: cart});
+    }
     render() {
-
+        
         return <Layout fullPage={false}>
 
             <div className="mainContent">
@@ -115,7 +98,7 @@ export class Cart extends React.Component {
                         <FlipMove typeName={null}>
                             {this.state.products.map((product, i) => {
                                 
-                                return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={product.orderNumber}/>
+                                return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={i}/>
                             })}
                         </FlipMove>
                     </div>

@@ -90,8 +90,6 @@ export class ProductDetail extends React.Component {
     render() {
 
         const { router } = this.props;
-        console.log("STATE IS")
-        console.log(this.state);
         return <Layout>
             <div className="container">
                 {/* 12.6% */}
@@ -147,7 +145,19 @@ export class ProductDetail extends React.Component {
                     </div>
 
                     <div className="buttons">
-                        <button onClick={e => {updateCart(this.state.productDetails); router.push('/cart');}}>ADD TO CART</button>
+                        <button onClick={e => {
+                            
+                            updateCart({
+                            productID:this.state.productDetails.productID, 
+                            productName: this.state.productDetails.productName, 
+                            price: this.state.productDetails.price,
+                            discount: this.state.productDetails.discount,
+                            quantity:1,
+                            size: this.state.productDetails.sizes[this.state.size], 
+                            color : this.state.productDetails.colours[this.state.color],
+                            image :this.state.productDetails.images[this.state.color] 
+                        });
+                         router.push('/cart');}}>ADD TO CART</button>
                         <img onClick={e => {updateWishList(this.state.productDetails); router.push('/wishlist');}} src="/images/blackWhiteHeart.svg"/>
                     </div>
 

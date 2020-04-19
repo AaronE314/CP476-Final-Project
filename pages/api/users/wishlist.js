@@ -44,11 +44,19 @@ handler.post(async (req, res) => {
         
         let doc = await req.db.collection('Users').find({"email" :userID },{projection:{_id : 0,wishlist:1}}).toArray();
         let wishlist = doc[0].wishlist
- 
-        let index = wishlist.indexOf(product);
+        console.log(wishlist);
+        let index = -1 ; 
+        wishlist.map((item , i )=>{
+            if (item.productID === product.productID){
+                index = i; 
+            }
+        });
+        console.log("index in wishlist is :", index);
         if (index === -1){
+            console.log("Adding")
             wishlist.push(product);
         }else {
+            console.log("removing"); 
             wishlist.splice(index,1);
         }
         let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{wishlist:wishlist}}, {upsert: false}).catch(function(err){throw err; })
