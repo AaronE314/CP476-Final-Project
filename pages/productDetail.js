@@ -26,8 +26,8 @@ export class ProductDetail extends React.Component {
 
             tempBackground: ["#F0F0F0", "#D4F6C8", "#B4D5F3", "#CFC3EB", "#DE9CCC"],
 
-            size: -1,
-            color: -1
+            size: 0,
+            color: 0
             
         }
 
@@ -86,7 +86,9 @@ export class ProductDetail extends React.Component {
         }
 
     }
-
+    addToCart(){
+        
+    }
     render() {
 
         const { router } = this.props;
@@ -146,19 +148,22 @@ export class ProductDetail extends React.Component {
 
                     <div className="buttons">
                         <button onClick={e => {
+                            if (this.state.productDetails.productID !== undefined){
+                                updateCart({
+                                    productID:this.state.productDetails.productID, 
+                                    productName: this.state.productDetails.productName, 
+                                    price: this.state.productDetails.price,
+                                    discount: this.state.productDetails.discount,
+                                    quantity:1,
+                                    size: this.state.productDetails.sizes[this.state.size], 
+                                    color : this.state.productDetails.colours[this.state.color],
+                                    image :this.state.productDetails.images[this.state.color] 
+                                });
+                                router.push('/cart');
+                            }
                             
-                            updateCart({
-                            productID:this.state.productDetails.productID, 
-                            productName: this.state.productDetails.productName, 
-                            price: this.state.productDetails.price,
-                            discount: this.state.productDetails.discount,
-                            quantity:1,
-                            size: this.state.productDetails.sizes[this.state.size], 
-                            color : this.state.productDetails.colours[this.state.color],
-                            image :this.state.productDetails.images[this.state.color] 
-                        });
-                         router.push('/cart');}}>ADD TO CART</button>
-                        <img onClick={e => {updateWishList(this.state.productDetails); router.push('/wishlist');}} src="/images/blackWhiteHeart.svg"/>
+                        }}>ADD TO CART</button>
+                        <img onClick={e => {updateWishList(this.state.productDetails); router.push('/wishlist');}} src="/images/blackWhiteHeart.svg"  />
                     </div>
 
                     <p className="desc">{this.state.productDetails.description.split('\n').map((item, key) => {

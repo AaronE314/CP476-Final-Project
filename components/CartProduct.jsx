@@ -6,7 +6,7 @@ export class CartProduct extends React.Component{
         super(props);
 
         this.state = {
-            highlightColor: ""
+            highlightColor: "",
         };
         this.getSubtotal = this.getSubtotal.bind(this);
         this.getAdjustedPrice = this.getAdjustedPrice.bind(this);
@@ -14,6 +14,8 @@ export class CartProduct extends React.Component{
         this.increaseQuantity = this.increaseQuantity.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
         this.updateWishlist = this.updateWishlist.bind(this);
+        this.increaseRef = React.createRef(); 
+        this.decreaseRef = React.createRef();
     }
 
     getSubtotal(){
@@ -29,16 +31,28 @@ export class CartProduct extends React.Component{
         return Math.round((this.props.product.price * (1 - this.props.product.discount)) * 100) / 100
     }
 
-    decreaseQuantity(){
+    async decreaseQuantity(){
         if (this.props.product.quantity > 1){
             // this.setState({...this.state, quantity: this.props.product.quantity - 1});
-            this.props.updateProduct("quantity", this.props.product.quantity - 1, this.props.i);
+            this.increaseRef.current.setAttribute("disabled",true);
+            console.log("38")
+            let x = await this.props.updateProduct("quantity", this.props.product.quantity - 1, this.props.i);
+            console.log("39")
+            this.increaseRef.current.removeAttribute("disabled");
         }
     }
-
-    increaseQuantity(){
+    async increaseQuantity(){
         // this.setState({...this.state, quantity: this.props.product.quantity + 1});
-        this.props.updateProduct("quantity", this.props.product.quantity + 1, this.props.i);
+        console.log(this.increaseRef);
+        
+        this.increaseRef.current.setAttribute("disabled",true);
+        console.log("GOING INTO CART.js")
+        let x = await this.props.updateProduct("quantity", this.props.product.quantity + 1, this.props.i);
+        
+
+        this.increaseRef.current.removeAttribute("disabled");
+        
+
     }
 
     updateWishlist(){
@@ -95,9 +109,9 @@ export class CartProduct extends React.Component{
                     }
 
                     <div className={styles.CartQuantity}>
-                        <img onClick={this.decreaseQuantity} className={(this.props.product.quantity > 1) ? styles.CartMinus : styles.CartMinusDisabled} src="/images/minus.svg"></img>
+                        <button ref = {this.decreaseRef}onClick={this.decreaseQuantity} className={(this.props.product.quantity > 1) ? styles.CartMinus : styles.CartMinusDisabled} src="/images/minus.svg"></button>
                         <p>{this.props.product.quantity}</p>
-                        <img onClick={this.increaseQuantity} src="/images/plus.svg"></img>
+                        <button type ="image" ref ={this.increaseRef} onClick={ this.increaseQuantity} src="/images/plus.svg"  ></button>
                     </div>
                 </div>
             </div>

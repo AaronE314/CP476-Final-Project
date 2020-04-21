@@ -49,7 +49,7 @@ handler.post(async (req, res) => {
         let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{shoppingCart:shoppingCart}}, {upsert: false}).catch(function(err){throw err; })
         res.status(200).send({
             status: 'ok',
-            message: 'Item removed from shopping cart seccessfully',
+            message: `Item removed from shopping cart seccessfully quantity now ${quantity}`,
         }); 
         
     }

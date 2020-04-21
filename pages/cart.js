@@ -24,18 +24,18 @@ export class Cart extends React.Component {
         this.getTotal = this.getTotal.bind(this);
     }
 
-    updateProduct(property, value, i) {
+    async updateProduct(property, value, i) {
 
         
 
         let products = this.state.products;
 
         if (property === "quantity"){
-            
-            updateCart(products[i],products[i].quantity > value, "single");
+            console.log("GOING INTO userAuth.js")
+            await updateCart(products[i],products[i].quantity > value, "single",value);
             
         }else if (property === "wishlisted"){
-            updateWishList(products[i]);
+            await updateWishList(products[i]);
         }
         products[i][property] = value;
 
@@ -61,10 +61,12 @@ export class Cart extends React.Component {
     getTotal() {
 
         let total = 0;
-
-        for (let i = 0; i < this.state.products.length; i++) {
-            total += this.getSubTotal(this.state.products[i]);
+        if (this.state.products !== undefined ){
+            for (let i = 0; i < this.state.products.length; i++) {
+                total += this.getSubTotal(this.state.products[i]);
+            }
         }
+
 
         return total;
     }
@@ -72,11 +74,11 @@ export class Cart extends React.Component {
     getItemsSold() {
 
         let items = 0;
-
-        for (let i = 0; i < this.state.products.length; i++) {
-            items += this.state.products[i].quantity;
+        if (this.state.products !== undefined){
+            for (let i = 0; i < this.state.products.length; i++) {
+                items += this.state.products[i].quantity;
+            }
         }
-
         return items;
     }
     async componentDidMount() {
@@ -86,7 +88,7 @@ export class Cart extends React.Component {
         this.setState({...this.state, products: cart});
     }
     render() {
-        
+
         return <Layout fullPage={false}>
 
             <div className="mainContent">
@@ -96,10 +98,13 @@ export class Cart extends React.Component {
                 <div className="content">
                     <div className="cartItems">
                         <FlipMove typeName={null}>
-                            {this.state.products.map((product, i) => {
+                            {
+                            (this.state.products !== undefined )? 
+                            this.state.products.map((product, i) => {
                                 
                                 return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={i}/>
-                            })}
+                            }): null //TODO Change this null to add a snazzy message letting users know that they have nothing in their shopping cart
+                             }
                         </FlipMove>
                     </div>
                     <div className="summary">
