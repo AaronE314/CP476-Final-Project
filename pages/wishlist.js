@@ -75,12 +75,12 @@ export class Wishlist extends React.Component {
     render() {
 
         let products = [];
-        if (this.state.products !== undefined){
+        if (this.state.products.length !== 0){
             for (let i = 0; i < this.state.products.length; i++) {
                 products.push(<ItemDisplayBox key={i} value={this.state.products[i]}/>);
             }
         }else {
-            //TODO display message saying nothing is in your wishlist
+            products.push(<h3 key={0}>You current have no items in your wishlist</h3>);
         }
         return <Layout fullPage={false}>
 

@@ -109,9 +109,9 @@ export class CartProduct extends React.Component{
                     }
 
                     <div className={styles.CartQuantity}>
-                        <button ref = {this.decreaseRef}onClick={this.decreaseQuantity} className={(this.props.product.quantity > 1) ? styles.CartMinus : styles.CartMinusDisabled} src="/images/minus.svg"></button>
+                        <button ref = {this.decreaseRef}onClick={this.decreaseQuantity} > <img className={(this.props.product.quantity > 1) ? styles.CartMinus : styles.CartMinusDisabled} src="/images/minus.svg"/></button>
                         <p>{this.props.product.quantity}</p>
-                        <button type ="image" ref ={this.increaseRef} onClick={ this.increaseQuantity} src="/images/plus.svg"  ></button>
+                        <button ref ={this.increaseRef} onClick={ this.increaseQuantity}><img  src="/images/plus.svg"  ></img></button>
                     </div>
                 </div>
             </div>

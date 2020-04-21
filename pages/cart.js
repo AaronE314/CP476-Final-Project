@@ -87,6 +87,10 @@ export class Cart extends React.Component {
         console.log(cart);
         this.setState({...this.state, products: cart});
     }
+    cartEmpty(){
+        console.log("EMPTY CART")
+        return <h3>You currently have no items in your Cart.</h3>
+    }
     render() {
 
         return <Layout fullPage={false}>
@@ -99,12 +103,12 @@ export class Cart extends React.Component {
                     <div className="cartItems">
                         <FlipMove typeName={null}>
                             {
-                            (this.state.products !== undefined )? 
+                            (this.state.products.length !== 0)? 
                             this.state.products.map((product, i) => {
                                 
                                 return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={i}/>
-                            }): null //TODO Change this null to add a snazzy message letting users know that they have nothing in their shopping cart
-                             }
+                            }): this.cartEmpty()
+                            }
                         </FlipMove>
                     </div>
                     <div className="summary">
