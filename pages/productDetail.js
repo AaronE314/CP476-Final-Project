@@ -163,7 +163,12 @@ export class ProductDetail extends React.Component {
                             }
                             
                         }}>ADD TO CART</button>
-                        <img onClick={e => {updateWishList(this.state.productDetails); router.push('/wishlist');}} src="/images/blackWhiteHeart.svg"  />
+                        <img onClick={e => {
+                            if (this.state.productDetails.productID!= undefined){
+                                updateWishList(this.state.productDetails);
+                                router.push('/wishlist');
+                            }
+                            }} src="/images/blackWhiteHeart.svg"  />
                     </div>
 
                     <p className="desc">{this.state.productDetails.description.split('\n').map((item, key) => {

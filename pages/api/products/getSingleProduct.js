@@ -27,8 +27,12 @@ handler.get(async (req, res) => {
             sizes:1,
             images:1,
             description:1,
-            newArrival:1
-
+            newArrival:1,
+            displayImageIndex:1,
+            displayColorIndex:1,
+            highlightColor:1,
+            wishlisted:1,
+            displayImg:1
         }
         let sortQuery = {}; 
 
