@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "../css/CartProduct.module.css";
-
+import {isProductWishlisted} from "../lib/utils"
 export class CartProduct extends React.Component{
     constructor(props){
         super(props);
@@ -66,14 +66,14 @@ export class CartProduct extends React.Component{
     }
 
     render(){
-
+        console.log(this.props.product)
         let highlightColor = "#FFF500";
         if (typeof window !== 'undefined') {
             highlightColor = window.getComputedStyle(document.documentElement).getPropertyValue('--highlightColor');
         }
 
         return <div className={styles.CartProduct}>
-            <img className={styles.CartImage} src={this.props.product.imageLink}></img>
+            <img className={styles.CartImage} src={`data:image/png;base64,${this.props.product.image}`}></img>
             
             <div className={styles.CartInfo}>
                 <p>{this.props.product.productName}</p>
@@ -102,16 +102,28 @@ export class CartProduct extends React.Component{
                 </table>
                 <div className={styles.CartWishQuantity}>
                     <img onClick={this.updateWishlist} className={styles.CartWishlist} src="/images/heart.svg"></img>
-                    {(this.props.product.wishlisted) ? 
+                    {(this.props.product.wishlisted || isProductWishlisted(this.props.product)) ? 
                         <svg className={styles.CartWishlistInner} width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.95 0C14.036 0 12.199 0.882834 11 2.27793C9.80099 0.882834 7.96399 0 6.04999 0C2.66199 0 -1.37687e-05 2.6376 -1.37687e-05 5.99455C-1.37687e-05 10.1144 3.73999 13.4714 9.40499 18.5722L11 20L12.595 18.5613C18.26 13.4714 22 10.1144 22 5.99455C22 2.6376 19.338 0 15.95 0Z" fill={highlightColor}/>
                         </svg> : null
                     }
 
                     <div className={styles.CartQuantity}>
-                        <button ref = {this.decreaseRef}onClick={this.decreaseQuantity} > <img className={(this.props.product.quantity > 1) ? styles.CartMinus : styles.CartMinusDisabled} src="/images/minus.svg"/></button>
+                        <div className={styles.container}>
+                            <img className={(this.props.product.quantity > 1) ? styles.CartMinus : styles.CartMinusDisabled} src="/images/minus.svg"/>
+                        <button className={styles.btn }ref = {this.decreaseRef}onClick={this.decreaseQuantity} ></button>
+                        </div>
+                         
+                        
+                        
                         <p>{this.props.product.quantity}</p>
-                        <button ref ={this.increaseRef} onClick={ this.increaseQuantity}><img  src="/images/plus.svg"  ></img></button>
+                        <div className={styles.container}>
+                            <img  className ={styles.topMargin}src="/images/plus.svg"  ></img>
+                        <button className={styles.btn} ref ={this.increaseRef} onClick={ this.increaseQuantity}>
+                            
+                            </button>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -48,9 +48,9 @@ export class Wishlist extends React.Component {
         return title;
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         document.documentElement.style.setProperty("--showMore", 1);
-        let wishlist = await getUserWishList();
+        let wishlist =  getUserWishList();
         this.setState({...this.state, products: wishlist});
     }
   
@@ -75,7 +75,7 @@ export class Wishlist extends React.Component {
     render() {
 
         let products = [];
-        if (this.state.products.length !== 0){
+        if ( this.state.products !== undefined &&this.state.products.length !== 0){
             for (let i = 0; i < this.state.products.length; i++) {
                 products.push(<ItemDisplayBox key={i} value={this.state.products[i]}/>);
             }

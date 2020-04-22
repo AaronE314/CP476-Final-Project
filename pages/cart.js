@@ -74,16 +74,22 @@ export class Cart extends React.Component {
     getItemsSold() {
 
         let items = 0;
-        if (this.state.products !== undefined){
+        if (this.state.products !== undefined && this.state.products !== undefined){
             for (let i = 0; i < this.state.products.length; i++) {
                 items += this.state.products[i].quantity;
             }
         }
         return items;
     }
-    async componentDidMount() {
+    // async componentDidMount() {
+    //     document.documentElement.style.setProperty("--showMore", 1);
+    //     let cart = await getUserCart();
+    //     console.log(cart);
+    //     this.setState({...this.state, products: await cart});
+    // }
+    componentDidMount() {
         document.documentElement.style.setProperty("--showMore", 1);
-        let cart = await getUserCart();
+        let cart =  getUserCart();
         console.log(cart);
         this.setState({...this.state, products: cart});
     }
