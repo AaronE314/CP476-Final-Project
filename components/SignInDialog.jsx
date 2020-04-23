@@ -64,9 +64,7 @@ export class SignInDialog extends React.Component {
                     
                     console.log("setUser");
 
-                    this.props.login();
-                    
-                    this.props.close();
+                    this.props.login().then(() => this.props.close());
                     
                 } else {
                     

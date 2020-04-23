@@ -81,9 +81,7 @@ export class SignUpDialog extends React.Component {
                     
                     setUser(!this.state.staySignedIn, data);
                     
-                    this.props.login();
-                    
-                    this.props.close();
+                    this.props.login().then(() => this.props.close());
     
                     
                 } else {
