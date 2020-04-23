@@ -47,7 +47,7 @@ handler.post(async (req, res) => {
         let index = -1 ; 
         
         shoppingCart.map((item,i )=>{
-            if (item.productID === product.productID && item.size === product.size && item.color.hex === product.color.hex){
+            if (item.productID === product.productID && item.size === product.size && item.colours.hex === product.colours.hex){
                 item.quantity = quantity; 
                 index = i; 
                 

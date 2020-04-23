@@ -19,15 +19,13 @@ handler.post(async (req, res) => {
     let { userID, product,amount } = JSON.parse(body);
     if (userID !== undefined){
 
-        // console.log("product = ", product);
-        console.log("amount = ", amount);
-        console.log("userID = ", userID);
+
          let doc = await req.db.collection('Users').find({"email" : userID },{projection:{_id : 0,shoppingCart:1}}).toArray();
         let shoppingCart = doc[0].shoppingCart
         let quantity ; 
         let index; 
         shoppingCart.map((item,i)=>{
-            if (item.productID === product.productID && item.size === product.size && item.color.hex === product.color.hex){
+            if (item.productID === product.productID && item.size === product.size && item.colours.hex === product.colours.hex){
                 if (amount === "single"){
                     item.quantity -=1; 
                     quantity = item.quantity;

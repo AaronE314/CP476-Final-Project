@@ -90,7 +90,7 @@ export class Cart extends React.Component {
     componentDidMount() {
         document.documentElement.style.setProperty("--showMore", 1);
         let cart =  getUserCart();
-        console.log(cart);
+        console.log("cart",cart)
         this.setState({...this.state, products: cart});
     }
     cartEmpty(){

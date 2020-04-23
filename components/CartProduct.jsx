@@ -88,7 +88,7 @@ export class CartProduct extends React.Component{
                         </tr>
                         <tr>
                             <td>Colour:</td>
-                            <td>{this.props.product.color.name}</td>
+                            <td>{this.props.product.colours.name}</td>
                         </tr>
                         <tr>
                             <td>Size:</td>
