@@ -7,6 +7,7 @@ import { updateWishList as updateUserWishList} from '../lib/userAuth';
 export class ItemDisplayBox extends React.Component{
     constructor(props){
         super(props);
+        console.log("props");
         console.log(props);
         this.state = {
             wishlisted: false
@@ -38,7 +39,7 @@ export class ItemDisplayBox extends React.Component{
     }
 
     updateWishlist(){
-        console.log("this.state.wishlisted:",this.state.wishlisted); 
+        
         updateUserWishList(this.props.value, this.state.wishlisted);
         this.setState({...this.state, wishlisted: !this.state.wishlisted});
     }
@@ -50,7 +51,7 @@ export class ItemDisplayBox extends React.Component{
         if (typeof window !== 'undefined') {
             highlightColor = window.getComputedStyle(document.documentElement).getPropertyValue('--highlightColor');
         }
-
+        
         return <div className={styles.DisplayItem}>
             <div className={styles.DisplayImage} id="displayTemp" style={{background: this.props.value.colours[this.props.value.displayImageIndex].hex}}>
             <Link href={{pathname: "/productDetail", query: {id: this.props.value.productID}}}><img className={styles.img} src={`data:image/png;base64, ${this.props.value.displayImg}`} id="displayImage"></img></Link>

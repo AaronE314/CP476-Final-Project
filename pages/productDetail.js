@@ -61,9 +61,8 @@ export class ProductDetail extends React.Component {
         const { router } = this.props;
         let id = router.query.id;
 
-        console.log("ROUTER")
-        console.log(this.props)
-        console.log(router.asPath)
+
+
         if (id !== undefined){
             
             if (isNumeric(id)){
@@ -74,20 +73,17 @@ export class ProductDetail extends React.Component {
 
         }else {
             let arr = router.asPath.split("="); 
-            console.log(arr); 
+             
             id = arr[1]; 
-            console.log(id);
+            
             if (isNumeric(id)){
                 let productDetails = await  getDetailedProduct(id)
-
+                
                 this.setState({...this.state,productDetails: productDetails[0]})
             }
 
         }
 
-    }
-    addToCart(){
-        
     }
     render() {
 
@@ -156,7 +152,7 @@ export class ProductDetail extends React.Component {
                                     discount: this.state.productDetails.discount,
                                     quantity:1,
                                     size: this.state.productDetails.sizes[this.state.size], 
-                                    color : this.state.productDetails.colours[this.state.color],
+                                    colours : this.state.productDetails.colours[this.state.color],
                                     image :this.state.productDetails.images[this.state.color] 
                                 });
                                 router.push('/cart');
@@ -165,6 +161,7 @@ export class ProductDetail extends React.Component {
                         }}>ADD TO CART</button>
                         <img onClick={e => {
                             if (this.state.productDetails.productID!= undefined){
+                                
                                 updateWishList(this.state.productDetails);
                                 router.push('/wishlist');
                             }
