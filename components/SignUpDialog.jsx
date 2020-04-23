@@ -49,6 +49,7 @@ export class SignUpDialog extends React.Component {
         let emailError = "";
         let passwordError = "";
         let passwordRepeatError = "";
+        let userError = "";
 
         if (this.state.email === "" || !isEmail(this.state.email)) {
             emailError = "Please enter a valid email."
@@ -62,9 +63,13 @@ export class SignUpDialog extends React.Component {
             passwordRepeatError = "Passwords don't match."
         }
 
-        this.setState({...this.state, emailError, passwordError, passwordRepeatError});
+        if (this.state.terms === false) {
+            userError = "Please accept the terms of service"
+        }
 
-        return emailError === "" && passwordError === "" && passwordRepeatError === "";
+        this.setState({...this.state, emailError, passwordError, passwordRepeatError, userError});
+
+        return emailError === "" && passwordError === "" && passwordRepeatError === "" && userError === "";
 
     }
 
@@ -74,8 +79,6 @@ export class SignUpDialog extends React.Component {
         if (this.validate()) {
             signUp(this.state.email, this.state.password)
             .then((data) => {
-                
-                console.log(data);
                 
                 if (data.status === "ok") {
                     

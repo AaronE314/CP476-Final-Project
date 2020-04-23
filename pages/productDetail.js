@@ -57,6 +57,18 @@ export class ProductDetail extends React.Component {
 
         this.setState({...this.state, size: size});
     }
+
+    hasFeilds = (item) => {
+        if (!item.images) {
+            item.images = [];
+        }
+        if (!item.sizes) {
+            item.sizes = [];
+        }
+
+        return item;
+    }
+
     async componentDidMount(){
         const { router } = this.props;
         let id = router.query.id;
@@ -67,8 +79,12 @@ export class ProductDetail extends React.Component {
             
             if (isNumeric(id)){
                 let productDetails = await  getDetailedProduct(id)
+                
 
-                this.setState({...this.state,productDetails: productDetails[0]})
+
+                console.log(productDetails[0]);
+
+                this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
             }
 
         }else {
@@ -78,8 +94,8 @@ export class ProductDetail extends React.Component {
             
             if (isNumeric(id)){
                 let productDetails = await  getDetailedProduct(id)
-                
-                this.setState({...this.state,productDetails: productDetails[0]})
+                console.log(productDetails[0]);
+                this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
             }
 
         }

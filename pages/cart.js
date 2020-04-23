@@ -4,6 +4,7 @@ import Link from 'next/link'
 import CartProduct from '../components/CartProduct';
 import FlipMove from 'react-flip-move';
 import { updateCart,updateWishList,getShoppingCart, getUserCart} from '../lib/userAuth';
+import Router from "next/router";
 
 export class Cart extends React.Component {
 
@@ -31,11 +32,11 @@ export class Cart extends React.Component {
         let products = this.state.products;
 
         if (property === "quantity"){
-            console.log("GOING INTO userAuth.js")
-            await updateCart(products[i], value - products[i].quantity < 0, "single", value - products[i].quantity);
+            console.log("GOING INTO userAuth.js");
+            await updateCart(products[i], false, "single", value - products[i].quantity);
             
         }else if (property === "wishlisted"){
-            await updateWishList(products[i]);
+            updateWishList(products[i]);
         }
         products[i][property] = value;
 
@@ -47,8 +48,7 @@ export class Cart extends React.Component {
         
 
         let products = [...this.state.products];
-        updateCart(products[i], true,"all"); 
-        console.log("Removing all of the product");
+        updateCart(products[i], true,"all");
         products.splice(i, 1);
 
         this.setState({...this.state, products: products, total: this.getTotal(), numberOfItems: this.getItemsSold()});
@@ -82,15 +82,14 @@ export class Cart extends React.Component {
         return items;
     }
 
+    checkout = () => {
+        Router.push("/checkout");
+    }
+
     componentDidMount() {
-        document.documentElement.style.setProperty("--showMore", 1);
         let cart =  getUserCart();
         console.log("cart",cart)
-        this.setState({...this.state, products: cart});
-    }
-    cartEmpty(){
-        console.log("EMPTY CART")
-        return <h3>You currently have no items in your Cart.</h3>
+        this.setState({...this.state, products: (cart) ? cart : []});
     }
     render() {
 
@@ -102,15 +101,13 @@ export class Cart extends React.Component {
 
                 <div className="content">
                     <div className="cartItems">
+                    {(this.state.products.length !== 0)?
                         <FlipMove typeName={null}>
-                            {
-                            (this.state.products.length !== 0)? 
-                            this.state.products.map((product, i) => {
+                            {this.state.products.map((product, i) => {
                                 
                                 return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={i}/>
-                            }): this.cartEmpty()
-                            }
-                        </FlipMove>
+                            })}
+                        </FlipMove> : <h3>You currently have no items in your Cart.</h3>}
                     </div>
                     <div className="summary">
                         <div className="summaryBox">
@@ -125,9 +122,7 @@ export class Cart extends React.Component {
                             </div>
                             <p>Taxes & Shipping calculated at next step</p>
                         </div>
-                        <Link href="/checkout">
-                            <button className="checkoutBtn">CHECKOUT</button>
-                        </Link>
+                        <button onClick={this.checkout} className="checkoutBtn">CHECKOUT</button>
                         <p>Read more about how to return an item <a href="#">here</a></p>
                         <p>Standard home delivery CAD $20 / Delivery in 5-7 business days<br/>
                         Free delivery on orders over CAD $200 before shipping & taxes</p>

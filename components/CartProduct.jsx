@@ -34,24 +34,27 @@ export class CartProduct extends React.Component{
     async decreaseQuantity(){
         if (this.props.product.quantity > 1){
             // this.setState({...this.state, quantity: this.props.product.quantity - 1});
+            this.increaseRef.current.setAttribute("disabled",true);
             this.decreaseRef.current.setAttribute("disabled",true);
-            console.log("38")
-            let x = await this.props.updateProduct("quantity", this.props.product.quantity - 1, this.props.i);
-            console.log("39")
-            this.decreaseRef.current.removeAttribute("disabled");
+            this.props.updateProduct("quantity", this.props.product.quantity - 1, this.props.i).then(() => {
+                this.increaseRef.current.removeAttribute("disabled");
+                this.decreaseRef.current.removeAttribute("disabled");
+            });
         }
     }
     async increaseQuantity(){
         // this.setState({...this.state, quantity: this.props.product.quantity + 1});
         
-        
+        console.log("start");
         this.increaseRef.current.setAttribute("disabled",true);
-        console.log("GOING INTO CART.js")
-        let x = await this.props.updateProduct("quantity", this.props.product.quantity + 1, this.props.i);
+        this.decreaseRef.current.setAttribute("disabled",true);
+        this.props.updateProduct("quantity", this.props.product.quantity + 1, this.props.i).then(() => {
+            this.increaseRef.current.removeAttribute("disabled");
+            this.decreaseRef.current.removeAttribute("disabled");
+            console.log("end");
+        });
         
 
-        this.increaseRef.current.removeAttribute("disabled");
-        
 
     }
 

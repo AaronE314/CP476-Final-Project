@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Dialog from './Dialog';
 import { Overlay } from './Overlay';
 
-import { getUserEmailName, isSignedIn } from '../lib/userAuth'
+import { getUserEmailName, isSignedIn, getNumberOfItemsInCart, setUser, initUser } from '../lib/userAuth'
 import { signOut } from '../lib/apiRequester'
 
 export class TopNav extends React.Component {
@@ -29,7 +29,8 @@ export class TopNav extends React.Component {
             ],
             category: null,
             loggedIn: false,
-            userName: ""
+            userName: "",
+            cartItems: 0
         };
 
         this.showSignUp = this.showSignUp.bind(this);
@@ -45,20 +46,33 @@ export class TopNav extends React.Component {
 
     async componentDidMount() {
 
+        const cartItems = getNumberOfItemsInCart();
+
         if (await isSignedIn()) {
 
             let email = getUserEmailName()
 
             if (email) {
     
-                this.setState({...this.state, loggedIn: true, userName: email})
+                this.setState({...this.state, cartItems: cartItems, loggedIn: true, userName: email});
     
             } else {
                 signOut();
+                this.setState({...this.state, cartItems: cartItems});
             }
 
+        } else {
+            this.setState({...this.state, cartItems: cartItems});
+            initUser();
         }
+    }
 
+    componentDidUpdate(prevProps, prevState) {
+
+        const cartItems = getNumberOfItemsInCart();
+        if (prevState.cartItems !== cartItems) {
+            this.setState({...this.state, cartItems: cartItems});
+        }
     }
 
     mouseOver(i) {
@@ -113,8 +127,6 @@ export class TopNav extends React.Component {
         if (await isSignedIn()) {
 
             let email = getUserEmailName();
-
-            console.log("Email: " + email);
 
             if (email) {
     
@@ -183,7 +195,7 @@ export class TopNav extends React.Component {
                             <Link href="/cart">
                                 <a className={styles.clickableText}>
                                     <img src="/images/cart.svg" id="cart"></img>
-                                    <span>CART</span>
+                                    <span>CART {(this.state.cartItems > 0) ? `(${this.state.cartItems})` : ""}</span>
                                 </a>
                             </Link>
                         </div>

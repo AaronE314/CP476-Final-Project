@@ -7,8 +7,6 @@ import { updateWishList as updateUserWishList} from '../lib/userAuth';
 export class ItemDisplayBox extends React.Component{
     constructor(props){
         super(props);
-        console.log("props");
-        console.log(props);
         this.state = {
             wishlisted: false
         }

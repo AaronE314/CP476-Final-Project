@@ -56,13 +56,9 @@ export class SignInDialog extends React.Component {
             signIn(this.state.email, this.state.password, this.state.staySignedIn)
             .then((data) => {
                 
-                console.log(data);
-                
                 if (data.status === "ok") {
                     
                     setUser(!this.state.staySignedIn, data);
-                    
-                    console.log("setUser");
 
                     this.props.login().then(() => this.props.close());
                     

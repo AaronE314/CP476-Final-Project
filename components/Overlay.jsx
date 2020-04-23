@@ -46,15 +46,12 @@ export class Overlay extends React.Component {
 
         this.mounted = true;
 
-        console.log("init");
         
         if (sessionStorage !== undefined) {
 
-            console.log("session Active");
             let data = sessionStorage.getItem("overlay");
 
             if (!data) {
-                console.log("fetching data");
                 data = await getOverlay();
                 sessionStorage.setItem("overlay", JSON.stringify(data));
             } else {
@@ -101,15 +98,4 @@ export class Overlay extends React.Component {
 
     }
 
-}
-
-export async function getStaticProps() {
-
-    console.log("test")
-
-    return {
-        props: {
-            test: "hi"
-        }
-    }
 }
