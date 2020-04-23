@@ -29,7 +29,8 @@ export class Categories extends React.Component {
             ],
             showMore: 1,
             query: router.query, 
-            products : []
+            products : [],
+            loading: true
         }
 
         this.showMore = this.showMore.bind(this);
@@ -45,9 +46,27 @@ export class Categories extends React.Component {
                 title += " " + router.query.subCategory;
             }
             return title;
-            
+            1
     }
+
+    maxShown = (width, height, showMore) => {
+        console.log(width, height);
+        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : 8;
+    }
+    
+    handleResize = () => {
+        this.setState({width: window.innerWidth, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore)});
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize)
+    }
+
     async componentDidMount() {
+
+        this.handleResize();
+        window.addEventListener('resize', this.handleResize)
+
         const { router } = this.props;
         let gender = router.query.mainCategory;
         let subCategory;
@@ -61,8 +80,7 @@ export class Categories extends React.Component {
         console.log("subCategory = " + isLetter(subCategory)); 
         if (isLetter(gender) && isLetter(subCategory)){
             let productArray  = await getProducts(gender, subCategory);
-        
-            this.setState({...this.state, products: productArray});
+            this.setState({...this.state, products: productArray, loading: false});
         }
 
     }
@@ -104,18 +122,12 @@ export class Categories extends React.Component {
     }
 
     showMore() {
-        document.documentElement.style.setProperty("--showMore", this.state.showMore + 1);
-        this.setState({...this.state, showMore: this.state.showMore + 1})
+        // document.documentElement.style.setProperty("--showMore", this.state.showMore + 1);
+        this.setState({...this.state, showMore: this.state.showMore + 1, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore + 1)})
     }
     
 
     render() {
-
-        let products = [];
-
-        for (let i = 0; i < this.state.products.length; i++) {
-            products.push(<ItemDisplayBox key={i} value={this.state.products[i]}/>);
-        }
 
         return <Layout>
 
@@ -175,11 +187,13 @@ export class Categories extends React.Component {
                         <label htmlFor="highest">Highest Price</label>
                     </div>
 
-                    <div className="products">
-                        {products}
-                    </div>
+                    {(this.state.products.length > 0) ? <div className="products">
+                        {this.state.products.slice(0, this.state.numberShown).map((item, i) => {
+                            return <ItemDisplayBox key={i} value={item}/>
+                        })}
+                    </div> : <p className="message">{(this.state.loading) ? "Loading..." : "No products match the query"}</p>}
 
-                    <button onClick={this.showMore} className="loadMore">LOAD MORE</button>
+                    {(this.state.products.length > this.state.numberShown) ? <button onClick={this.showMore} className="loadMore">LOAD MORE</button> : null}
             </div>
 
             <style jsx>{`
@@ -215,9 +229,12 @@ export class Categories extends React.Component {
                     grid-column-gap: 32px;
                     grid-template-columns: repeat(auto-fill, minmax(343px, 1fr));
 
-                    /* super jank */
-                    max-height: calc(1082px * var(--showMore));
                     overflow: hidden;
+                }
+
+                .message {
+                    text-align: center;
+                    width: 100%;
                 }
 
                 .filterby label {
