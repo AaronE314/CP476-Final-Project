@@ -32,7 +32,7 @@ export class Cart extends React.Component {
 
         if (property === "quantity"){
             console.log("GOING INTO userAuth.js")
-            await updateCart(products[i],products[i].quantity > value, "single",value);
+            await updateCart(products[i], value - products[i].quantity < 0, "single", value - products[i].quantity);
             
         }else if (property === "wishlisted"){
             await updateWishList(products[i]);
@@ -81,12 +81,7 @@ export class Cart extends React.Component {
         }
         return items;
     }
-    // async componentDidMount() {
-    //     document.documentElement.style.setProperty("--showMore", 1);
-    //     let cart = await getUserCart();
-    //     console.log(cart);
-    //     this.setState({...this.state, products: await cart});
-    // }
+
     componentDidMount() {
         document.documentElement.style.setProperty("--showMore", 1);
         let cart =  getUserCart();

@@ -154,8 +154,8 @@ export class ProductDetail extends React.Component {
                                     size: this.state.productDetails.sizes[this.state.size], 
                                     colours : this.state.productDetails.colours[this.state.color],
                                     image :this.state.productDetails.images[this.state.color] 
-                                }, null,null ,1 );
-                                router.push('/cart');
+                                }, null,null ,1 ).then(()=>{router.push('/cart');});
+                                
                             }
                             
                         }}>ADD TO CART</button>

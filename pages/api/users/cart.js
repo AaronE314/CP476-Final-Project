@@ -41,14 +41,25 @@ handler.post(async (req, res) => {
     let { userID, product ,quantity} = JSON.parse(body);
     if (userID !== undefined){
 
-
+        console.log("HELLLLO")
         let doc = await req.db.collection('Users').find({"email" : userID },{projection:{_id : 0,shoppingCart:1}}).toArray();
         let shoppingCart = doc[0].shoppingCart
-        let index = -1 ; 
-        
+        let index = -1 ;
+        let placeholder = quantity;   
+        console.log(shoppingCart);
+        console.log(product)
         shoppingCart.map((item,i )=>{
             if (item.productID === product.productID && item.size === product.size && item.colours.hex === product.colours.hex){
-                item.quantity = quantity; 
+                console.log("MATCH")
+                if (item.quantity === undefined){
+                    console.log("LINE 52")
+                    item.quantity = quantity; 
+                }else {
+                    
+                    item.quantity += quantity; 
+                    console.log(item.quantity);
+                }
+                placeholder = item.quantity;
                 index = i; 
                 
             }
@@ -63,7 +74,7 @@ handler.post(async (req, res) => {
         let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{shoppingCart:shoppingCart}}, {upsert: false}).catch(function(err){throw err; })
         res.status(200).send({
             status: 'ok',
-            message: `Item added to shopping cart seccessfully quantity is ${quantity }`,
+            message: `Item added to shopping cart seccessfully quantity is ${placeholder }`
         }); 
         
     }

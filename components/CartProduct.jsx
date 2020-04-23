@@ -43,7 +43,7 @@ export class CartProduct extends React.Component{
     }
     async increaseQuantity(){
         // this.setState({...this.state, quantity: this.props.product.quantity + 1});
-        console.log(this.increaseRef);
+        
         
         this.increaseRef.current.setAttribute("disabled",true);
         console.log("GOING INTO CART.js")
@@ -66,7 +66,7 @@ export class CartProduct extends React.Component{
     }
 
     render(){
-        console.log(this.props.product)
+        
         let highlightColor = "#FFF500";
         if (typeof window !== 'undefined') {
             highlightColor = window.getComputedStyle(document.documentElement).getPropertyValue('--highlightColor');
