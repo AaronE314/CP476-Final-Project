@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import AnchorLink from 'react-anchor-link-smooth-scroll'

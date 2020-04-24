@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Order from '../components/order';
 import { isSignedIn } from '../lib/userAuth';
 import Router from 'next/router';
