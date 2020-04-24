@@ -6,6 +6,7 @@ import { withRouter } from 'next/router';
 import { getProducts, getProductsSearch } from "../lib/apiRequester";
 import { isLetter,isValidTitle} from "../lib/validators";
 import { getCompare } from "../lib/utils";
+import FlipMove from 'react-flip-move';
 export class Categories extends React.Component {
 
     constructor(props) {
@@ -32,7 +33,19 @@ export class Categories extends React.Component {
             query: router.query, 
             products : [],
             loading: true,
-            sortBy: "rec"
+            sortBy: "rec",
+            activeFilters: new Set(),
+            priceFilers: [{low: 0, high: 10, text: "$0 - $10"},
+                          {low: 11, high: 20, text: "$11 - $20"},
+                          {low: 21, high: 30, text: "$21 - $30"},
+                          {low: 31, high: 40, text: "$31 - $40"},
+                          {low: 41, high: 50, text: "$41 - $50"},
+                          {low: 51, high: 10000000, text: "$51+"}],
+            sizeFilters: [{text: 'S'},
+                          {text: 'M'},
+                          {text: 'L'},
+                          {text: 'XL'},
+                          {text: 'XXL'}]
         }
 
         this.showMore = this.showMore.bind(this);
@@ -49,6 +62,36 @@ export class Categories extends React.Component {
             }
             return title;
             1
+    }
+
+    applyFilters = (products) => {
+
+        return products.filter((item) => {
+
+
+            let matchesPrice = false;
+            let matchesSize = false;
+
+            if (this.state.activeFilters.size === 0) {
+                return true;
+            }
+            this.state.activeFilters.forEach((filter) => {
+
+                if (filter.low !== undefined) {
+
+                    matchesPrice = matchesPrice || item.price > filter.low && item.price < filter.high;
+
+                } else {
+
+                    matchesSize = matchesSize || (item.sizes && item.sizes.includes(filter.text));
+
+                }
+
+            });
+
+            return matchesPrice || matchesSize;
+
+        });
     }
 
     maxShown = (width, height, showMore) => {
@@ -143,18 +186,33 @@ export class Categories extends React.Component {
 
         let [name, asending] = e.target.value.split(" ");
 
-        console.log(name, asending);
         let newArray = this.state.products.sort(getCompare(name, asending === 'true'))
-
-        console.log(newArray);
 
         this.setState({...this.state, 
             sortBy: e.target.value, 
             products: newArray});
     }
+
+    handleFilterChange = (filter, value) => {
+
+        let val = (filter === "price") ? this.state.priceFilers[value] : this.state.sizeFilters[value];
+
+        this.state.activeFilters.add(val);
+
+        this.setState({...this.state});
+    }
+
+    removeFilter = (filter) => {
+        this.state.activeFilters.delete(filter);
+        this.setState({...this.state});
+    }
     
 
     render() {
+
+        let products = this.applyFilters(this.state.products);
+
+        console.log(products.length);
 
         return <Layout>
 
@@ -185,20 +243,29 @@ export class Categories extends React.Component {
 
                     <div className="filterby">
                         <label>Filter By</label>
-                        <select className="price">
-                            <option defaultValue>Price</option>
-                            <option>$0-%50</option>
-                            <option>$50-%100</option>
+                        <select className="price" onChange={e => this.handleFilterChange("price", e.target.value)} value={"default"}>
+                            <option defaultValue value="default">Price</option>
+                            {this.state.priceFilers.map((item, i) => {
+                                return <option key={i} value={i}>{item.text}</option>
+                            })};
                         </select>
-                        <select className="title">
-                            <option defaultValue>Filter Title</option>
-                            <option>?</option>
-                            <option>?</option>
+                        <select className="title" onChange={e => this.handleFilterChange("title", e.target.value)} value={"default"}>
+                            <option defaultValue value="default">Size</option>
+                            {this.state.sizeFilters.map((item, i) => {
+                                return <option key={i} value={i}>{item.text}</option>
+                            })};
                         </select>
-                        <div className="filterPannel">
-                            <span>$0 - $50</span>
-                            <img src="/images/close.svg"/>
+                        <div className="filterPannels">
+                        <FlipMove typeName={null}>
+                            {[...this.state.activeFilters].map((item, i) => {
+                                return <div className="filterPannel" key={item.text}>
+                                    <span>{`${item.text}`}</span>
+                                    <img onClick={e => this.removeFilter(item)} src="/images/close.svg"/>
+                                </div>
+                            })}
+                        </FlipMove>
                         </div>
+
                     </div>
 
                     <div className="sortBy">
@@ -214,13 +281,13 @@ export class Categories extends React.Component {
                         <label htmlFor="highest">Highest Price</label>
                     </div>
 
-                    {(this.state.products.length > 0) ? <div className="products">
-                        {this.state.products.slice(0, this.state.numberShown).map((item, i) => {
+                    {(products.length > 0) ? <div className="products">
+                        {products.slice(0, this.state.numberShown).map((item, i) => {
                             return <ItemDisplayBox key={i} value={item}/>
                         })}
                     </div> : <p className="message">{(this.state.loading) ? "Loading..." : "No products match the query"}</p>}
 
-                    {(this.state.products.length > this.state.numberShown) ? <button onClick={this.showMore} className="loadMore">LOAD MORE</button> : null}
+                    {(products.length > this.state.numberShown) ? <button onClick={this.showMore} className="loadMore">LOAD MORE</button> : null}
             </div>
 
             <style jsx>{`
@@ -289,12 +356,25 @@ export class Categories extends React.Component {
                     background-color: var(--highlightColor);
                 }
 
+                .filterPannels {
+                    position: relative;
+                    display: flex;
+                    height: 57px;
+                }
+
                 .filterPannel {
                     position: relative;
                     width: 110px;
                     height: 32px;
                     border: 0.5px solid black;
-                    margin: 12px 0;
+                    margin: 12px 8px 12px 0;
+
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    -khtml-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
                 }
 
                 .filterPannel span {
@@ -312,6 +392,7 @@ export class Categories extends React.Component {
                     position: absolute;
                     right: 12px;
                     top: 8px;
+                    cursor: pointer;
                 }
 
                 .sortBy {

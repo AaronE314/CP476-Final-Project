@@ -33,6 +33,7 @@ handler.get(async (req, res) => {
             colours:1,
             dateCreated:1,
             gender:1,
+            sizes: 1,
             newArrival:1,
             Category:1
 };

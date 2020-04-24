@@ -105,7 +105,7 @@ export class Cart extends React.Component {
                         <FlipMove typeName={null}>
                             {this.state.products.map((product, i) => {
                                 
-                                return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={i}/>
+                                return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={product.productID}/>
                             })}
                         </FlipMove> : <h3>You currently have no items in your Cart.</h3>}
                     </div>
