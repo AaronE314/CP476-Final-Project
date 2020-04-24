@@ -1,6 +1,0 @@
-{
-    "email": "String", 
-    "password":"pasword", 
-    "wishlist":  ["productIDs"], 
-    "ShoppingCart" : [{"productId":"String", "size": "Small", "color":"red"}]
-  }

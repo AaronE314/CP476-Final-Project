@@ -1,1 +1,0 @@
-export const URLString = "http://localhost:3000"; 
