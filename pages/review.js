@@ -8,7 +8,7 @@ import { buildCheckout } from '../lib/apiRequester'
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
-
+import {  getUserCart} from '../lib/userAuth';
 let loading = false;
 
 export class Review extends React.Component {
@@ -95,12 +95,12 @@ export class Review extends React.Component {
         return (product.price * (1 - product.discount)) * product.quantity;
     }
 
-    getTotal() {
+    getTotal(cart) {
 
         let total = 0;
 
-        for (let i = 0; i < this.state.products.length; i++) {
-            total += this.getSubTotal(this.state.products[i]);
+        for (let i = 0; i < cart.length; i++) {
+            total += this.getSubTotal(cart[i]);
         }
 
         return total;
@@ -215,8 +215,8 @@ export class Review extends React.Component {
         loading = false;
 
         const { router } = this.props;
-
-        let value = this.getTotal();
+        let cart =  getUserCart();
+        let value = this.getTotal(cart);
 
         let shipping = (value > 200) ? 0 : 20;
 
@@ -224,18 +224,7 @@ export class Review extends React.Component {
 
         let total = value + shipping + tax;
 
-        // let shippingInfo = {
-        //     firstName: "",
-        //     lastName: "",
-        //     email: "",
-        //     phone: "",
-        //     address: "",
-        //     unit: "",
-        //     city: "",
-        //     zip: "",
-        //     country: "",
-        //     province: ""
-        // }
+
 
         let shippingInfo = undefined;
 
@@ -244,14 +233,16 @@ export class Review extends React.Component {
         if (router.query.formData) {
             shippingInfo = JSON.parse(router.query.formData)
         } 
+        
+
 
         this.setState({...this.state, total: total.toFixed(2), 
                                       value: value.toFixed(2), 
                                       tax: tax.toFixed(2), 
                                       shipping: shipping.toFixed(2),
-                                      shippingInfo});
+                                      shippingInfo,products: (cart) ? cart : [] }
+                                      );
     }
-
     render() {
 
         return <Layout fullPage={false}>
@@ -264,7 +255,7 @@ export class Review extends React.Component {
                     <div className="cartItems">
                         {this.state.products.map((product, i) => {
                             
-                            return <CheckoutProduct product={product} key={product.orderNumber}/>
+                            return <CheckoutProduct product={product} key={i}/>
                         })}
                         <div className="subTotals">
                             <div className="value">

@@ -34,7 +34,7 @@ export class CheckoutProduct extends React.Component{
         }
         
         return <div className={styles.CheckoutProduct}>
-            <img className={styles.CheckoutImage} src = {this.props.product.imageLink}></img>
+            <img className={styles.CheckoutImage} src = {`data:image/png;base64,${this.props.product.image}`}></img>
             <div className={styles.CheckoutInfo}>
                 <p>{this.props.product.productName}</p>
                 {(this.props.product.discount > 0) ? <p className={styles.CheckoutDiscount} style={{background: highlightColor}}>${this.getAdjustedPrice()}</p> : null}

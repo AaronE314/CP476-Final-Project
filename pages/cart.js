@@ -83,7 +83,7 @@ export class Cart extends React.Component {
     }
 
     checkout = () => {
-        Router.push("/checkout");
+        Router.push(`/checkout?products=${JSON.stringify(this.state.products)}`, "checkout");
     }
 
     componentDidMount() {

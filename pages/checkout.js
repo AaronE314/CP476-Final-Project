@@ -3,11 +3,11 @@ import Layout from '../components/layout';
 import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router from "next/router";
-
+import { withRouter } from 'next/router';
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
-
+import {  getUserCart} from '../lib/userAuth';
 export class Checkout extends React.Component {
 
     constructor(props) {
@@ -18,39 +18,7 @@ export class Checkout extends React.Component {
             numberOfItems: 8,
             total: 0,
             products: [
-                {
-                    productName: "Product Name",
-                    quantity: 1,
-                    price: 3.99,
-                    discount: 0,
-                    size: "S",
-                    colour: "Black",
-                    orderNumber: "0850318003",
-                    imageLink: "/images/tempImages/tempImg1_1.jpg",
-                    wishlisted: true,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 2,
-                    price: 3.99,
-                    discount: 0.2,
-                    size: "M",
-                    colour: "Black",
-                    orderNumber: "0850318004",
-                    imageLink: "/images/tempImages/tempImg1_2.jpg",
-                    wishlisted: false,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 4,
-                    price: 3.99,
-                    discount: 0.4,
-                    size: "XL",
-                    colour: "Blue",
-                    orderNumber: "0850318005",
-                    imageLink: "/images/tempImages/tempImg1_3.jpg",
-                    wishlisted: false,
-                },
+
             ],
 
             firstName: "",
@@ -170,11 +138,15 @@ export class Checkout extends React.Component {
         }
 
         if (this.validate(formData)) {
-            Router.push(`/review?formData=${JSON.stringify(formData)}`, "review");
+            Router.push(`/review?formData=${JSON.stringify(formData)}&products=${JSON.stringify(this.state.products)}`, "review");
         }
 
     }
-
+    componentDidMount(){
+        let cart =  getUserCart();
+        console.log("cart",cart)
+        this.setState({...this.state, products: (cart) ? cart : []});
+    }
     render() {
 
         return <Layout fullPage={false}>
@@ -192,7 +164,7 @@ export class Checkout extends React.Component {
                         <div className="cartItems">
                             {this.state.products.map((product, i) => {
                                 
-                                return <CheckoutProduct product={product} key={product.orderNumber}/>
+                                return <CheckoutProduct product={product} key={i}/>
                             })}
                             <div className="total">
                                 <label>Total</label>
@@ -572,4 +544,4 @@ export class Checkout extends React.Component {
 
 } 
 
-export default Checkout;
+export default withRouter(Checkout);
