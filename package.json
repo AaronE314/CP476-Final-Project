@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "next build && git add -f out/ && git commit -m \"Deploy gh-pages\" && git push origin `git subtree split --prefix out master`:gh-pages --force"
+    "deploy": "next build && next export && git add -f out/ && git commit -m \"Deploy gh-pages\" && git push origin `git subtree split --prefix out master`:gh-pages --force"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
