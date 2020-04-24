@@ -21,6 +21,7 @@ export class Layout extends React.Component {
         <Head>
             <title>Web Store</title>
             <link rel="icon" href="/favicon.ico" />
+            {/* {(this.props.stripe) ? <script src="https://js.stripe.com/v3/"></script> : null} */}
         </Head>
 
         <header>

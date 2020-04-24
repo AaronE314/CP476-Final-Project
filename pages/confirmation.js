@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import ReactToPrint from 'react-to-print';
+import { withRouter } from 'next/router';
 
 export class Confirmation extends React.Component {
 
@@ -15,7 +16,7 @@ export class Confirmation extends React.Component {
             value: 0,
             shipping: 0,
             tax: 0,
-            confirmationNumber: "W0227201998042392",
+            orderNumber: "W0227201998042392",
             products: [
                 {
                     productName: "Product Name",
@@ -73,6 +74,8 @@ export class Confirmation extends React.Component {
 
     componentDidMount() {
 
+        let { router } = this.props;
+
         let value = this.getTotal();
 
         let shipping = (value > 200) ? 0 : 20;
@@ -84,7 +87,8 @@ export class Confirmation extends React.Component {
         this.setState({...this.state, total: total.toFixed(2), 
                                       value: value.toFixed(2), 
                                       tax: tax.toFixed(2), 
-                                      shipping: shipping.toFixed(2)})
+                                      shipping: shipping.toFixed(2),
+                                      orderNumber: router.query.orderNumber})
     }
 
     render() {
@@ -124,9 +128,7 @@ export class Confirmation extends React.Component {
                         
                         <h1>Thank You!</h1>
                         
-                        <p>Your confirmation number is:</p>
-
-                        <p className="orderNumber">{this.state.confirmationNumber}</p>
+                        <p className="orderNumber">Your confirmation number is: <b>{this.state.orderNumber}</b></p>
 
                         <p>Your order will arrive within 5-7 business days. If you have any questions, please don’t hesitate to reach out to our customer service.</p>
 
@@ -373,4 +375,4 @@ export class Confirmation extends React.Component {
 
 } 
 
-export default Confirmation;
+export default withRouter(Confirmation);

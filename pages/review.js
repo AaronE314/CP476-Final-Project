@@ -4,10 +4,12 @@ import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router from "next/router";
 import { withRouter } from 'next/router';
-
+import { buildCheckout } from '../lib/apiRequester'
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
+
+let loading = false;
 
 export class Review extends React.Component {
 
@@ -135,7 +137,8 @@ export class Review extends React.Component {
             provinceError: ""
         };
 
-        if (this.state.sameAsShipping) {
+        if (this.state.sameAsShipping && this.state.shippingInfo) {
+
             this.setState({...this.state, errors});
             return true;
         }
@@ -169,31 +172,47 @@ export class Review extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        loading = true;
 
-        let formData = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            phone: this.state.phone,
-            address: this.state.address,
-            unit: this.state.unit,
-            city: this.state.city,
-            zip: this.state.zip,
-            country: this.state.country,
-            province: this.state.province
+        let formData = (this.state.sameAsShipping && this.state.shippingInfo) 
+        ? this.state.shippingInfo
+        : {
+            firstName: this.state.billingfirstName,
+            lastName: this.state.billinglastName,
+            email: this.state.billingemail,
+            phone: this.state.billingphone,
+            address: this.state.billingaddress,
+            unit: this.state.billingunit,
+            city: this.state.billingcity,
+            zip: this.state.billingzip,
+            country: this.state.billingcountry,
+            province: this.state.billingprovince
         }
 
-        if (this.validate(formData)) {
-            Router.push("/confirmation");
+        if (this.validate(formData) && this.state.shippingInfo) {
+            // Router.push("/confirmation");
 
             // TODO: Make payment call.
             // TODO: Add order to user.
-            // Router.push(`/review?formData=${JSON.stringify(formData)}`, "review");
+            buildCheckout(formData, this.state.products, {price: this.state.price, quantity: this.state.numberOfItems, address: formData.address})
+            .then((data) => {
+
+                console.log("hiiii");
+
+                if (data.message === "ok") {
+                    loading = false;
+                    Router.push(`/confirmation?orderNumber=${data.orderNumber}`, "/confirmation");
+                }
+
+            });
         }
+        loading = false;
 
     }
 
     componentDidMount() {
+
+        loading = false;
 
         const { router } = this.props;
 
@@ -205,18 +224,20 @@ export class Review extends React.Component {
 
         let total = value + shipping + tax;
 
-        let shippingInfo = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            address: "",
-            unit: "",
-            city: "",
-            zip: "",
-            country: "",
-            province: ""
-        }
+        // let shippingInfo = {
+        //     firstName: "",
+        //     lastName: "",
+        //     email: "",
+        //     phone: "",
+        //     address: "",
+        //     unit: "",
+        //     city: "",
+        //     zip: "",
+        //     country: "",
+        //     province: ""
+        // }
+
+        let shippingInfo = undefined;
 
         console.log(router.query.formData);
         
@@ -352,7 +373,8 @@ export class Review extends React.Component {
                                 <label className="checkboxLabel">Same as shipping information</label>
                             </div>
                             
-                            <button className="submit" type="submit" className="reviewBtn">PAY</button>
+                            <button className="submit" type="submit" className="reviewBtn"
+                                    disabled={loading}>PAY</button>
                         </form>
                     </div>
                 </div>
