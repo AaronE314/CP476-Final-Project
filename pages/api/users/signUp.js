@@ -11,6 +11,7 @@ import middleware from '../../../middleware/database';
 import * as argon2 from 'argon2';
 import isEmail from 'validator/lib/isEmail';
 import cookies from '../../../lib/cookies';
+import {sendVerification} from '../../../lib/email';
 
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -46,11 +47,13 @@ handler.post(async (req, res) => {
             email,
             password: hashedPassword,
             wishlist: [],
-            shoppingCart: []
+            shoppingCart: [],
+            verified: false
         }))
         .then((user) => {
             req.session.userId = user.insertedId;
             const addedUser = user.ops[0]
+            sendVerification(addedUser.email);
             const token = jwt.sign({ username: addedUser.email, admin: addedUser.admin}, process.env.jwtSecret, {expiresIn: '7d'});
             res.cookie('token', token, { httpOnly: true, maxAge: 604800});
             res.status(201).send({
