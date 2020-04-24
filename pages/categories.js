@@ -5,6 +5,7 @@ import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
 import { getProducts, getProductsSearch } from "../lib/apiRequester";
 import { isLetter,isValidTitle} from "../lib/validators";
+import { getCompare } from "../lib/utils";
 export class Categories extends React.Component {
 
     constructor(props) {
@@ -30,7 +31,8 @@ export class Categories extends React.Component {
             showMore: 1,
             query: router.query, 
             products : [],
-            loading: true
+            loading: true,
+            sortBy: "rec"
         }
 
         this.showMore = this.showMore.bind(this);
@@ -136,6 +138,20 @@ export class Categories extends React.Component {
     showMore() {
         this.setState({...this.state, showMore: this.state.showMore + 1, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore + 1)})
     }
+
+    handleChange = (e) => {
+
+        let [name, asending] = e.target.value.split(" ");
+
+        console.log(name, asending);
+        let newArray = this.state.products.sort(getCompare(name, asending === 'true'))
+
+        console.log(newArray);
+
+        this.setState({...this.state, 
+            sortBy: e.target.value, 
+            products: newArray});
+    }
     
 
     render() {
@@ -188,13 +204,13 @@ export class Categories extends React.Component {
                     <div className="sortBy">
                         <label>Sort By</label>
 
-                        <input defaultChecked id="recommended" type="radio" name="sortBy"/>
+                        <input defaultChecked id="recommended" value="rec true" type="radio" name="sortBy" onChange={this.handleChange}/>
                         <label htmlFor="recommended">Recommended</label>
-                        <input id="newest" type="radio" name="sortBy"/>
+                        <input id="newest" type="radio" value="new true" name="sortBy" onChange={this.handleChange}/>
                         <label  htmlFor="newest">Newest</label>
-                        <input id="lowest" type="radio" name="sortBy"/>
+                        <input id="lowest" type="radio" value="price true" name="sortBy" onChange={this.handleChange}/>
                         <label  htmlFor="lowest">Lowest Price</label>
-                        <input id="highest" type="radio" name="sortBy"/>
+                        <input id="highest" type="radio" value="price false" name="sortBy" onChange={this.handleChange}/>
                         <label htmlFor="highest">Highest Price</label>
                     </div>
 
