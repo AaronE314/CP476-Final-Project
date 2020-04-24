@@ -4,9 +4,10 @@ import styles from "../css/TopNav.module.css";
 import Link from 'next/link';
 import Dialog from './Dialog';
 import { Overlay } from './Overlay';
-
+import { escape } from 'validator';
 import { getUserEmailName, isSignedIn, getNumberOfItemsInCart, setUser, initUser } from '../lib/userAuth'
 import { signOut } from '../lib/apiRequester'
+import Router from 'next/router';
 
 export class TopNav extends React.Component {
 
@@ -30,7 +31,8 @@ export class TopNav extends React.Component {
             category: null,
             loggedIn: false,
             userName: "",
-            cartItems: 0
+            cartItems: 0,
+            search: ""
         };
 
         this.showSignUp = this.showSignUp.bind(this);
@@ -145,6 +147,31 @@ export class TopNav extends React.Component {
 
     }
 
+    handleEnter = (e) => {
+        if (e.keyCode === 13 && this.state.search !== "") {
+
+            Router.push(`/categories?search=${escape(this.state.search)}`)
+
+        }
+    }
+
+    handleChange = (e) => {
+        this.setState({...this.state, [e.target.name]: e.target.value.trim()});
+    }
+
+    search = () => {
+        
+        if (this.state.search !== "") {
+            
+            Router.push(`/categories?search=${escape(this.state.search)}`)
+            
+        } else {
+            this.focusId("search");
+        }
+        
+    }
+
+
     render() {
 
         return <div className={styles.topNavContainer} onMouseLeave={this.mouseOut}>
@@ -163,8 +190,8 @@ export class TopNav extends React.Component {
 
                     <div className={styles.right}>
                         <div className={styles.search}>
-                            <img onClick={() => {this.focusId("search")}} src="/images/search.svg" htmlFor="search" id="searchImg"></img>
-                            <input id="search" placeholder="Search"></input>
+                            <img onClick={this.search} src="/images/search.svg" htmlFor="search" id="searchImg"></img>
+                            <input id="search" onChange={this.handleChange} name="search" onKeyDown={this.handleEnter} placeholder="Search"></input>
                         </div>
                         
                         <div onClick={this.toggleMenu} className={`${styles.hamburger} ${(this.state.menuOpen) ? styles.open : ""}`}>

@@ -3,7 +3,7 @@ import Layout from '../components/layout';
 import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
-import { getProducts } from "../lib/apiRequester";
+import { getProducts, getProductsSearch } from "../lib/apiRequester";
 import { isLetter,isValidTitle} from "../lib/validators";
 export class Categories extends React.Component {
 
@@ -75,12 +75,17 @@ export class Categories extends React.Component {
             subCategory = router.query.subCategory;
         }
 
-        document.documentElement.style.setProperty("--showMore", 1);
-        console.log("gender = " + isLetter(gender)); 
-        console.log("subCategory = " + isLetter(subCategory)); 
-        if (isLetter(gender) && isLetter(subCategory)){
+        let search = router.query.search ? unescape(router.query.search) : undefined;
+
+        if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
+            console.log("query by category");
             let productArray  = await getProducts(gender, subCategory);
             this.setState({...this.state, products: productArray, loading: false});
+        } else if (isLetter(search)){
+            let productArray  = await getProductsSearch(search);
+            this.setState({...this.state, products: productArray, loading: false});
+        } else {
+            this.setState({...this.state, products: [], loading: false});
         }
 
     }
@@ -96,17 +101,24 @@ export class Categories extends React.Component {
             
             subCategory = router.query.subCategory;
         }
-        if (gender !== prevProps.router.query.mainCategory  || subCategory !== prevProps.router.query.subCategory) {
+        
+        if (gender !== prevProps.router.query.mainCategory  
+            || subCategory !== prevProps.router.query.subCategory
+            || router.query.search !== prevProps.router.query.search) {
 
             console.log("gender = " + isLetter(gender)); 
-            console.log("subCategory = " + isLetter(subCategory)); 
-            document.documentElement.style.setProperty("--showMore", 1);
-            if (isLetter(gender) && isLetter(subCategory)){
+            console.log("subCategory = " + isLetter(subCategory));
+            let search = router.query.search ? unescape(router.query.search) : undefined;
+            if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
+                console.log("a");
                 let productArray  = await getProducts(gender, subCategory);
                 this.state.products.length = 0 ;
-                this.setState({...this.state, products: productArray});
+                this.setState({...this.state, products: productArray, loading: false});
+            } else if (isLetter(search)){
+                console.log("b");
+                let productArray  = await getProductsSearch(search);
+                this.setState({...this.state, products: productArray, loading: false});
             }
-
         }
     }
     getLink(item) {
@@ -122,7 +134,6 @@ export class Categories extends React.Component {
     }
 
     showMore() {
-        // document.documentElement.style.setProperty("--showMore", this.state.showMore + 1);
         this.setState({...this.state, showMore: this.state.showMore + 1, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore + 1)})
     }
     
