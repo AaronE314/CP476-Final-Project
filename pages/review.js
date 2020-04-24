@@ -340,7 +340,7 @@ export class Review extends React.Component {
                                 </div>
                                 <div className="container formLeft">
                                     <label htmlFor="billingcountry" className={`${(this.state.billingcountry !== "") ? "text": ""}`}>County / Region</label>
-                                    <select onChange={this.handleChange} name="country" 
+                                    <select onChange={this.handleChange} name="billingcountry" 
                                         className={`CountyRegion ${(this.state.errors.countryError) ? "error" : ""} ${(this.state.billingcountry !== "") ? "text": ""}`}
                                         autoComplete="billingcountry">
                                         <option value="" defaultChecked>County / Region</option>
