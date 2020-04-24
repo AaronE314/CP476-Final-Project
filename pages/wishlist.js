@@ -3,9 +3,10 @@ import Layout from '../components/layout';
 import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
-
+import {getUserWishList} from '../lib/userAuth'; 
 export class Wishlist extends React.Component {
-
+//get wish list
+//put wishlist in 'value' of itemdisplaybox
     constructor(props) {
         super(props);
 
@@ -27,7 +28,8 @@ export class Wishlist extends React.Component {
                 {name: "Joggers", link: "/categories", filter: "joggers"}
             ],
             showMore: 1,
-            query: router.query
+            query: router.query,
+            products : []
         }
 
         this.showMore = this.showMore.bind(this);
@@ -48,6 +50,8 @@ export class Wishlist extends React.Component {
 
     componentDidMount() {
         document.documentElement.style.setProperty("--showMore", 1);
+        let wishlist =  getUserWishList();
+        this.setState({...this.state, products: wishlist});
     }
   
     getLink(item) {
@@ -71,11 +75,13 @@ export class Wishlist extends React.Component {
     render() {
 
         let products = [];
-
-        for (let i = 0; i < 3; i++) {
-            products.push(<ItemDisplayBox key={i}/>);
+        if ( this.state.products !== undefined &&this.state.products.length !== 0){
+            for (let i = 0; i < this.state.products.length; i++) {
+                products.push(<ItemDisplayBox key={i} value={this.state.products[i]}/>);
+            }
+        }else {
+            products.push(<h3 key={0}>You current have no items in your wishlist</h3>);
         }
-
         return <Layout fullPage={false}>
 
             <div className="mainContent">

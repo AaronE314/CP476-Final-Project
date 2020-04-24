@@ -3,6 +3,8 @@ import Layout from '../components/layout';
 import Link from 'next/link'
 import CartProduct from '../components/CartProduct';
 import FlipMove from 'react-flip-move';
+import { updateCart,updateWishList,getShoppingCart, getUserCart} from '../lib/userAuth';
+import Router from "next/router";
 
 export class Cart extends React.Component {
 
@@ -14,39 +16,7 @@ export class Cart extends React.Component {
             numberOfItems: 8,
             total: 0,
             products: [
-                {
-                    productName: "Product Name",
-                    quantity: 1,
-                    price: 3.99,
-                    discount: 0,
-                    size: "S",
-                    colour: "Black",
-                    orderNumber: "0850318003",
-                    imageLink: "/images/tempImages/tempImg1_1.jpg",
-                    wishlisted: true,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 2,
-                    price: 3.99,
-                    discount: 0.2,
-                    size: "M",
-                    colour: "Black",
-                    orderNumber: "0850318004",
-                    imageLink: "/images/tempImages/tempImg1_2.jpg",
-                    wishlisted: false,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 4,
-                    price: 3.99,
-                    discount: 0.4,
-                    size: "XL",
-                    colour: "Blue",
-                    orderNumber: "0850318005",
-                    imageLink: "/images/tempImages/tempImg1_3.jpg",
-                    wishlisted: false,
-                },
+
             ]
         }
 
@@ -55,23 +25,30 @@ export class Cart extends React.Component {
         this.getTotal = this.getTotal.bind(this);
     }
 
-    updateProduct(property, value, i) {
+    async updateProduct(property, value, i) {
 
-        //TODO: update db
+        
 
         let products = this.state.products;
 
+        if (property === "quantity"){
+            console.log("GOING INTO userAuth.js");
+            await updateCart(products[i], false, "single", value - products[i].quantity);
+            
+        }else if (property === "wishlisted"){
+            updateWishList(products[i]);
+        }
         products[i][property] = value;
 
         this.setState({...this.state, products: products, total: this.getTotal(), numberOfItems: this.getItemsSold()});
     }
 
-    removeProduct(i) {
+    async removeProduct(i) {
 
-        //TODO: update db
+        
 
         let products = [...this.state.products];
-
+        updateCart(products[i], true,"all");
         products.splice(i, 1);
 
         this.setState({...this.state, products: products, total: this.getTotal(), numberOfItems: this.getItemsSold()});
@@ -84,10 +61,12 @@ export class Cart extends React.Component {
     getTotal() {
 
         let total = 0;
-
-        for (let i = 0; i < this.state.products.length; i++) {
-            total += this.getSubTotal(this.state.products[i]);
+        if (this.state.products !== undefined ){
+            for (let i = 0; i < this.state.products.length; i++) {
+                total += this.getSubTotal(this.state.products[i]);
+            }
         }
+
 
         return total;
     }
@@ -95,14 +74,23 @@ export class Cart extends React.Component {
     getItemsSold() {
 
         let items = 0;
-
-        for (let i = 0; i < this.state.products.length; i++) {
-            items += this.state.products[i].quantity;
+        if (this.state.products !== undefined && this.state.products !== undefined){
+            for (let i = 0; i < this.state.products.length; i++) {
+                items += this.state.products[i].quantity;
+            }
         }
-
         return items;
     }
 
+    checkout = () => {
+        Router.push("/checkout");
+    }
+
+    componentDidMount() {
+        let cart =  getUserCart();
+        console.log("cart",cart)
+        this.setState({...this.state, products: (cart) ? cart : []});
+    }
     render() {
 
         return <Layout fullPage={false}>
@@ -113,12 +101,13 @@ export class Cart extends React.Component {
 
                 <div className="content">
                     <div className="cartItems">
+                    {(this.state.products.length !== 0)?
                         <FlipMove typeName={null}>
                             {this.state.products.map((product, i) => {
                                 
-                                return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={product.orderNumber}/>
+                                return <CartProduct product={product} i={i} removeProduct={this.removeProduct} updateProduct={this.updateProduct} key={product.productID}/>
                             })}
-                        </FlipMove>
+                        </FlipMove> : <h3>You currently have no items in your Cart.</h3>}
                     </div>
                     <div className="summary">
                         <div className="summaryBox">
@@ -133,9 +122,7 @@ export class Cart extends React.Component {
                             </div>
                             <p>Taxes & Shipping calculated at next step</p>
                         </div>
-                        <Link href="/checkout">
-                            <button className="checkoutBtn">CHECKOUT</button>
-                        </Link>
+                        <button onClick={this.checkout} className="checkoutBtn">CHECKOUT</button>
                         <p>Read more about how to return an item <a href="#">here</a></p>
                         <p>Standard home delivery CAD $20 / Delivery in 5-7 business days<br/>
                         Free delivery on orders over CAD $200 before shipping & taxes</p>

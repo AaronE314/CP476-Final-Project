@@ -3,14 +3,17 @@ import Layout from '../components/layout';
 import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
-
+import { getProducts, getProductsSearch } from "../lib/apiRequester";
+import { isLetter,isValidTitle} from "../lib/validators";
+import { getCompare } from "../lib/utils";
+import FlipMove from 'react-flip-move';
 export class Categories extends React.Component {
 
     constructor(props) {
         super(props);
 
         const { router } = this.props;
-
+        
         this.state = {
 
             arivals: [
@@ -27,7 +30,22 @@ export class Categories extends React.Component {
                 {name: "Joggers", link: "/categories", filter: "joggers"}
             ],
             showMore: 1,
-            query: router.query
+            query: router.query, 
+            products : [],
+            loading: true,
+            sortBy: "rec",
+            activeFilters: new Set(),
+            priceFilers: [{low: 0, high: 10, text: "$0 - $10"},
+                          {low: 11, high: 20, text: "$11 - $20"},
+                          {low: 21, high: 30, text: "$21 - $30"},
+                          {low: 31, high: 40, text: "$31 - $40"},
+                          {low: 41, high: 50, text: "$41 - $50"},
+                          {low: 51, high: 10000000, text: "$51+"}],
+            sizeFilters: [{text: 'S'},
+                          {text: 'M'},
+                          {text: 'L'},
+                          {text: 'XL'},
+                          {text: 'XXL'}]
         }
 
         this.showMore = this.showMore.bind(this);
@@ -42,14 +60,112 @@ export class Categories extends React.Component {
             if (router.query.subCategory) {
                 title += " " + router.query.subCategory;
             }
-
             return title;
+            1
     }
 
-    componentDidMount() {
-        document.documentElement.style.setProperty("--showMore", 1);
+    applyFilters = (products) => {
+
+        return products.filter((item) => {
+
+
+            let matchesPrice = false;
+            let matchesSize = false;
+
+            if (this.state.activeFilters.size === 0) {
+                return true;
+            }
+            this.state.activeFilters.forEach((filter) => {
+
+                if (filter.low !== undefined) {
+
+                    matchesPrice = matchesPrice || item.price > filter.low && item.price < filter.high;
+
+                } else {
+
+                    matchesSize = matchesSize || (item.sizes && item.sizes.includes(filter.text));
+
+                }
+
+            });
+
+            return matchesPrice || matchesSize;
+
+        });
     }
-  
+
+    maxShown = (width, height, showMore) => {
+        console.log(width, height);
+        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : 8;
+    }
+    
+    handleResize = () => {
+        this.setState({width: window.innerWidth, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore)});
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize)
+    }
+
+    async componentDidMount() {
+
+        this.handleResize();
+        window.addEventListener('resize', this.handleResize)
+
+        const { router } = this.props;
+        let gender = router.query.mainCategory;
+        let subCategory;
+        if (router.query.subCategory) {
+            
+            subCategory = router.query.subCategory;
+        }
+
+        let search = router.query.search ? unescape(router.query.search) : undefined;
+
+        if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
+            console.log("query by category");
+            let productArray  = await getProducts(gender, subCategory);
+            this.setState({...this.state, products: productArray, loading: false});
+        } else if (isLetter(search)){
+            let productArray  = await getProductsSearch(search);
+            this.setState({...this.state, products: productArray, loading: false});
+        } else {
+            this.setState({...this.state, products: [], loading: false});
+        }
+
+    }
+    async componentDidUpdate(prevProps, prevState){
+       
+
+        
+        const { router } = this.props;
+        
+        let gender = router.query.mainCategory;
+        let subCategory;
+        if (router.query.subCategory) {
+            
+            subCategory = router.query.subCategory;
+        }
+        
+        if (gender !== prevProps.router.query.mainCategory  
+            || subCategory !== prevProps.router.query.subCategory
+            || router.query.search !== prevProps.router.query.search) {
+
+            console.log("gender = " + isLetter(gender)); 
+            console.log("subCategory = " + isLetter(subCategory));
+            let search = router.query.search ? unescape(router.query.search) : undefined;
+            if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
+                console.log("a");
+                let productArray  = await getProducts(gender, subCategory);
+                this.state.products.length = 0 ;
+                this.setState({...this.state, products: productArray, loading: false});
+            } else if (isLetter(search)){
+                console.log("b");
+                let productArray  = await getProductsSearch(search);
+                this.setState({...this.state, products: productArray, loading: false});
+            }
+        }
+    }
     getLink(item) {
 
         const { router } = this.props;
@@ -63,18 +179,40 @@ export class Categories extends React.Component {
     }
 
     showMore() {
-        document.documentElement.style.setProperty("--showMore", this.state.showMore + 1);
-        this.setState({...this.state, showMore: this.state.showMore + 1})
+        this.setState({...this.state, showMore: this.state.showMore + 1, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore + 1)})
+    }
+
+    handleChange = (e) => {
+
+        let [name, asending] = e.target.value.split(" ");
+
+        let newArray = this.state.products.sort(getCompare(name, asending === 'true'))
+
+        this.setState({...this.state, 
+            sortBy: e.target.value, 
+            products: newArray});
+    }
+
+    handleFilterChange = (filter, value) => {
+
+        let val = (filter === "price") ? this.state.priceFilers[value] : this.state.sizeFilters[value];
+
+        this.state.activeFilters.add(val);
+
+        this.setState({...this.state});
+    }
+
+    removeFilter = (filter) => {
+        this.state.activeFilters.delete(filter);
+        this.setState({...this.state});
     }
     
 
     render() {
 
-        let products = [];
+        let products = this.applyFilters(this.state.products);
 
-        for (let i = 0; i < 100; i++) {
-            products.push(<ItemDisplayBox key={i}/>);
-        }
+        console.log(products.length);
 
         return <Layout>
 
@@ -105,40 +243,51 @@ export class Categories extends React.Component {
 
                     <div className="filterby">
                         <label>Filter By</label>
-                        <select className="price">
-                            <option defaultValue>Price</option>
-                            <option>$0-%50</option>
-                            <option>$50-%100</option>
+                        <select className="price" onChange={e => this.handleFilterChange("price", e.target.value)} value={"default"}>
+                            <option defaultValue value="default">Price</option>
+                            {this.state.priceFilers.map((item, i) => {
+                                return <option key={i} value={i}>{item.text}</option>
+                            })};
                         </select>
-                        <select className="title">
-                            <option defaultValue>Filter Title</option>
-                            <option>?</option>
-                            <option>?</option>
+                        <select className="title" onChange={e => this.handleFilterChange("title", e.target.value)} value={"default"}>
+                            <option defaultValue value="default">Size</option>
+                            {this.state.sizeFilters.map((item, i) => {
+                                return <option key={i} value={i}>{item.text}</option>
+                            })};
                         </select>
-                        <div className="filterPannel">
-                            <span>$0 - $50</span>
-                            <img src="/images/close.svg"/>
+                        <div className="filterPannels">
+                        <FlipMove typeName={null}>
+                            {[...this.state.activeFilters].map((item, i) => {
+                                return <div className="filterPannel" key={item.text}>
+                                    <span>{`${item.text}`}</span>
+                                    <img onClick={e => this.removeFilter(item)} src="/images/close.svg"/>
+                                </div>
+                            })}
+                        </FlipMove>
                         </div>
+
                     </div>
 
                     <div className="sortBy">
                         <label>Sort By</label>
 
-                        <input defaultChecked id="recommended" type="radio" name="sortBy"/>
+                        <input defaultChecked id="recommended" value="rec true" type="radio" name="sortBy" onChange={this.handleChange}/>
                         <label htmlFor="recommended">Recommended</label>
-                        <input id="newest" type="radio" name="sortBy"/>
+                        <input id="newest" type="radio" value="new true" name="sortBy" onChange={this.handleChange}/>
                         <label  htmlFor="newest">Newest</label>
-                        <input id="lowest" type="radio" name="sortBy"/>
+                        <input id="lowest" type="radio" value="price true" name="sortBy" onChange={this.handleChange}/>
                         <label  htmlFor="lowest">Lowest Price</label>
-                        <input id="highest" type="radio" name="sortBy"/>
+                        <input id="highest" type="radio" value="price false" name="sortBy" onChange={this.handleChange}/>
                         <label htmlFor="highest">Highest Price</label>
                     </div>
 
-                    <div className="products">
-                        {products}
-                    </div>
+                    {(products.length > 0) ? <div className="products">
+                        {products.slice(0, this.state.numberShown).map((item, i) => {
+                            return <ItemDisplayBox key={i} value={item}/>
+                        })}
+                    </div> : <p className="message">{(this.state.loading) ? "Loading..." : "No products match the query"}</p>}
 
-                    <button onClick={this.showMore} className="loadMore">LOAD MORE</button>
+                    {(products.length > this.state.numberShown) ? <button onClick={this.showMore} className="loadMore">LOAD MORE</button> : null}
             </div>
 
             <style jsx>{`
@@ -174,9 +323,12 @@ export class Categories extends React.Component {
                     grid-column-gap: 32px;
                     grid-template-columns: repeat(auto-fill, minmax(343px, 1fr));
 
-                    /* super jank */
-                    max-height: calc(1082px * var(--showMore));
                     overflow: hidden;
+                }
+
+                .message {
+                    text-align: center;
+                    width: 100%;
                 }
 
                 .filterby label {
@@ -204,12 +356,25 @@ export class Categories extends React.Component {
                     background-color: var(--highlightColor);
                 }
 
+                .filterPannels {
+                    position: relative;
+                    display: flex;
+                    height: 57px;
+                }
+
                 .filterPannel {
                     position: relative;
                     width: 110px;
                     height: 32px;
                     border: 0.5px solid black;
-                    margin: 12px 0;
+                    margin: 12px 8px 12px 0;
+
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    -khtml-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
                 }
 
                 .filterPannel span {
@@ -227,6 +392,7 @@ export class Categories extends React.Component {
                     position: absolute;
                     right: 12px;
                     top: 8px;
+                    cursor: pointer;
                 }
 
                 .sortBy {

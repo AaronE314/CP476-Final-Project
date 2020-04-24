@@ -3,7 +3,9 @@ import Layout from '../components/layout';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
-
+import { updateCart, updateWishList } from '../lib/userAuth';
+import {isNumeric} from "../lib/validators";
+import {  getDetailedProduct } from "../lib/apiRequester";
 export class ProductDetail extends React.Component {
 
     constructor(props) {
@@ -12,32 +14,20 @@ export class ProductDetail extends React.Component {
         this.state = {
 
             productDetails: {
-                name: "Product Name",
-                price: "$3.99",
-                colors: ["red", "black", "grey", "white", "yellow"],
-                sizes: ["S", "M", "L", "XL"],
+                productName: "",
+                price: "",
+                colours: [],
+                sizes: [],
                 
-                images: ["/images/tempImages/tempImg1_1.jpg",
-                         "/images/tempImages/tempImg1_2.jpg", 
-                         "/images/tempImages/tempImg1_3.jpg", 
-                         "/images/tempImages/tempImg2_1.jpg", 
-                         "/images/tempImages/tempImg2_2.jpg"],
+                images: [],
                 
-                description: `Casual modernity. Designed from pure cotton, this jacket is reimagined with a waist belt and a cropped length.\n
-                \n
-                - A-line fit\n
-                - Pointed collar\n
-                - Zip-up front\n
-                - Long sleeves\n
-                - Two side pockets 100% Cotton / Machine washable\n
-                \n
-                Back length of size S is 66.5cm / Model is 180cm tall and wearing a size S`,
+                description: ""
             },    
 
             tempBackground: ["#F0F0F0", "#D4F6C8", "#B4D5F3", "#CFC3EB", "#DE9CCC"],
 
-            size: -1,
-            color: -1
+            size: 0,
+            color: 0
             
         }
 
@@ -68,10 +58,52 @@ export class ProductDetail extends React.Component {
         this.setState({...this.state, size: size});
     }
 
+    hasFeilds = (item) => {
+        if (!item.images) {
+            item.images = [];
+        }
+        if (!item.sizes) {
+            item.sizes = [];
+        }
+
+        return item;
+    }
+
+    async componentDidMount(){
+        const { router } = this.props;
+        let id = router.query.id;
+
+
+
+        if (id !== undefined){
+            
+            if (isNumeric(id)){
+                let productDetails = await  getDetailedProduct(id)
+                
+
+
+                console.log(productDetails[0]);
+
+                this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
+            }
+
+        }else {
+            let arr = router.asPath.split("="); 
+             
+            id = arr[1]; 
+            
+            if (isNumeric(id)){
+                let productDetails = await  getDetailedProduct(id)
+                console.log(productDetails[0]);
+                this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
+            }
+
+        }
+
+    }
     render() {
 
         const { router } = this.props;
-
         return <Layout>
             <div className="container">
                 {/* 12.6% */}
@@ -80,7 +112,7 @@ export class ProductDetail extends React.Component {
                         {this.state.productDetails.images.map((item, i) => {
                             return <AnchorLink key={i} href={`#img${i}`}>
                                 <div className="smallImage" style={{background: this.state.tempBackground[i]}}>
-                                    <img src={item}/>
+                                    <img src={`data:image/png;base64, ${item}`}/>
                                 </div>
                             </AnchorLink>
                         })}
@@ -91,22 +123,22 @@ export class ProductDetail extends React.Component {
                 <div className="largePictures">
                     {this.state.productDetails.images.map((item, i) => {
                         return <div key={i} className="largeImage" id={`img${i}`} style={{background: this.state.tempBackground[i]}} >
-                            <img src={item}/>
+                            <img src={`data:image/png;base64, ${item}`}/>
                         </div>
                     })}
                 </div>
 
                 {/* 43% */}
                 <div className="details sticky">
-                    <h2>{this.state.productDetails.name}</h2>
+                    <h2>{this.state.productDetails.productName}</h2>
 
                     <h2>{this.state.productDetails.price}</h2>
 
                     <div className="colors">
                         <p>Colour</p>
                         <div className="box">
-                            {this.state.productDetails.colors.map((item, i) => {
-                                return <div key={i} style={{backgroundColor: item, border: ((this.state.color === i) ? "5px" : "0.5px") + " solid black"}} onClick={() => {this.setColor(i)}}> 
+                            {this.state.productDetails.colours.map((item, i) => {
+                                return <div key={i} style={{backgroundColor: item.hex, border: ((this.state.color === i) ? "5px" : "0.5px") + " solid black"}} onClick={() => {this.setColor(i)}}> 
                                 </div>
                             })}
                         </div>
@@ -127,8 +159,29 @@ export class ProductDetail extends React.Component {
                     </div>
 
                     <div className="buttons">
-                        <button>ADD TO CART</button>
-                        <img src="/images/blackWhiteHeart.svg"/>
+                        <button onClick={e => {
+                            if (this.state.productDetails.productID !== undefined){
+                                updateCart({
+                                    productID:this.state.productDetails.productID, 
+                                    productName: this.state.productDetails.productName, 
+                                    price: this.state.productDetails.price,
+                                    discount: this.state.productDetails.discount,
+                                    quantity:1,
+                                    size: this.state.productDetails.sizes[this.state.size], 
+                                    colours : this.state.productDetails.colours[this.state.color],
+                                    image :this.state.productDetails.images[this.state.color] 
+                                }, null,null ,1 ).then(()=>{router.push('/cart');});
+                                
+                            }
+                            
+                        }}>ADD TO CART</button>
+                        <img onClick={e => {
+                            if (this.state.productDetails.productID!= undefined){
+                                
+                                updateWishList(this.state.productDetails);
+                                router.push('/wishlist');
+                            }
+                            }} src="/images/blackWhiteHeart.svg"  />
                     </div>
 
                     <p className="desc">{this.state.productDetails.description.split('\n').map((item, key) => {

@@ -4,10 +4,14 @@ import Link from 'next/link';
 
 import styles from "../css/Overlay.module.css";
 
+import { getOverlay } from "../lib/apiRequester";
+
 export class Overlay extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.mounted = false;
 
         this.state = {
 
@@ -36,6 +40,34 @@ export class Overlay extends React.Component {
             return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
         }
         return {pathname: link, query: {mainCategory: this.props.category}};
+    }
+
+    async componentDidMount() {
+
+        this.mounted = true;
+
+        
+        if (sessionStorage !== undefined) {
+
+            let data = sessionStorage.getItem("overlay");
+
+            if (!data) {
+                data = await getOverlay();
+                sessionStorage.setItem("overlay", JSON.stringify(data));
+            } else {
+                data = JSON.parse(data);
+            }
+
+            
+            if (this.mounted) {
+                this.setState({...this.state, category: data});
+            }
+        }
+
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     render() {
