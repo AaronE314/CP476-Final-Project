@@ -52,7 +52,7 @@ export class ItemDisplayBox extends React.Component{
         
         return <div className={styles.DisplayItem}>
             <div className={styles.DisplayImage} id="displayTemp" style={{background: this.props.value.colours[this.props.value.displayImageIndex].hex}}>
-            <Link href={{pathname: "/productDetail", query: {id: this.props.value.productID}}}><img className={styles.img} src={`data:image/png;base64, ${this.props.value.displayImg}`} id="displayImage"></img></Link>
+            <Link as={`${process.env.ASSET_PREFIX}/productDetail`} href={{pathname: "/productDetail", query: {id: this.props.value.productID}}}><img className={styles.img} src={`data:image/png;base64, ${this.props.value.displayImg}`} id="displayImage"></img></Link>
             <img onClick={this.updateWishlist} className={styles.DisplayWishlist} src="/images/heart.svg"></img>
                 {(this.state.wishlisted || isProductWishlisted(this.props.value) ) ? 
                     <svg className={styles.DisplayWishlistInner} width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">

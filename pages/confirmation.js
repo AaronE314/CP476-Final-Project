@@ -135,7 +135,7 @@ export class Confirmation extends React.Component {
                         <p>All this information will be emailed to you shortly</p>
 
                         <div className="buttons">
-                            <Link href="/"><button className="backBtn">BACK TO SHOP</button></Link>
+                            <Link href="/" as={`${process.env.ASSET_PREFIX}/`}><button className="backBtn">BACK TO SHOP</button></Link>
                             <ReactToPrint
                                 trigger={() => {
                                     return <button className="printBtn">

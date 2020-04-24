@@ -166,17 +166,34 @@ export class Categories extends React.Component {
             }
         }
     }
+    // getLink(item) {
+
+    //     const { router } = this.props;
+
+    //     let link = item.link;
+
+    //     if (item.filter !== "") {
+    //         return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+    //     }
+    //     return {pathname: link, query: {mainCategory: router.query.mainCategory}};
+    // }
+
     getLink(item) {
 
         const { router } = this.props;
 
-        let link = item.link;
+        let link = item.link;        
 
         if (item.filter !== "") {
-            return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+            // return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+            return `${link}?mainCategory=${router.query.mainCategory}&subCategory=${item.filter}`
         }
-        return {pathname: link, query: {mainCategory: router.query.mainCategory}};
+        return `${link}?mainCategory=${router.query.mainCategory}`
+        // return {pathname: link, query: {mainCategory: this.props.categoryrouter.query.mainCategory}};
+
+        
     }
+
 
     showMore() {
         this.setState({...this.state, showMore: this.state.showMore + 1, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore + 1)})
@@ -212,8 +229,6 @@ export class Categories extends React.Component {
 
         let products = this.applyFilters(this.state.products);
 
-        console.log(products.length);
-
         return <Layout>
 
             <div className="sidenav">
@@ -222,7 +237,7 @@ export class Categories extends React.Component {
                     <h4>New Arrivals</h4>
                     <ul>
                         {this.state.arivals.map((item, i) => {
-                            return <li key={i}><Link href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
+                            return <li key={i}><Link as={`${process.env.ASSET_PREFIX}${this.getLink(item)}`} href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
                         })}
                     </ul>
                 </div>
@@ -231,7 +246,7 @@ export class Categories extends React.Component {
                     <h4>Shop by Category</h4>
                     <ul>
                         {this.state.category.map((item, i) => {
-                            return <li key={i}><Link href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
+                            return <li key={i}><Link as={`${process.env.ASSET_PREFIX}${this.getLink(item)}`} href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
                         })}
                     </ul>
                 </div>

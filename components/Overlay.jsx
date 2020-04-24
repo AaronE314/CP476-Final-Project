@@ -35,11 +35,15 @@ export class Overlay extends React.Component {
     getLink(item) {
 
         let link = item.link;
-
+        
         if (item.filter !== "") {
-            return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
+            // return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
+            return `${link}?mainCategory=${this.props.category}&subCategory=${item.filter}`
         }
-        return {pathname: link, query: {mainCategory: this.props.category}};
+        return `${link}?mainCategory=${this.props.category}`
+        // return {pathname: link, query: {mainCategory: this.props.category}};
+
+        
     }
 
     async componentDidMount() {
@@ -72,7 +76,7 @@ export class Overlay extends React.Component {
 
     render() {
 
-        document.documentElement.style.setProperty("--overlayOffset", (112 + this.props.offset) + "px");
+        // document.documentElement.style.setProperty("--overlayOffset", (112 + this.props.offset) + "px");
 
         return <div className={styles.overlay}>
 
@@ -80,7 +84,7 @@ export class Overlay extends React.Component {
                 <h4 className={styles.title}>New Arrivals</h4>
                 <ul className={styles.list}>
                     {this.state.arivals.map((item, i) => {
-                        return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
+                        return <li key={i}><Link as={`${process.env.ASSET_PREFIX}${this.getLink(item)}`} href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
                     })}
                 </ul>
             </div>
@@ -89,7 +93,7 @@ export class Overlay extends React.Component {
                 <h4 className={styles.title}>Shop by Category</h4>
                 <ul className={styles.list}>
                     {this.state.category.map((item, i) => {
-                        return <li key={i}><Link href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
+                        return <li key={i}><Link as={`${process.env.ASSET_PREFIX}${this.getLink(item)}`} href={this.getLink(item)} passHref><a>{item.name}</a></Link></li>
                     })}
                 </ul>
             </div>

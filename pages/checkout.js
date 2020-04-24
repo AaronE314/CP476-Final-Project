@@ -187,7 +187,7 @@ export class Checkout extends React.Component {
                     <div className="leftSide">
                         <div className="edit">
                             <label className="title">Shopping Cart</label>
-                            <Link href="/cart"><label className="editText">EDIT</label></Link>
+                            <Link href="/cart" as={`${process.env.ASSET_PREFIX}/cart`}><label className="editText">EDIT</label></Link>
                         </div>
                         <div className="cartItems">
                             {this.state.products.map((product, i) => {

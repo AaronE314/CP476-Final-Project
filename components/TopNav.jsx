@@ -178,7 +178,7 @@ export class TopNav extends React.Component {
             <div className={styles.topNav}>
 
                     <div className={styles.logo}>
-                        <Link href="/"><img id="logo" src="/images/tempLogo.svg"></img></Link>
+                        <Link as={`${process.env.ASSET_PREFIX}/`} href="/"><img id="logo" src="/images/tempLogo.svg"></img></Link>
                     </div>
                     
                     <nav id="CategoriesNav" className={styles.catagories}>
@@ -208,7 +208,7 @@ export class TopNav extends React.Component {
                                             : "SIGN IN"}</span>
                                 </a>
                                 <div className={`${styles.userDropdown} ${(this.state.userOpen) ? styles.userOpen : ""}`}>
-                                    <Link href="/orders"><span className={styles.clickableText}><img src="/images/clock.svg"/><span>ORDERS</span></span></Link>
+                                    <Link as={`${process.env.ASSET_PREFIX}/orders`} href="/orders"><span className={styles.clickableText}><img src="/images/clock.svg"/><span>ORDERS</span></span></Link>
                                     <span className={styles.clickableText}><img src="/images/card.svg"/><span>SAVED INFO</span></span>
                                     <span onClick={this.logout} className={styles.clickableText}><img src="/images/signout.svg"/><span>SIGN OUT</span></span>
                                 </div>
@@ -216,10 +216,10 @@ export class TopNav extends React.Component {
 
                             <a className={styles.clickableText}>
                                 <img src="/images/heart.svg" id="heart"></img>
-                                <Link href="/wishlist"><span>WISHLIST</span></Link>
+                                <Link as={`${process.env.ASSET_PREFIX}/wishlist`} href="/wishlist"><span>WISHLIST</span></Link>
                             </a>
 
-                            <Link href="/cart">
+                            <Link href="/cart" as={`${process.env.ASSET_PREFIX}/cart`}>
                                 <a className={styles.clickableText}>
                                     <img src="/images/cart.svg" id="cart"></img>
                                     <span>CART {(this.state.cartItems > 0) ? `(${this.state.cartItems})` : ""}</span>
