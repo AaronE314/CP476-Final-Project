@@ -106,4 +106,8 @@
         right: 6px;
         bottom: 24px;
     }
+
+    .aboutCol {
+        margin-left: 16px;
+    }
 }

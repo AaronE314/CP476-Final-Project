@@ -28,6 +28,6 @@ middleware.use(cookieParser());
 middleware.use(auth);
 
 middleware.use(database);
-middleware.use(session());
+// middleware.use(session());
 
 export default middleware;

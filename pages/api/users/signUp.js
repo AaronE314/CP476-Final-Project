@@ -49,7 +49,7 @@ handler.post(async (req, res) => {
             shoppingCart: []
         }))
         .then((user) => {
-            req.session.userId = user.insertedId;
+            // req.session.userId = user.insertedId;
             const addedUser = user.ops[0]
             const token = jwt.sign({ username: addedUser.email, admin: addedUser.admin}, process.env.jwtSecret, {expiresIn: '7d'});
             res.cookie('token', token, { httpOnly: true, path: "/"});

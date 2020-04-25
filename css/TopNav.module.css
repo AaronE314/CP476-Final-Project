@@ -387,6 +387,10 @@
         padding-right: 19px;
     }
 
+    .logo {
+        margin: 16px 32px 16px 16px;
+    }
+
     .search input:focus {
         width: calc(100vw - 154px);
      }

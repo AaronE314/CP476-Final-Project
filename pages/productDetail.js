@@ -400,7 +400,7 @@ export class ProductDetail extends React.Component {
                     }
 
                     .smallPicturesContainer, .largePictures, .details {
-                        margin: 16px 0 32px 0;
+                        margin: 16px 16px 32px 16px;
                         /* text-align: center; */
                     }
                 }
