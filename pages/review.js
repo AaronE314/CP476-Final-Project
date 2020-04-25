@@ -8,7 +8,7 @@ import { buildCheckout } from '../lib/apiRequester'
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
-import {  getUserCart} from '../lib/userAuth';
+import {  getUserCart, deleteCart} from '../lib/userAuth';
 let loading = false;
 
 export class Review extends React.Component {
@@ -74,7 +74,7 @@ export class Review extends React.Component {
     }
 
     handleChange = (e) => {
-
+        
         if (e.target.name === "billingphone") {
 
             let number = formatNumber(e.target.value.trim());
@@ -158,7 +158,7 @@ export class Review extends React.Component {
 
         if (this.validate(formData) && this.state.shippingInfo) {
             // Router.push("/confirmation");
-
+            
             // TODO: Make payment call.
             // TODO: Add order to user.
             buildCheckout(formData, this.state.products, {price: this.state.total, quantity: this.state.numberOfItems, address: formData.address})

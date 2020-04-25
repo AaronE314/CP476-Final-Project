@@ -48,10 +48,12 @@ handler.post(async (req, res) => {
             }
         ]
     }
+    
     if (body.email !== undefined){
-        console.log(body.email)
+        
         order.email = body.email; 
     }
+    
     let doc = await req.db.collection('Orders').insertOne(order).catch(function(err){throw err; })
     
     // TODO: add order to db

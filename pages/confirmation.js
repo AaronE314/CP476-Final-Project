@@ -4,7 +4,7 @@ import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import ReactToPrint from 'react-to-print';
 import { withRouter } from 'next/router';
-import {  getUserCart} from '../lib/userAuth';
+import {  getUserCart,deleteCart} from '../lib/userAuth';
 export class Confirmation extends React.Component {
 
     constructor(props) {
@@ -46,7 +46,7 @@ export class Confirmation extends React.Component {
 
         let cart =  getUserCart();
         let value = this.getTotal(cart);
-
+        deleteCart();
         let shipping = (value > 200) ? 0 : 20;
 
         let tax = value * 0.13;
