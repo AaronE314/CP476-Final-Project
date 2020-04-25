@@ -35,11 +35,15 @@ export class Overlay extends React.Component {
     getLink(item) {
 
         let link = item.link;
-
+        
         if (item.filter !== "") {
-            return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
+            // return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
+            return `${link}?mainCategory=${this.props.category}&subCategory=${item.filter}`
         }
-        return {pathname: link, query: {mainCategory: this.props.category}};
+        return `${link}?mainCategory=${this.props.category}`
+        // return {pathname: link, query: {mainCategory: this.props.category}};
+
+        
     }
 
     async componentDidMount() {
@@ -72,7 +76,7 @@ export class Overlay extends React.Component {
 
     render() {
 
-        document.documentElement.style.setProperty("--overlayOffset", (112 + this.props.offset) + "px");
+        // document.documentElement.style.setProperty("--overlayOffset", (112 + this.props.offset) + "px");
 
         return <div className={styles.overlay}>
 

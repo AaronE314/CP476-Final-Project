@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link'
 import CartProduct from '../components/CartProduct';
 import FlipMove from 'react-flip-move';

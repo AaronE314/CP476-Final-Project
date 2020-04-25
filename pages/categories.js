@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
@@ -166,17 +166,34 @@ export class Categories extends React.Component {
             }
         }
     }
+    // getLink(item) {
+
+    //     const { router } = this.props;
+
+    //     let link = item.link;
+
+    //     if (item.filter !== "") {
+    //         return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+    //     }
+    //     return {pathname: link, query: {mainCategory: router.query.mainCategory}};
+    // }
+
     getLink(item) {
 
         const { router } = this.props;
 
-        let link = item.link;
+        let link = item.link;        
 
         if (item.filter !== "") {
-            return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+            // return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+            return `${link}?mainCategory=${router.query.mainCategory}&subCategory=${item.filter}`
         }
-        return {pathname: link, query: {mainCategory: router.query.mainCategory}};
+        return `${link}?mainCategory=${router.query.mainCategory}`
+        // return {pathname: link, query: {mainCategory: this.props.categoryrouter.query.mainCategory}};
+
+        
     }
+
 
     showMore() {
         this.setState({...this.state, showMore: this.state.showMore + 1, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore + 1)})
@@ -211,8 +228,6 @@ export class Categories extends React.Component {
     render() {
 
         let products = this.applyFilters(this.state.products);
-
-        console.log(products.length);
 
         return <Layout>
 

@@ -41,9 +41,9 @@ handler.post(async (req, res) => {
         .then((user) => {
             req.session.userId = user._id;
             const token = jwt.sign({ username: user.email, admin: user.admin}, process.env.jwtSecret, {expiresIn: '7d'});
-            let options = { httpOnly: true};
+            let options = { httpOnly: true, path: "/"};
             if (expires) {
-                options = { httpOnly: true, maxAge: 604800}
+                options = { httpOnly: true, maxAge: 604800, path: "/"}
             }
             res.cookie('token', token, options);
             return res.send({

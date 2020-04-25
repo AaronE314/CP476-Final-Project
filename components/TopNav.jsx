@@ -50,20 +50,28 @@ export class TopNav extends React.Component {
 
         const cartItems = getNumberOfItemsInCart();
 
+        console.log("navMount");
+
         if (await isSignedIn()) {
+
+            console.log("navMount signedIn");
 
             let email = getUserEmailName()
 
             if (email) {
+
+                console.log("navMount email exists");
     
                 this.setState({...this.state, cartItems: cartItems, loggedIn: true, userName: email});
     
             } else {
+                console.log("navMount email does not exist");
                 signOut();
                 this.setState({...this.state, cartItems: cartItems});
             }
 
         } else {
+            console.log("navMount not signed in");
             this.setState({...this.state, cartItems: cartItems});
             initUser();
         }
@@ -219,7 +227,7 @@ export class TopNav extends React.Component {
                                 <Link href="/wishlist"><span>WISHLIST</span></Link>
                             </a>
 
-                            <Link href="/cart">
+                            <Link href="/cart" >
                                 <a className={styles.clickableText}>
                                     <img src="/images/cart.svg" id="cart"></img>
                                     <span>CART {(this.state.cartItems > 0) ? `(${this.state.cartItems})` : ""}</span>
