@@ -15,9 +15,9 @@ handler.use(middleware);
  */
 handler.get(async (req, res) => {
     try{
-        if (req.session.userId !== undefined){
+        if (req.email) {
             let doc = {}
-            doc = await req.db.collection('Users').find({_id : req.session.userId },{projection:{_id : 0,wishlist:1}}).toArray();
+            doc = await req.db.collection('Users').find({_id : req.email },{projection:{_id : 0,wishlist:1}}).toArray();
     
             console.log(doc);
             res.json(doc)

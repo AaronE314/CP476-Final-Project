@@ -9,8 +9,8 @@ handler.use(middleware);
 
 handler.post(async (req, res) => {
 
-    if (req.session.userId) {
-        req.session.userId = undefined;
+    if (req.email) {
+        req.email = undefined;
         res.cookie('token', "", { httpOnly: true, maxAge: 0});
         res.send({
             status: 'ok',
