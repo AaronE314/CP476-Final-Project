@@ -1,13 +1,16 @@
 .Footer {
   position: relative;
-  height: 310px;
   width: 100%;
+  min-height: 310px;
   left: 0%;
   right: 0%;
   bottom: 0px;
 
   background: rgba(0, 0, 0, 0.05);
-  display: inline-flex;
+}
+
+.linksWrapper {
+  display: flex;
 }
 .aboutCol {
   width: 72px;
@@ -25,7 +28,7 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 19px;
-  width: 86px;
+  width: 110px;
   margin: 48px 0px 0px 72px;
 }
 .titles {
@@ -37,59 +40,44 @@
   line-height: 22px;
 }
 .copyright {
-  position: absolute;
-  width: 293px;
-  height: 16px;
-  left: 32px;
-  bottom: 24px;
-
   font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 1.5em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 
   color: rgba(0, 0, 0, 0.54);
 }
-.tos {
-  position: absolute;
-  width: 150px;
-  height: 16px;
-  right: 206px;
-  bottom: 24px;
-
+.tos, .privacyPol {
   font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 1.5em;
   letter-spacing: 0.1em;
   text-decoration-line: underline;
   text-transform: uppercase;
+  padding-left: 16px;
 
   color: rgba(0, 0, 0, 0.54);
 }
 
-.privacyPol {
-  position: absolute;
-  width: 130px;
-  height: 16px;
-  right: 32px;
-  bottom: 24px;
-
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: 0.1em;
-  text-decoration-line: underline;
-  text-transform: uppercase;
-
-  color: rgba(0, 0, 0, 0.54);
+.bottomLinkWrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin-top: 72px;
+  padding: 16px;
 }
+
+.bottomLinks {
+  display: flex;
+  justify-content: space-between;
+}
+
+
 
 @media only screen and (max-width: 716px) {
     .copyright {
@@ -109,5 +97,18 @@
 
     .aboutCol {
         margin-left: 16px;
+    }
+
+    .bottomLinkWrapper {
+      flex-direction: column;
+    }
+
+    .bottomLinks {
+      margin-bottom: 16px;
+      justify-content: space-between;
+    }
+
+    .tos, .privacyPol {
+      padding-left: 0px;
     }
 }
