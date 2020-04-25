@@ -24,6 +24,13 @@ handler.get(async (req, res) => {
             res.json({loggedIn: true, validToken: true});
         } catch(err) {
             res.json({loggedIn: true, validToken: false});
+        } finally {
+            console.log("closing");
+            try {
+                req.dbClient.close().catch();
+            } catch(e) {
+                
+            }
         }
 
     }

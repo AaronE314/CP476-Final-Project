@@ -47,6 +47,13 @@ handler.post(async (req, res) => {
             if (expires) {
                 options = { httpOnly: true, maxAge: 604800, path: "/"}
             }
+
+            console.log("closing");
+            try {
+                req.dbClient.close().catch();
+            } catch(e) {
+                
+            }
             // console.log(token);
             res.cookie('token', token, options);
             return res.send({
@@ -57,10 +64,19 @@ handler.post(async (req, res) => {
                            shoppingCart: user.shoppingCart}
             });
         })
-        .catch(error => res.send({
-            status: 'error',
-            message: error.toString()
-        }));
+        .catch(error => {
+            console.log("closing");
+            try {
+                req.dbClient.close().catch();
+            } catch(e) {
+                
+            }
+            
+            res.send({
+                status: 'error',
+                message: error.toString()
+            })
+        });
 
 });
 

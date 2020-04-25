@@ -26,6 +26,13 @@ handler.get(async (req, res) => {
         }
     }catch(err){
         throw err; 
+    } finally {
+        console.log("closing");
+        try {
+            req.dbClient.close().catch();
+        } catch(e) {
+            
+        }
     }
 
 })

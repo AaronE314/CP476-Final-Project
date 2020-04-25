@@ -55,6 +55,12 @@ handler.post(async (req, res) => {
             const addedUser = user.ops[0]
             const token = jwt.sign({ username: addedUser.email, admin: addedUser.admin}, process.env.jwtSecret, {expiresIn: '7d'});
             res.cookie('token', token, { httpOnly: true, path: "/"});
+            console.log("closing");
+            try {
+                req.dbClient.close().catch();
+            } catch(e) {
+                
+            }
             res.status(201).send({
                 status: 'ok',
                 message: 'User signed up seccessfully',
@@ -63,10 +69,18 @@ handler.post(async (req, res) => {
                            shoppingCart: addedUser.shoppingCart}
             });
         })
-        .catch(error => res.send({
-            status: 'error',
-            message: error.toString()
-        }));
+        .catch(error => {
+            console.log("closing");
+            try {
+                req.dbClient.close().catch();
+            } catch(e) {
+                
+            }
+            res.send({
+                status: 'error',
+                message: error.toString()
+            })
+        });
 
 });
 

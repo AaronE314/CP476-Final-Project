@@ -20,10 +20,17 @@ handler.get(async (req, res) => {
         let doc = {}
         doc = await req.db.collection('Overlay').find({}).toArray();
         let temp = await doc;
-
+        console.log("done");
         res.json(temp)
     }catch(err){
         throw err; 
+    } finally {
+        console.log("closing");
+        try {
+            req.dbClient.close().catch();
+        } catch(e) {
+            
+        }
     }
 
 })

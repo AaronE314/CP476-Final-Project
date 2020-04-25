@@ -21,6 +21,13 @@ handler.get(async (req, res) => {
         res.json(doc[0]);
     }catch(err){
         throw err; 
+    } finally {
+        console.log("closing");
+        try {
+            req.dbClient.close().catch();
+        } catch(e) {
+            
+        }
     }
 
 })

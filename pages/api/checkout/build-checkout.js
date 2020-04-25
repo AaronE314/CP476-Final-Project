@@ -61,6 +61,11 @@ handler.post(async (req, res) => {
     
     // TODO: add order to db
 
+    try {
+        req.dbClient.close().catch();
+    } catch(e) {
+        
+    }
     res.json({message: "ok", orderNumber: orderNumber});
 
 }); 
