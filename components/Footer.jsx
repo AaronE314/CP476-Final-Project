@@ -17,7 +17,7 @@ export class Footer extends React.Component {
                 <div className = {styles.titles}><a  href="#">Help</a><br/></div>
                 
                 <a href="#">FAQ</a><br/>
-                <a href="#">Contact US</a><br/>
+                <a href="#">Contact Us</a><br/>
                 <a href="#">Shipping</a><br/>
                 <a href="#">Return Policy</a><br/>
             </div>
