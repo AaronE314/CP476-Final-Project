@@ -13,10 +13,11 @@ const Orders = ({orders}) => {
     return <Layout fullPage={false}>
         
         <div className="orders">
-            {orders.map((order, i) => {
+            { (orders.length > 0  ) 
+            ? orders.map((order, i) => {
                 
                 return <Order order={order} key={i}/>
-            })}
+            }): <h3>You currently have no orders.</h3>}
         </div>
         
 
@@ -53,7 +54,7 @@ Orders.getInitialProps = async (ctx) => {
     if (await isSignedIn()) {
 
         let orders = await getOrders();
-        
+        console.log(orders);
         return {
             orders: orders};
     } else {
