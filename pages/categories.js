@@ -57,11 +57,16 @@ export class Categories extends React.Component {
             const { router } = this.props;
             let title = router.query.mainCategory;
 
-            if (router.query.subCategory) {
-                title += " " + router.query.subCategory;
+            if (title == null) {
+                title = `"` + router.query.search + `"`;
+            } else {
+                if (router.query.subCategory) {
+                    title += " " + router.query.subCategory;
+                }
             }
+
             return title;
-            1
+            
     }
 
     applyFilters = (products) => {
