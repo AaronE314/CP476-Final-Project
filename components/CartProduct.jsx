@@ -45,13 +45,13 @@ export class CartProduct extends React.Component{
     async increaseQuantity(){
         // this.setState({...this.state, quantity: this.props.product.quantity + 1});
         
-        console.log("start");
+        
         this.increaseRef.current.setAttribute("disabled",true);
         this.decreaseRef.current.setAttribute("disabled",true);
         this.props.updateProduct("quantity", this.props.product.quantity + 1, this.props.i).then(() => {
             this.increaseRef.current.removeAttribute("disabled");
             this.decreaseRef.current.removeAttribute("disabled");
-            console.log("end");
+            
         });
         
 

@@ -144,7 +144,7 @@ export class Checkout extends React.Component {
     }
     componentDidMount(){
         let cart =  getUserCart();
-        console.log("cart",cart)
+        // console.log("cart",cart)
         this.setState({...this.state, products: (cart) ? cart : []});
     }
     render() {
