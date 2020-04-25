@@ -25,8 +25,7 @@ export class TopNav extends React.Component {
             categories: [
                 "MEN",
                 "WOMEN",
-                "KIDS",
-                "HOME"
+                "KIDS"
             ],
             category: null,
             loggedIn: false,
@@ -185,7 +184,7 @@ export class TopNav extends React.Component {
             <div className={styles.topNav}>
 
                     <div className={styles.logo}>
-                        <Link href="/"><img id="logo" src="/images/tempLogo.svg"></img></Link>
+                        <Link href="/"><img id="logo" src="/images/logo.svg"></img></Link>
                     </div>
                     
                     <nav id="CategoriesNav" className={styles.catagories}>
