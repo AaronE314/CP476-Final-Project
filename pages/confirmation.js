@@ -4,7 +4,7 @@ import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import ReactToPrint from 'react-to-print';
 import { withRouter } from 'next/router';
-
+import {  getUserCart} from '../lib/userAuth';
 export class Confirmation extends React.Component {
 
     constructor(props) {
@@ -18,39 +18,7 @@ export class Confirmation extends React.Component {
             tax: 0,
             orderNumber: "W0227201998042392",
             products: [
-                {
-                    productName: "Product Name",
-                    quantity: 1,
-                    price: 3.99,
-                    discount: 0,
-                    size: "S",
-                    colour: "Black",
-                    orderNumber: "0850318003",
-                    imageLink: "/images/tempImages/tempImg1_1.jpg",
-                    wishlisted: true,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 2,
-                    price: 3.99,
-                    discount: 0.2,
-                    size: "M",
-                    colour: "Black",
-                    orderNumber: "0850318004",
-                    imageLink: "/images/tempImages/tempImg1_2.jpg",
-                    wishlisted: false,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 4,
-                    price: 3.99,
-                    discount: 0.4,
-                    size: "XL",
-                    colour: "Blue",
-                    orderNumber: "0850318005",
-                    imageLink: "/images/tempImages/tempImg1_3.jpg",
-                    wishlisted: false,
-                },
+                
             ]
         }
 
@@ -61,12 +29,12 @@ export class Confirmation extends React.Component {
         return (product.price * (1 - product.discount)) * product.quantity;
     }
 
-    getTotal() {
+    getTotal(cart) {
 
         let total = 0;
 
-        for (let i = 0; i < this.state.products.length; i++) {
-            total += this.getSubTotal(this.state.products[i]);
+        for (let i = 0; i < cart.length; i++) {
+            total += this.getSubTotal(cart[i]);
         }
 
         return total;
@@ -76,19 +44,23 @@ export class Confirmation extends React.Component {
 
         let { router } = this.props;
 
-        let value = this.getTotal();
+        let cart =  getUserCart();
+        let value = this.getTotal(cart);
 
         let shipping = (value > 200) ? 0 : 20;
 
         let tax = value * 0.13;
 
         let total = value + shipping + tax;
-
+        let num = 0; 
+        cart.forEach((item)=>{
+            num += item.quantity
+        });
         this.setState({...this.state, total: total.toFixed(2), 
                                       value: value.toFixed(2), 
                                       tax: tax.toFixed(2), 
                                       shipping: shipping.toFixed(2),
-                                      orderNumber: router.query.orderNumber})
+                                      orderNumber: router.query.orderNumber,products: (cart) ? cart : [], numberOfItems:num})
     }
 
     render() {
@@ -103,7 +75,7 @@ export class Confirmation extends React.Component {
                     <div className="cartItems">
                         {this.state.products.map((product, i) => {
                             
-                            return <CheckoutProduct product={product} key={product.orderNumber}/>
+                            return <CheckoutProduct product={product} key={i}/>
                         })}
                         <div className="subTotals">
                             <div className="value">

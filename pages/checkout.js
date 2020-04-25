@@ -138,7 +138,7 @@ export class Checkout extends React.Component {
         }
 
         if (this.validate(formData)) {
-            Router.push(`/review?formData=${JSON.stringify(formData)}&products=${JSON.stringify(this.state.products)}`, "review");
+            Router.push(`/review?formData=${JSON.stringify(formData)}&products=${JSON.stringify(this.state.products)}}`, "review");
         }
 
     }

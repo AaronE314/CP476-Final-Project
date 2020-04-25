@@ -26,39 +26,6 @@ export class Review extends React.Component {
             shippingInfo: undefined,
 
             products: [
-                {
-                    productName: "Product Name",
-                    quantity: 1,
-                    price: 3.99,
-                    discount: 0,
-                    size: "S",
-                    colour: "Black",
-                    orderNumber: "0850318003",
-                    imageLink: "/images/tempImages/tempImg1_1.jpg",
-                    wishlisted: true,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 2,
-                    price: 3.99,
-                    discount: 0.2,
-                    size: "M",
-                    colour: "Black",
-                    orderNumber: "0850318004",
-                    imageLink: "/images/tempImages/tempImg1_2.jpg",
-                    wishlisted: false,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 4,
-                    price: 3.99,
-                    discount: 0.4,
-                    size: "XL",
-                    colour: "Blue",
-                    orderNumber: "0850318005",
-                    imageLink: "/images/tempImages/tempImg1_3.jpg",
-                    wishlisted: false,
-                },
             ],
 
             sameAsShipping: false,
@@ -108,7 +75,7 @@ export class Review extends React.Component {
 
     handleChange = (e) => {
 
-        if (e.target.name === "phone") {
+        if (e.target.name === "billingphone") {
 
             let number = formatNumber(e.target.value.trim());
             e.target.value = number;
@@ -194,7 +161,7 @@ export class Review extends React.Component {
 
             // TODO: Make payment call.
             // TODO: Add order to user.
-            buildCheckout(formData, this.state.products, {price: this.state.price, quantity: this.state.numberOfItems, address: formData.address})
+            buildCheckout(formData, this.state.products, {price: this.state.total, quantity: this.state.numberOfItems, address: formData.address})
             .then((data) => {
 
                 console.log("hiiii");
@@ -228,7 +195,10 @@ export class Review extends React.Component {
 
         let shippingInfo = undefined;
 
-        console.log(router.query.formData);
+        let num = 0; 
+        cart.forEach((item)=>{
+            num += item.quantity
+        });
         
         if (router.query.formData) {
             shippingInfo = JSON.parse(router.query.formData)
@@ -240,7 +210,7 @@ export class Review extends React.Component {
                                       value: value.toFixed(2), 
                                       tax: tax.toFixed(2), 
                                       shipping: shipping.toFixed(2),
-                                      shippingInfo,products: (cart) ? cart : [] }
+                                      shippingInfo,products: (cart) ? cart : [] ,numberOfItems : num}
                                       );
     }
     render() {

@@ -7,7 +7,7 @@ export default class Order extends React.Component {
 
     constructor(props) {
         super(props);
-
+        console.log(props)
         this.state = {
 
             numberShown: 8
@@ -43,7 +43,7 @@ export default class Order extends React.Component {
     }
     
     openOrder = () => {
-        Router.push(`/orderReview?orderNumber=${this.props.order.orderId}`);
+        Router.push(`/orderReview?orderNumber=${this.props.order.orderNumber}`);
     }
 
     render() {
@@ -51,7 +51,7 @@ export default class Order extends React.Component {
         return <div className={styles.order}>
 
             <div className={styles.info}>
-                <label>Order ID: {this.props.order.orderId}</label>
+                <label>Order ID: {this.props.order.orderNumber}</label>
                 <label className={styles.sans}>{this.props.order.date}</label>
                 <br/>
                 <label className={styles.sans}>{`Cost: $${this.props.order.cost}`}</label>
