@@ -58,7 +58,7 @@ handler.post(async (req, res) => {
             res.cookie('token', token, { httpOnly: true, maxAge: 604800});
             res.status(201).send({
                 status: 'ok',
-                message: 'User signed up seccessfully',
+                message: 'User signed up successfully',
                 userInfo: {email: addedUser.email, 
                            wishlist: addedUser.wishlist,
                            shoppingCart: addedUser.shoppingCart}
