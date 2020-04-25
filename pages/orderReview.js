@@ -4,7 +4,8 @@ import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router, { useRouter } from "next/router";
 import { withRouter } from 'next/router';
-import { isSignedIn } from '../lib/userAuth';
+import { isSignedIn} from '../lib/userAuth';
+import {getSingleOrder} from '../lib/apiRequester';
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
@@ -532,7 +533,11 @@ OrderReview.getInitialProps = async (ctx) => {
     console.log("init");
 
     if (await isSignedIn()) {
-        console.log("valid");
+
+
+        let orderNumber = ctx.query.orderNumber
+        let order = await getSingleOrder(orderNumber);
+        console.log(order);
         return {
 
             products: [

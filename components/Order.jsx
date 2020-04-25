@@ -7,7 +7,8 @@ export default class Order extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
+        console.log("props");
+        console.log(props);
         this.state = {
 
             numberShown: 8
@@ -54,20 +55,20 @@ export default class Order extends React.Component {
                 <label>Order ID: {this.props.order.orderNumber}</label>
                 <label className={styles.sans}>{this.props.order.date}</label>
                 <br/>
-                <label className={styles.sans}>{`Cost: $${this.props.order.cost}`}</label>
-                <label className={styles.sans}>{`Quantitiy: ${this.props.order.Quantity}`}</label>
-                <label className={styles.sans}>{`Address: ${this.props.order.Address}`}</label>
+                <label className={styles.sans}>{`Cost: $${this.props.order.line_items[0].amount}`}</label>
+                <label className={styles.sans}>{`Quantity: ${this.props.order.line_items[0].quantity}`}</label>
+                <label className={styles.sans}>{`Address: ${this.props.order.line_items[0].address}`}</label>
             </div>
 
             <div className={styles.pictures}>
-                {this.props.order.productImages.slice(0, this.state.numberShown).map((item, i) => {
+                {this.props.order.line_items[0].products.slice(0, this.state.numberShown).map((item, i) => {
                     return <div key={i}>
-                        <img src={item}/>
+                        <img src={`data:image/png;base64,${item.image}`}/>
                     </div>
                 })}
-                {(this.props.order.productImages.length > this.state.numberShown) 
+                {(this.props.order.line_items[0].products.length > this.state.numberShown) 
                 ? <div onClick={this.openOrder} className={styles.showMore}>
-                <p>{`+${this.props.order.productImages.length - this.state.numberShown}`}</p>
+                <p>{`+${this.props.order.line_items[0].products.length - this.state.numberShown}`}</p>
                 </div> : null}
             </div>
 

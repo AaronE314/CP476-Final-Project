@@ -14,6 +14,7 @@ const Orders = ({orders}) => {
         
         <div className="orders">
             {orders.map((order, i) => {
+                
                 return <Order order={order} key={i}/>
             })}
         </div>

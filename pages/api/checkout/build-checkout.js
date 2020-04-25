@@ -31,10 +31,12 @@ handler.post(async (req, res) => {
     // format
     let orderNumber = [now.slice(0, 4), now.slice(4, 10), now.slice(10, 14)].join('-')
     let body = JSON.parse(req.body)
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     const order = {
         payment_method_types: ["card"],
         orderNumber: orderNumber,
-        date:now, 
+        date:date, 
         line_items: [
             {
                 amount: body.price,
