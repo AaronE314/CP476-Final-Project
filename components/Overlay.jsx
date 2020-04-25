@@ -38,9 +38,9 @@ export class Overlay extends React.Component {
         
         if (item.filter !== "") {
             // return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
-            return `/${link}?mainCategory=${this.props.category}&subCategory=${item.filter}`
+            return `${link}?mainCategory=${this.props.category}&subCategory=${item.filter}`
         }
-        return `/${link}?mainCategory=${this.props.category}`
+        return `${link}?mainCategory=${this.props.category}`
         // return {pathname: link, query: {mainCategory: this.props.category}};
 
         
