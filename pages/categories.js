@@ -536,8 +536,8 @@ export class Categories extends React.Component {
                     }
 
                     .mainContent {
-                        margin-left: 32px;
-                        width: calc(100% - (2 * 32px));
+                        margin: 32px 16px;
+                        width: calc(100% - (2 * 16px));
                     }
 
                 }
@@ -546,6 +546,7 @@ export class Categories extends React.Component {
 
                     .products {
                         justify-content: center;
+                        grid-template-columns: repeat(auto-fill,minmax(100%,1fr));
                     }
 
                 }
