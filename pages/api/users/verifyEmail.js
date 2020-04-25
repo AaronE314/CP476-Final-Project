@@ -10,7 +10,7 @@ handler.use(middleware);
 /**
  * @author Chris Labatt
  * @public
- * @summary post request for verifying the user's email address and updating the database to confirm it. 
+ * @summary A post request for verifying the user's email address and updating the database to confirm it. 
  * @argument token The JWT containing the userID.
  */
 
@@ -18,9 +18,11 @@ handler.post(async (req, res) => {
     console.log("Verifying Email");
     let {token} = JSON.parse(req.body);
     try{
+        //Decodes and verifies the token, will throw an error if passed expiry date.
         const decodedToken = jwt.verify(token, process.env.jwtVerify);
         const userID = decodedToken.username;
 
+        //Searches for the user in the DB and updates their verified flag to signal that they have verified.
         let doc = await req.db.collection('Users').findOneAndUpdate({"email" : userID }, {$set: {"verified": true}});
         res.send({
             status: 'ok',
@@ -30,6 +32,7 @@ handler.post(async (req, res) => {
     catch(err){
         console.log(err);
         if(err.name == 'JsonWebTokenError'){
+            //Error occurs when a token is passed its expiry date.
             const userEmail = jwt.decode(token).username;
             resendVerification(userEmail)
             .then((e) => {

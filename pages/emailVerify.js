@@ -3,57 +3,41 @@ import { withRouter } from 'next/router';
 import Layout from '../components/layout';
 import { verifyEmail } from "../lib/apiRequester";
 import Router from 'next/router';
-const jwt = require('jsonwebtoken');
-//require('dotenv').config();
-//need to fix this
-const jwtSecret ='SomeSecretValue'
 
 export class EmailVerify extends React.Component {
-    
+
     async componentDidMount(){
         try{
-            const { router } = this.props;
+            //Gets the token string from the URL
+            const urlQuery = new URLSearchParams(window.location.search);
+            let token = urlQuery.get("ver");
 
-            let token = router.query.verifyEmail;
-            console.log(token);
-            //it feels like it's loading too quickly to get the url queries
-            //temporarily hardcoding with the token that I know exists.
-            const token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxhYmE5OTkwQG15bGF1cmllci5jYSIsImlhdCI6MTU4Nzg0MjI0MywiZXhwIjoxNTg5MDUxODQzfQ.ghyGUjdVU2fnYniE-1y6ixX3fSRwKieeqR4_LoT7tTI";
-            const expiredToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxhYmE5OTkwQG15bGF1cmllci5jYSIsImlhdCI6MTU4Nzc0NzQ2MSwiZXhwIjoxNTg3NzUyMjYxfQ.VN8piKdJeLw8Tn2LxU3BVLWOSD_7dEImH_8Sv4sSPw8";
-            // console.log(token);
-            // console.log(this.props);
-            // console.log(this.props.router);
-            // console.log(this.props.router.query);
-            // Have verify in try catch as it errors if false
-            //const decodedToken = jwt.verify(expiredToken, jwtSecret);
-            //console.log(decodedToken);
-            verifyEmail(token2)
+            //Passes the token in a post request to verify it and update the database
+            verifyEmail(token)
             .then((data) => {
                 console.log(data);
                 if (data.status === "ok") {
-                    //Email was verified, so it should redirect the user to the main page?
+                    //Tells the user that their email was verified, and that it should redirect the user to the main page
                     document.getElementById("info").innerHTML = "Your email has now been verified, we are re-directing you to the main page.<br>If nothing happens after 15 seconds, you can just close the tab."
-                    Router.push(`/`); // Redirect after finishing
+                    Router.push(`/`); // Redirect to main page after finishing
                 } else if (data-status === "TokenExpired") {
-                    //Verification Email has expired, send a new one
+                    //Tells the user that their verification email expired, and that a new one was sent to them
                     document.getElementById("info").innerHTML = "This link has expired, a new one has been sent to you.";
                 } else {
-                    //Unexpected error
+                    //Notifies the user that an unexpected error has occured with their verification
                     document.getElementById("info").innerHTML = "An unexpected error has occurred, please try again later.";   
                 }
             });
         }
         catch(err){
+            //Notifies the user that an unexpected error has occured with their verification
             console.log(err);
             document.getElementById("info").innerHTML = "An unexpected error has occurred, please try again later.";
         }
     }
 
     render(){
-        
-        
-        //document.location.href="/";
-        
+        // Text to notify the user that their email is being verified in case it takes a while.
         return <Layout><div className = 'mainContent' id = 'info'>We are currently verifying your account.</div>
         
         <style jsx>{`
