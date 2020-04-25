@@ -21,7 +21,7 @@ handler.use(middleware);
 
 handler.post(async (req, res) => {
 
-    console.log("signUp");
+    // console.log("signUp");
 
     let body = JSON.parse(req.body);
 

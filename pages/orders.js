@@ -54,7 +54,7 @@ Orders.getInitialProps = async (ctx) => {
     if (await isSignedIn()) {
 
         let orders = await getOrders();
-        console.log(orders);
+        // console.log(orders);
         return {
             orders: orders};
     } else {

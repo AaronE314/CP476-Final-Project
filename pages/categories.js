@@ -100,7 +100,7 @@ export class Categories extends React.Component {
     }
 
     maxShown = (width, height, showMore) => {
-        console.log(width, height);
+        // console.log(width, height);
         return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : 8;
     }
     
@@ -128,7 +128,7 @@ export class Categories extends React.Component {
         let search = router.query.search ? unescape(router.query.search) : undefined;
 
         if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
-            console.log("query by category");
+            // console.log("query by category");
             let productArray  = await getProducts(gender, subCategory);
             this.setState({...this.state, products: productArray, loading: false});
         } else if (isLetter(search)){
@@ -156,16 +156,16 @@ export class Categories extends React.Component {
             || subCategory !== prevProps.router.query.subCategory
             || router.query.search !== prevProps.router.query.search) {
 
-            console.log("gender = " + isLetter(gender)); 
-            console.log("subCategory = " + isLetter(subCategory));
+            // console.log("gender = " + isLetter(gender)); 
+            // console.log("subCategory = " + isLetter(subCategory));
             let search = router.query.search ? unescape(router.query.search) : undefined;
             if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
-                console.log("a");
+                // console.log("a");
                 let productArray  = await getProducts(gender, subCategory);
                 this.state.products.length = 0 ;
                 this.setState({...this.state, products: productArray, loading: false});
             } else if (isLetter(search)){
-                console.log("b");
+                // console.log("b");
                 let productArray  = await getProductsSearch(search);
                 this.setState({...this.state, products: productArray, loading: false});
             }

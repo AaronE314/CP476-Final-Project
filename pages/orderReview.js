@@ -530,14 +530,14 @@ const OrderReview = (props) => {
 
 OrderReview.getInitialProps = async (ctx) => {
 
-    console.log("init");
+    // console.log("init");
 
     if (await isSignedIn()) {
 
 
         let orderNumber = ctx.query.orderNumber
         let order = await getSingleOrder(orderNumber);
-        console.log(order);
+        // console.log(order);
         return {
 
             products: order.line_items[0].products,
@@ -554,7 +554,7 @@ OrderReview.getInitialProps = async (ctx) => {
             province: order.line_items[0].billingInfo.province,
         }
     } else {
-        console.log("not");
+        // console.log("not");
         if (ctx.res) {
             ctx.res.writeHead(302, {
                 Location: "/",

@@ -19,7 +19,7 @@ handler.use(middleware);
 
 handler.post(async (req, res) => {
 
-    console.log("signIn");
+    // console.log("signIn");
 
     let body = req.body
     let { email, password, expires } = JSON.parse(body);
@@ -45,7 +45,7 @@ handler.post(async (req, res) => {
             if (expires) {
                 options = { httpOnly: true, maxAge: 604800, path: "/"}
             }
-            console.log(token);
+            // console.log(token);
             res.cookie('token', token, options);
             return res.send({
                 status: 'ok',

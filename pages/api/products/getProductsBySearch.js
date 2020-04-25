@@ -16,7 +16,7 @@ handler.get(async (req, res) => {
 
     try {
 
-        console.log("searching");
+        // console.log("searching");
         
         let doc = {}
         

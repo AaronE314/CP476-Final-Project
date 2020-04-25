@@ -164,7 +164,7 @@ export class Review extends React.Component {
             buildCheckout(formData, this.state.products, {price: this.state.total, quantity: this.state.numberOfItems, address: formData.address})
             .then((data) => {
 
-                console.log("hiiii");
+                // console.log("hiiii");
 
                 if (data.message === "ok") {
                     loading = false;
