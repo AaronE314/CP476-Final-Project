@@ -186,9 +186,9 @@ export class Categories extends React.Component {
 
         if (item.filter !== "") {
             // return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
-            return `${link}?mainCategory=${router.query.mainCategory}&subCategory=${item.filter}`
+            return `/${link}?mainCategory=${router.query.mainCategory}&subCategory=${item.filter}`
         }
-        return `${link}?mainCategory=${router.query.mainCategory}`
+        return `/${link}?mainCategory=${router.query.mainCategory}`
         // return {pathname: link, query: {mainCategory: this.props.categoryrouter.query.mainCategory}};
 
         
