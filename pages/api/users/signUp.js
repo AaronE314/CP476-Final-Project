@@ -52,7 +52,7 @@ handler.post(async (req, res) => {
             req.session.userId = user.insertedId;
             const addedUser = user.ops[0]
             const token = jwt.sign({ username: addedUser.email, admin: addedUser.admin}, process.env.jwtSecret, {expiresIn: '7d'});
-            res.cookie('token', token, { httpOnly: true, maxAge: 604800});
+            res.cookie('token', token, { httpOnly: true, path: "/"});
             res.status(201).send({
                 status: 'ok',
                 message: 'User signed up seccessfully',
