@@ -6,7 +6,8 @@
  * @argument password [in body] user password. 
  */
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/database';
+// import middleware from '../../../middleware/database';
+import applyMiddleware from '../../../middleware/withMiddleware';
 import * as argon2 from 'argon2';
 import cookies from '../../../lib/cookies';
 
@@ -15,7 +16,8 @@ require('dotenv').config();
 
 let handler = nextConnect();
 
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler);
 
 handler.post(async (req, res) => {
 

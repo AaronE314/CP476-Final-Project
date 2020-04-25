@@ -21,13 +21,13 @@ export async function database(req, res, next) {
   }
 }
 
-const middleware = nextConnect();
+// const middleware = nextConnect();
 
 // middleware.use(headerSet);
-middleware.use(cookieParser());
-middleware.use(auth);
+// middleware.use(cookieParser());
+// middleware.use(auth);
 
-middleware.use(database);
+// middleware.use(database);
 // middleware.use(session());
 
-export default middleware;
+export default database;

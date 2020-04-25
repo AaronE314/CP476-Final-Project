@@ -1,11 +1,13 @@
 
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/databaseUpdater';
+import applyMiddleware from '../../../middleware/withMiddleware';
+// import middleware from '../../../middleware/databaseUpdater';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
 
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler, "updater");
 /**
  * @author Austin Bursey
  * @public

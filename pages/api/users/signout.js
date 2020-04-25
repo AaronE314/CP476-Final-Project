@@ -1,11 +1,13 @@
 
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/database';
+import applyMiddleware from '../../../middleware/withMiddleware';
+// import middleware from '../../../middleware/database';
 import cookies from '../../../lib/cookies';
 
 const handler = nextConnect();
 
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler);
 
 handler.post(async (req, res) => {
 

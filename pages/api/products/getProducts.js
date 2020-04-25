@@ -5,12 +5,14 @@
  * @argument gender [in html] that you would like to sort by. 
  */
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/ReadOnlydatabase';
+// import middleware from '../../../middleware/ReadOnlydatabase';
+import applyMiddleware from '../../../middleware/withMiddleware';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
 
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler, "readonly");
 
 handler.get(async (req, res) => {
     try{

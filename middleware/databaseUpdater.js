@@ -10,7 +10,7 @@ const client = new MongoClient(process.env.MONGODB_URI_WRITER, {
   useUnifiedTopology: true,
 });
 
-export async function database(req, res, next) {
+export async function databaseUpdater(req, res, next) {
   try {
    
     if (!client.isConnected()) await client.connect().catch(function(err){throw err; });
@@ -22,13 +22,14 @@ export async function database(req, res, next) {
   }
 }
 
-const middleware = nextConnect();
+// const middleware = nextConnect();
 
 // middleware.use(headerSet);
-middleware.use(cookieParser());
-middleware.use(auth);
+// middleware.use(cookieParser());
+// middleware.use(auth);
 
-middleware.use(database);
+// middleware.use(database);
 // middleware.use(session());
 
-export default middleware;
+// export default middleware;
+export default databaseUpdater;
