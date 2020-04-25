@@ -237,7 +237,7 @@ export class Categories extends React.Component {
                     <h4>New Arrivals</h4>
                     <ul>
                         {this.state.arivals.map((item, i) => {
-                            return <li key={i}><Link as={`${process.env.ASSET_PREFIX}${this.getLink(item)}`} href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
+                            return <li key={i}><Link href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
                         })}
                     </ul>
                 </div>
@@ -246,7 +246,7 @@ export class Categories extends React.Component {
                     <h4>Shop by Category</h4>
                     <ul>
                         {this.state.category.map((item, i) => {
-                            return <li key={i}><Link as={`${process.env.ASSET_PREFIX}${this.getLink(item)}`} href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
+                            return <li key={i}><Link href={this.getLink(item)} passHref><a className="hoverColor">{item.name}</a></Link></li>
                         })}
                     </ul>
                 </div>
