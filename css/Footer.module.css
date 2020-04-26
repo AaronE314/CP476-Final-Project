@@ -68,8 +68,8 @@
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
-  margin-top: 72px;
   padding: 16px;
+  margin: 72px 16px 0 16px;
 }
 
 .bottomLinks {
@@ -101,6 +101,7 @@
 
     .bottomLinkWrapper {
       flex-direction: column;
+      margin: 72px 0 0 0;
     }
 
     .bottomLinks {

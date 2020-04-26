@@ -8,7 +8,7 @@ export class Home extends React.Component {
     super(props);
 
     this.state = {
-      slogan: "A GOOD PLACE FOR A COMPANY SLOGAN"
+      slogan: "Spring into the new season"
     }
   }
 
@@ -25,15 +25,21 @@ export class Home extends React.Component {
       <div className="centerText">
         <h1 className ="slogan">{this.state.slogan}</h1>
         <div className="buttons">
-          <button className="shopNew">
-            SHOP NEW
-          </button>
-          <button className="shopNew">
-            FEATURED
-          </button>
-          <button className="shopNew">
-            SALE
-          </button>
+          <a href="/categories?mainCategory=MEN">
+            <button className="shopNew">
+              Shop Men
+            </button>
+          </a>
+          <a href="/categories?mainCategory=WOMEN">
+            <button className="shopNew">
+              Shop Women
+            </button>
+          </a>
+          <a href="/categories?mainCategory=KIDS">
+            <button className="shopNew">
+              Shop Kids
+            </button>
+          </a>
         </div>
       </div>
       <style jsx>{`
@@ -56,6 +62,10 @@ export class Home extends React.Component {
           filter: brightness(95%);
           cursor: pointer;
       }
+      .shopNew, .slogan {
+          text-transform: uppercase;
+      }
+
       .noselect { 
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -80,6 +90,7 @@ export class Home extends React.Component {
         text-transform: uppercase;
         background: var(--highlightColor);
         line-height: 37px;
+        padding: 4px 0;
       }
       .backgroundImage {
         --margin: 32px;
@@ -119,19 +130,20 @@ export class Home extends React.Component {
           top: calc(50% - 94px/2);
           left: calc(50% - var(--width)/2);
         }
-        .buttons button {
-          border: none;
-          width: calc(var(--width)/3 - 3%);
-          /* 120px; */
-          min-height: 32px;
-          margin-top: 32px;
-          left: calc(50% - 264px/2);
-          background: var(--highlightColor);
+        .buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .buttons a {
+          max-width: 225px;
         }
         .img1 {
           --margin: 16px;
           margin: var(--margin) 0;
           width: 100%;
+          display: table-cell;
+          vertical-align: middle;
         }
       }
     
