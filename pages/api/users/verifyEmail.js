@@ -1,11 +1,13 @@
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/databaseUpdater';
+import applyMiddleware from '../../../middleware/withMiddleware';
+// import middleware from '../../../middleware/databaseUpdater';
 import {resendVerification} from '../../../lib/email';
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const handler = nextConnect();
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler);
 
 /**
  * @author Chris Labatt

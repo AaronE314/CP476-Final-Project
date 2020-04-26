@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter } from 'next/router';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import { verifyEmail } from "../lib/apiRequester";
 import Router from 'next/router';
 
