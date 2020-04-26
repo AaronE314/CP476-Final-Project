@@ -48,12 +48,6 @@ handler.post(async (req, res) => {
                 options = { httpOnly: true, maxAge: 604800, path: "/"}
             }
 
-            
-            try {
-                req.dbClient.close().catch();
-            } catch(e) {
-                
-            }
             // console.log(token);
             res.cookie('token', token, options);
             return res.send({

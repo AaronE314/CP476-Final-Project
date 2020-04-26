@@ -4,8 +4,8 @@ import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router, { useRouter } from "next/router";
 import { withRouter } from 'next/router';
-import { isSignedIn} from '../lib/userAuth';
-import {getSingleOrder} from '../lib/apiRequester';
+import { getUser} from '../lib/userAuth';
+import {getSingleOrder, checkToken} from '../lib/apiRequester';
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
@@ -530,13 +530,18 @@ const OrderReview = (props) => {
 
 OrderReview.getInitialProps = async (ctx) => {
 
-    // console.log("init");
+    let res = await checkToken(ctx.req);
 
-    if (await isSignedIn()) {
+    let loggedIn = res.loggedIn && res.validToken 
+            && ((typeof localStorage !== 'undefined') ? getUser() !== undefined : true);
+
+    let user = (ctx.req && loggedIn) ? res.payload.username : undefined;
+
+    if (loggedIn) {
 
 
         let orderNumber = ctx.query.orderNumber
-        let order = await getSingleOrder(orderNumber);
+        let order = await getSingleOrder(orderNumber, user);
         // console.log(order);
         return {
 

@@ -22,6 +22,7 @@ export async function databaseReadOnly(req, res, next) {
   }
 }
 
+<<<<<<< HEAD
 const middleware = nextConnect();
 client.on('connectionPoolCreated', event => console.dir(event));
 client.on('connectionPoolClosed', event => console.dir(event));
@@ -35,4 +36,6 @@ client.on('connectionCheckedIn', event => console.dir(event));
 client.on('connectionPoolCleared', event => console.dir(event));
 
 middleware.use(databaseReadOnly);
+=======
+>>>>>>> 94dabbf2da2ed136bf7b620c8bb62299b2f08ec7
 export default databaseReadOnly;

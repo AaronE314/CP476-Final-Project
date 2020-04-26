@@ -24,7 +24,4 @@ export async function databaseUpdater(req, res, next) {
 }
 
 
-const middleware = nextConnect();
-
-middleware.use(databaseUpdater);
 export default databaseUpdater;

@@ -5,6 +5,7 @@ import nextConnect from 'next-connect';
 // import middleware from '../../../middleware/database';
 import applyMiddleware from '../../../middleware/withMiddleware';
 import {ObjectID} from 'mongodb';
+import {orderConfirmation} from '../../../lib/email';
 const handler = nextConnect();
 
 // handler.use(middleware);
@@ -59,7 +60,7 @@ handler.post(async (req, res) => {
     
     let doc = await req.db.collection('Orders').insertOne(order).catch(function(err){throw err; })
     
-    // TODO: add order to db
+    orderConfirmation(order);
 
     try {
         req.dbClient.close().catch();

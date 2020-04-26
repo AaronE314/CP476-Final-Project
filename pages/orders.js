@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import Order from '../components/Order';
-import { isSignedIn } from '../lib/userAuth';
+import { getUser } from '../lib/userAuth';
 import Router from 'next/router';
-import {getOrders} from "../lib/apiRequester"
+import {getOrders, checkToken} from "../lib/apiRequester"
+import { URLString } from '../constants';
 const Orders = ({orders}) => {
 
     // const [orders, setOrders] = useState();
@@ -51,12 +52,19 @@ const Orders = ({orders}) => {
 
 Orders.getInitialProps = async (ctx) => {
 
-    if (await isSignedIn()) {
+    let res = await checkToken(ctx.req);
 
-        let orders = await getOrders();
-        // console.log(orders);
+    let loggedIn = res.loggedIn && res.validToken 
+            && ((typeof localStorage !== 'undefined') ? getUser() !== undefined : true);
+
+    let user = (ctx.req && loggedIn) ? res.payload.username : undefined;
+
+    if (loggedIn) {
+        console.log("Signed In");
+        let orders = await getOrders(user);
         return {
-            orders: orders};
+            orders: orders
+        };
     } else {
         if (ctx.res) {
             ctx.res.writeHead(302, {

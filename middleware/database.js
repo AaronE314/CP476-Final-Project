@@ -21,8 +21,5 @@ export async function database(req, res, next) {
     throw err; 
   }
 }
-const middleware = nextConnect();
-
-middleware.use(database);
 
 export default database;
