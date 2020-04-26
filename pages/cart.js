@@ -123,7 +123,6 @@ export class Cart extends React.Component {
                             <p>Taxes & Shipping calculated at next step</p>
                         </div>
                         <button onClick={this.checkout} className="checkoutBtn">CHECKOUT</button>
-                        <p>Read more about how to return an item <a href="#">here</a></p>
                         <p>Standard home delivery CAD $20 / Delivery in 5-7 business days<br/>
                         Free delivery on orders over CAD $200 before shipping & taxes</p>
                     </div>

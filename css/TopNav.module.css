@@ -376,15 +376,17 @@
         position: absolute;
         top: 64px;
         padding: 0;
-        padding-left: 11px;
+        padding-left: 16px;
         padding-bottom: 10px;
         background: white;
         width: calc(100% - 11px);
-        justify-content: space-between;
+        justify-content: space-around;
+
     }
 
     .topNav nav a {
-        padding-right: 19px;
+        padding-right: 16px;
+        padding-top: 8px;
     }
 
     .logo {

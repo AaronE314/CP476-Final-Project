@@ -417,7 +417,7 @@ export class Categories extends React.Component {
 
                 .sortBy {
                     position: relative;
-                    margin: 24px 0;
+                    margin: 8px 0 24px 0;
                 }
 
                 .sortBy label {

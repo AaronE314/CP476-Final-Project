@@ -13,7 +13,7 @@
   display: flex;
 }
 .aboutCol {
-  width: 72px;
+  width: 150px;
 
   font-family: "Open Sans";
   font-style: normal;
@@ -29,8 +29,19 @@
   font-size: 14px;
   line-height: 19px;
   width: 110px;
-  margin: 48px 0px 0px 72px;
+  margin: 48px 0px 0px 64px;
 }
+
+.aboutCol ul, .helpCol ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.aboutCol ul li, .helpCol ul li {
+  padding-bottom: 4px;
+}
+
 .titles {
   margin-bottom: 16px;
   font-family: "Open Sans";
@@ -65,16 +76,8 @@
 }
 
 .bottomLinkWrapper {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
   padding: 16px;
   margin: 72px 16px 0 16px;
-}
-
-.bottomLinks {
-  display: flex;
-  justify-content: space-between;
 }
 
 
@@ -99,14 +102,12 @@
         margin-left: 16px;
     }
 
-    .bottomLinkWrapper {
-      flex-direction: column;
-      margin: 72px 0 0 0;
+    .helpCol {
+      margin: 48px 0px 0px 32px;
     }
 
-    .bottomLinks {
-      margin-bottom: 16px;
-      justify-content: space-between;
+    .bottomLinkWrapper {
+      margin: 72px 0 0 0;
     }
 
     .tos, .privacyPol {

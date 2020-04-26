@@ -10,24 +10,23 @@ export class Footer extends React.Component {
             <div className={styles.linksWrapper}>
                 <div className={styles.aboutCol}>
                     <div className={styles.titles}><a >About</a><br/></div>
-                    
-                    <a href="#">Links</a><br/>
-                    <a href="#">More Links </a>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">User Guide</a></li>
+                    </ul>
                 </div>
                 <div className={styles.helpCol}>
                     <div className = {styles.titles}><a  href="#">Help</a><br/></div>
-                    
-                    <a href="#">FAQ</a><br/>
-                    <a href="#">Contact US</a><br/>
-                    <a href="#">Shipping</a><br/>
-                    <a href="#">Return Policy</a><br/>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                    </ul>
                 </div>
             </div>
             <div className={styles.bottomLinkWrapper}>
-                <div className={styles.bottomLinks}>
-                    <a className={styles.tos} href="#">Terms Of Service</a>
-                    <a className={styles.privacyPol} href="#">Privacy Policy</a>
-                </div>
                 <a className={styles.copyright} href="#">All Images are copyright to their owners. This is just a hypothetical site For a School Project.</a>
             </div>
         </div>;

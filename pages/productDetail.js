@@ -163,7 +163,6 @@ export class ProductDetail extends React.Component {
                             })}
                         </div>
                         <br/>
-                        <a href="#">WHAT SIZE DO I WANT?</a>
                     </div>
 
                     <div className="buttons">

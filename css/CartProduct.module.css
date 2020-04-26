@@ -1,11 +1,14 @@
 .CartProduct{
     position: relative;
     max-width: 578px;
-    height: 229px;
+    min-height: 229px;
+    height: fit-content;
     border-bottom: 0.5px solid #000000;
     font-family: "Open Sans";
     font-size: 16px;
     margin-top: 32px;
+    display: flex;
+    align-items: flex-start;
 }
 
 .CartProduct * {
@@ -16,19 +19,19 @@
 .CartImage{
     width: 151px;
     height: 205px;
+    object-fit: cover;
     background-color: #F0F0F0;
     float: left;
 }
 
 .CartInfo{
-    height: 205px;
     margin-left: 16px;
+    margin-bottom: 16px;
     display: inline-block;
 }
 
 .CartInfo p{
     margin: 0px;
-    height: 19px;
     margin-bottom: 4px;
 }
 
@@ -103,7 +106,7 @@
 }
 
 .CartRemove{
-    float: right;
+    margin-left: auto;
     cursor: pointer;
 }
 .container{
