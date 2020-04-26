@@ -23,6 +23,16 @@ export async function databaseReadOnly(req, res, next) {
 }
 
 const middleware = nextConnect();
+client.on('connectionPoolCreated', event => console.dir(event));
+client.on('connectionPoolClosed', event => console.dir(event));
+client.on('connectionCreated', event => console.dir(event));
+client.on('connectionReady', event => console.dir(event));
+client.on('connectionClosed', event => console.dir(event));
+client.on('connectionCheckOutStarted', event => console.dir(event));
+client.on('connectionCheckOutFailed', event => console.dir(event));
+client.on('connectionCheckedOut', event => console.dir(event));
+client.on('connectionCheckedIn', event => console.dir(event));
+client.on('connectionPoolCleared', event => console.dir(event));
 
 middleware.use(databaseReadOnly);
 export default databaseReadOnly;
