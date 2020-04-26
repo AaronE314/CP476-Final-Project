@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
@@ -16,6 +16,7 @@ export class ProductDetail extends React.Component {
             productDetails: {
                 productName: "",
                 price: "",
+                discount: 0,
                 colours: [],
                 sizes: [],
                 
@@ -69,6 +70,13 @@ export class ProductDetail extends React.Component {
         return item;
     }
 
+    getAdjustedPrice(){
+        if (this.state.productDetails.discount > 0) {
+            return Math.round((this.state.productDetails.price * (1 - this.state.productDetails.discount)) * 100) / 100
+        }
+        
+    }
+
     async componentDidMount(){
         const { router } = this.props;
         let id = router.query.id;
@@ -82,7 +90,7 @@ export class ProductDetail extends React.Component {
                 
 
 
-                console.log(productDetails[0]);
+                // console.log(productDetails[0]);
 
                 this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
             }
@@ -94,7 +102,7 @@ export class ProductDetail extends React.Component {
             
             if (isNumeric(id)){
                 let productDetails = await  getDetailedProduct(id)
-                console.log(productDetails[0]);
+                // console.log(productDetails[0]);
                 this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
             }
 
@@ -132,7 +140,7 @@ export class ProductDetail extends React.Component {
                 <div className="details sticky">
                     <h2>{this.state.productDetails.productName}</h2>
 
-                    <h2>{this.state.productDetails.price}</h2>
+                    <h2>{this.state.productDetails.discount > 0 ? <span className="discountedPrice">${this.getAdjustedPrice()}</span> : null}<span className={this.state.productDetails.discount > 0 ? "oldPrice" : ""}>${this.state.productDetails.price}</span></h2>
 
                     <div className="colors">
                         <p>Colour</p>
@@ -193,6 +201,14 @@ export class ProductDetail extends React.Component {
             </div>
 
             <style jsx>{`
+                .discountedPrice {
+                    background: rgb(255, 245, 0);
+                    margin-right: 8px;
+                }
+
+                .oldPrice {
+                    text-decoration: line-through;
+                }
 
                 .desc, .productNo {
                     font-family: 'Open Sans';
@@ -400,7 +416,7 @@ export class ProductDetail extends React.Component {
                     }
 
                     .smallPicturesContainer, .largePictures, .details {
-                        margin: 16px 0 32px 0;
+                        margin: 16px 16px 32px 16px;
                         /* text-align: center; */
                     }
                 }

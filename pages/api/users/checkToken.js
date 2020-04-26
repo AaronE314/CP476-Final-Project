@@ -1,6 +1,6 @@
 
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/database';
+// import middleware from '../../../middleware/database';
 
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const handler = nextConnect();
 
-middleware.use(cookieParser());
+handler.use(cookieParser());
 
 handler.get(async (req, res) => {
 

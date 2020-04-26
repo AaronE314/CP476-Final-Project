@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router, { useRouter } from "next/router";
 import { withRouter } from 'next/router';
-import { isSignedIn } from '../lib/userAuth';
+import { isSignedIn} from '../lib/userAuth';
+import {getSingleOrder} from '../lib/apiRequester';
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
@@ -81,7 +82,7 @@ const OrderReview = (props) => {
                     <h1>Order Summary</h1>
                     {props.products.map((product, i) => {
                         
-                        return <CheckoutProduct product={product} key={product.orderNumber}/>
+                        return <CheckoutProduct product={product} key={i}/>
                     })}
                     <div className="subTotals">
                         <div className="value">
@@ -529,61 +530,31 @@ const OrderReview = (props) => {
 
 OrderReview.getInitialProps = async (ctx) => {
 
-    console.log("init");
+    // console.log("init");
 
     if (await isSignedIn()) {
-        console.log("valid");
+
+
+        let orderNumber = ctx.query.orderNumber
+        let order = await getSingleOrder(orderNumber);
+        // console.log(order);
         return {
 
-            products: [
-                {
-                    productName: "Product Name",
-                    quantity: 1,
-                    price: 3.99,
-                    discount: 0,
-                    size: "S",
-                    colour: "Black",
-                    orderNumber: "0850318003",
-                    imageLink: "/images/tempImages/tempImg1_1.jpg",
-                    wishlisted: true,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 2,
-                    price: 3.99,
-                    discount: 0.2,
-                    size: "M",
-                    colour: "Black",
-                    orderNumber: "0850318004",
-                    imageLink: "/images/tempImages/tempImg1_2.jpg",
-                    wishlisted: false,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 4,
-                    price: 3.99,
-                    discount: 0.4,
-                    size: "XL",
-                    colour: "Blue",
-                    orderNumber: "0850318005",
-                    imageLink: "/images/tempImages/tempImg1_3.jpg",
-                    wishlisted: false,
-                },
-            ],
+            products: order.line_items[0].products,
 
-            firstName: "John",
-            lastName: "Doe",
-            email: "johndoe@email.com",
-            phone: "(123) 456-7890",
-            address: "123 Street Ave.",
-            unit: "Unit A",
-            city: "Toronto",
-            zip: "A1A 2B2",
-            country: "Canada",
-            province: "Ontario",
+            firstName: order.line_items[0].billingInfo.firstName,
+            lastName: order.line_items[0].billingInfo.lastName,
+            email: order.line_items[0].billingInfo.email,
+            phone: order.line_items[0].billingInfo.phone,
+            address: order.line_items[0].billingInfo.address,
+            unit: order.line_items[0].billingInfo.unit,
+            city: order.line_items[0].billingInfo.city,
+            zip: order.line_items[0].billingInfo.zip,
+            country: order.line_items[0].billingInfo.country,
+            province: order.line_items[0].billingInfo.province,
         }
     } else {
-        console.log("not");
+        // console.log("not");
         if (ctx.res) {
             ctx.res.writeHead(302, {
                 Location: "/",

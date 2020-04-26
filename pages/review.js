@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router from "next/router";
@@ -8,7 +8,7 @@ import { buildCheckout } from '../lib/apiRequester'
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
 import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
-
+import {  getUserCart, deleteCart} from '../lib/userAuth';
 let loading = false;
 
 export class Review extends React.Component {
@@ -26,39 +26,6 @@ export class Review extends React.Component {
             shippingInfo: undefined,
 
             products: [
-                {
-                    productName: "Product Name",
-                    quantity: 1,
-                    price: 3.99,
-                    discount: 0,
-                    size: "S",
-                    colour: "Black",
-                    orderNumber: "0850318003",
-                    imageLink: "/images/tempImages/tempImg1_1.jpg",
-                    wishlisted: true,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 2,
-                    price: 3.99,
-                    discount: 0.2,
-                    size: "M",
-                    colour: "Black",
-                    orderNumber: "0850318004",
-                    imageLink: "/images/tempImages/tempImg1_2.jpg",
-                    wishlisted: false,
-                },
-                {
-                    productName: "Product Name",
-                    quantity: 4,
-                    price: 3.99,
-                    discount: 0.4,
-                    size: "XL",
-                    colour: "Blue",
-                    orderNumber: "0850318005",
-                    imageLink: "/images/tempImages/tempImg1_3.jpg",
-                    wishlisted: false,
-                },
             ],
 
             sameAsShipping: false,
@@ -95,20 +62,20 @@ export class Review extends React.Component {
         return (product.price * (1 - product.discount)) * product.quantity;
     }
 
-    getTotal() {
+    getTotal(cart) {
 
         let total = 0;
 
-        for (let i = 0; i < this.state.products.length; i++) {
-            total += this.getSubTotal(this.state.products[i]);
+        for (let i = 0; i < cart.length; i++) {
+            total += this.getSubTotal(cart[i]);
         }
 
         return total;
     }
 
     handleChange = (e) => {
-
-        if (e.target.name === "phone") {
+        
+        if (e.target.name === "billingphone") {
 
             let number = formatNumber(e.target.value.trim());
             e.target.value = number;
@@ -191,13 +158,13 @@ export class Review extends React.Component {
 
         if (this.validate(formData) && this.state.shippingInfo) {
             // Router.push("/confirmation");
-
+            
             // TODO: Make payment call.
             // TODO: Add order to user.
-            buildCheckout(formData, this.state.products, {price: this.state.price, quantity: this.state.numberOfItems, address: formData.address})
+            buildCheckout(formData, this.state.products, {price: this.state.total, quantity: this.state.numberOfItems, address: formData.address})
             .then((data) => {
 
-                console.log("hiiii");
+                // console.log("hiiii");
 
                 if (data.message === "ok") {
                     loading = false;
@@ -215,8 +182,8 @@ export class Review extends React.Component {
         loading = false;
 
         const { router } = this.props;
-
-        let value = this.getTotal();
+        let cart =  getUserCart();
+        let value = this.getTotal(cart);
 
         let shipping = (value > 200) ? 0 : 20;
 
@@ -224,34 +191,28 @@ export class Review extends React.Component {
 
         let total = value + shipping + tax;
 
-        // let shippingInfo = {
-        //     firstName: "",
-        //     lastName: "",
-        //     email: "",
-        //     phone: "",
-        //     address: "",
-        //     unit: "",
-        //     city: "",
-        //     zip: "",
-        //     country: "",
-        //     province: ""
-        // }
+
 
         let shippingInfo = undefined;
 
-        console.log(router.query.formData);
+        let num = 0; 
+        cart.forEach((item)=>{
+            num += item.quantity
+        });
         
         if (router.query.formData) {
             shippingInfo = JSON.parse(router.query.formData)
         } 
+        
+
 
         this.setState({...this.state, total: total.toFixed(2), 
                                       value: value.toFixed(2), 
                                       tax: tax.toFixed(2), 
                                       shipping: shipping.toFixed(2),
-                                      shippingInfo});
+                                      shippingInfo,products: (cart) ? cart : [] ,numberOfItems : num}
+                                      );
     }
-
     render() {
 
         return <Layout fullPage={false}>
@@ -264,7 +225,7 @@ export class Review extends React.Component {
                     <div className="cartItems">
                         {this.state.products.map((product, i) => {
                             
-                            return <CheckoutProduct product={product} key={product.orderNumber}/>
+                            return <CheckoutProduct product={product} key={i}/>
                         })}
                         <div className="subTotals">
                             <div className="value">
@@ -349,7 +310,7 @@ export class Review extends React.Component {
                                 </div>
                                 <div className="container formLeft">
                                     <label htmlFor="billingcountry" className={`${(this.state.billingcountry !== "") ? "text": ""}`}>County / Region</label>
-                                    <select onChange={this.handleChange} name="country" 
+                                    <select onChange={this.handleChange} name="billingcountry" 
                                         className={`CountyRegion ${(this.state.errors.countryError) ? "error" : ""} ${(this.state.billingcountry !== "") ? "text": ""}`}
                                         autoComplete="billingcountry">
                                         <option value="" defaultChecked>County / Region</option>

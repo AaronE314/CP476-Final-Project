@@ -1,6 +1,16 @@
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-export default async (req, res) => {
+
+import nextConnect from 'next-connect';
+// import middleware from '../../../middleware/database';
+import applyMiddleware from '../../../middleware/withMiddleware';
+import {ObjectID} from 'mongodb';
+const handler = nextConnect();
+
+// handler.use(middleware);
+applyMiddleware(handler);
+
+handler.post(async (req, res) => {
 
     // const session = await stripe.checkout.sessions.create({
     //     payment_method_types: ["card"],
@@ -23,24 +33,40 @@ export default async (req, res) => {
     now += now + Math.floor(Math.random() * 10)
     // format
     let orderNumber = [now.slice(0, 4), now.slice(4, 10), now.slice(10, 14)].join('-')
-
+    let body = JSON.parse(req.body)
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     const order = {
         payment_method_types: ["card"],
         orderNumber: orderNumber,
+        date:date, 
         line_items: [
             {
-                amount: req.body.price,
+                amount: body.price,
                 currency: "cad",
-                quantity: req.body.quantity,
-                address: req.body.address,
-                billingInfo: req.body.billingInfo,
-                products: req.body.products
+                quantity: body.quantity,
+                address: body.address,
+                billingInfo: body.billingInfo,
+                products: body.products
             }
         ]
     }
-
+    
+    if (body.email !== undefined){
+        
+        order.email = body.email; 
+    }
+    
+    let doc = await req.db.collection('Orders').insertOne(order).catch(function(err){throw err; })
+    
     // TODO: add order to db
 
+    try {
+        req.dbClient.close().catch();
+    } catch(e) {
+        
+    }
     res.json({message: "ok", orderNumber: orderNumber});
 
-}; 
+}); 
+export default (req, res) => handler.apply(req, res) 

@@ -1,22 +1,27 @@
 
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/database';
+import applyMiddleware from '../../../middleware/withMiddleware';
+// import middleware from '../../../middleware/database';
 import cookies from '../../../lib/cookies';
 
 const handler = nextConnect();
 
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler);
 
 handler.post(async (req, res) => {
 
-    if (req.session.userId) {
-        req.session.userId = undefined;
+    if (req.email) {
+        req.email = undefined;
         res.cookie('token', "", { httpOnly: true, maxAge: 0});
+        
         res.send({
             status: 'ok',
             message: "User sucessfully signed out"
         });
     } else {
+        
+
         res.send({
             status: 'error',
             message: "No User signed In"

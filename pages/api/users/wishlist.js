@@ -1,11 +1,13 @@
 
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/databaseUpdater';
+import applyMiddleware from '../../../middleware/withMiddleware';
+// import middleware from '../../../middleware/databaseUpdater';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
 
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler, "updater");
 /**
  * @author Austin Bursey
  * @public
@@ -15,9 +17,9 @@ handler.use(middleware);
  */
 handler.get(async (req, res) => {
     try{
-        if (req.session.userId !== undefined){
+        if (req.email) {
             let doc = {}
-            doc = await req.db.collection('Users').find({_id : req.session.userId },{projection:{_id : 0,wishlist:1}}).toArray();
+            doc = await req.db.collection('Users').find({_id : req.email },{projection:{_id : 0,wishlist:1}}).toArray();
     
             console.log(doc);
             res.json(doc)
@@ -44,25 +46,22 @@ handler.post(async (req, res) => {
         
         let doc = await req.db.collection('Users').find({"email" :userID },{projection:{_id : 0,wishlist:1}}).toArray();
         let wishlist = doc[0].wishlist
-        console.log(wishlist);
         let index = -1 ; 
         wishlist.map((item , i )=>{
             if (item.productID === product.productID){
                 index = i; 
             }
         });
-        console.log("index in wishlist is :", index);
         if (index === -1){
-            console.log("Adding")
             wishlist.push(product);
         }else {
-            console.log("removing"); 
             wishlist.splice(index,1);
         }
         let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{wishlist:wishlist}}, {upsert: false}).catch(function(err){throw err; })
     
 
-    
+        
+
         res.status(200).send({
             status: 'ok',
             message: 'Item added seccessfully',

@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
@@ -57,11 +57,16 @@ export class Categories extends React.Component {
             const { router } = this.props;
             let title = router.query.mainCategory;
 
-            if (router.query.subCategory) {
-                title += " " + router.query.subCategory;
+            if (title == null) {
+                title = `"` + router.query.search + `"`;
+            } else {
+                if (router.query.subCategory) {
+                    title += " " + router.query.subCategory;
+                }
             }
+
             return title;
-            1
+            
     }
 
     applyFilters = (products) => {
@@ -95,7 +100,7 @@ export class Categories extends React.Component {
     }
 
     maxShown = (width, height, showMore) => {
-        console.log(width, height);
+        // console.log(width, height);
         return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : 8;
     }
     
@@ -123,7 +128,7 @@ export class Categories extends React.Component {
         let search = router.query.search ? unescape(router.query.search) : undefined;
 
         if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
-            console.log("query by category");
+            // console.log("query by category");
             let productArray  = await getProducts(gender, subCategory);
             this.setState({...this.state, products: productArray, loading: false});
         } else if (isLetter(search)){
@@ -151,32 +156,49 @@ export class Categories extends React.Component {
             || subCategory !== prevProps.router.query.subCategory
             || router.query.search !== prevProps.router.query.search) {
 
-            console.log("gender = " + isLetter(gender)); 
-            console.log("subCategory = " + isLetter(subCategory));
+            // console.log("gender = " + isLetter(gender)); 
+            // console.log("subCategory = " + isLetter(subCategory));
             let search = router.query.search ? unescape(router.query.search) : undefined;
             if ((gender !== undefined || subCategory !== undefined) && isLetter(gender) && isLetter(subCategory)){
-                console.log("a");
+                // console.log("a");
                 let productArray  = await getProducts(gender, subCategory);
                 this.state.products.length = 0 ;
                 this.setState({...this.state, products: productArray, loading: false});
             } else if (isLetter(search)){
-                console.log("b");
+                // console.log("b");
                 let productArray  = await getProductsSearch(search);
                 this.setState({...this.state, products: productArray, loading: false});
             }
         }
     }
+    // getLink(item) {
+
+    //     const { router } = this.props;
+
+    //     let link = item.link;
+
+    //     if (item.filter !== "") {
+    //         return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+    //     }
+    //     return {pathname: link, query: {mainCategory: router.query.mainCategory}};
+    // }
+
     getLink(item) {
 
         const { router } = this.props;
 
-        let link = item.link;
+        let link = item.link;        
 
         if (item.filter !== "") {
-            return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+            // return {pathname: link, query: {mainCategory: router.query.mainCategory, subCategory: item.filter}};
+            return `${link}?mainCategory=${router.query.mainCategory}&subCategory=${item.filter}`
         }
-        return {pathname: link, query: {mainCategory: router.query.mainCategory}};
+        return `${link}?mainCategory=${router.query.mainCategory}`
+        // return {pathname: link, query: {mainCategory: this.props.categoryrouter.query.mainCategory}};
+
+        
     }
+
 
     showMore() {
         this.setState({...this.state, showMore: this.state.showMore + 1, numberShown: this.maxShown(window.innerWidth, window.innerHeight, this.state.showMore + 1)})
@@ -211,8 +233,6 @@ export class Categories extends React.Component {
     render() {
 
         let products = this.applyFilters(this.state.products);
-
-        console.log(products.length);
 
         return <Layout>
 
@@ -521,8 +541,8 @@ export class Categories extends React.Component {
                     }
 
                     .mainContent {
-                        margin-left: 32px;
-                        width: calc(100% - (2 * 32px));
+                        margin: 32px 16px;
+                        width: calc(100% - (2 * 16px));
                     }
 
                 }
@@ -531,6 +551,7 @@ export class Categories extends React.Component {
 
                     .products {
                         justify-content: center;
+                        grid-template-columns: repeat(auto-fill,minmax(100%,1fr));
                     }
 
                 }

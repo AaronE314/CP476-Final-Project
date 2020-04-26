@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link'
 import CartProduct from '../components/CartProduct';
 import FlipMove from 'react-flip-move';
@@ -32,7 +32,7 @@ export class Cart extends React.Component {
         let products = this.state.products;
 
         if (property === "quantity"){
-            console.log("GOING INTO userAuth.js");
+            // console.log("GOING INTO userAuth.js");
             await updateCart(products[i], false, "single", value - products[i].quantity);
             
         }else if (property === "wishlisted"){
@@ -83,12 +83,12 @@ export class Cart extends React.Component {
     }
 
     checkout = () => {
-        Router.push("/checkout");
+        Router.push(`/checkout?products=${JSON.stringify(this.state.products)}`, "checkout");
     }
 
     componentDidMount() {
         let cart =  getUserCart();
-        console.log("cart",cart)
+        // console.log("cart",cart)
         this.setState({...this.state, products: (cart) ? cart : []});
     }
     render() {

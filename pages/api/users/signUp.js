@@ -6,7 +6,8 @@
  * @argument email [in body] that you would like to add to collection. 
  */
 import nextConnect from 'next-connect';
-import middleware from '../../../middleware/database';
+// import middleware from '../../../middleware/database';
+import applyMiddleware from '../../../middleware/withMiddleware';
 
 import * as argon2 from 'argon2';
 import isEmail from 'validator/lib/isEmail';
@@ -18,11 +19,12 @@ require('dotenv').config();
 
 const handler = nextConnect();
 
-handler.use(middleware);
+// handler.use(middleware);
+applyMiddleware(handler);
 
 handler.post(async (req, res) => {
 
-    console.log("signUp");
+    // console.log("signUp");
 
     let body = JSON.parse(req.body);
 
@@ -51,11 +53,12 @@ handler.post(async (req, res) => {
             verified: false
         }))
         .then((user) => {
-            req.session.userId = user.insertedId;
+            // req.session.userId = user.insertedId;
             const addedUser = user.ops[0]
             sendVerification(addedUser.email);
             const token = jwt.sign({ username: addedUser.email, admin: addedUser.admin}, process.env.jwtSecret, {expiresIn: '7d'});
-            res.cookie('token', token, { httpOnly: true, maxAge: 604800});
+            res.cookie('token', token, { httpOnly: true, path: "/"});
+
             res.status(201).send({
                 status: 'ok',
                 message: 'User signed up successfully',
@@ -64,10 +67,12 @@ handler.post(async (req, res) => {
                            shoppingCart: addedUser.shoppingCart}
             });
         })
-        .catch(error => res.send({
-            status: 'error',
-            message: error.toString()
-        }));
+        .catch(error => {
+            res.send({
+                status: 'error',
+                message: error.toString()
+            })
+        });
 
 });
 

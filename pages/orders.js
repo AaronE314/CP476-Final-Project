@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/layout';
-import Order from '../components/order';
+import Layout from '../components/Layout';
+import Order from '../components/Order';
 import { isSignedIn } from '../lib/userAuth';
 import Router from 'next/router';
-
+import {getOrders} from "../lib/apiRequester"
 const Orders = ({orders}) => {
 
     // const [orders, setOrders] = useState();
@@ -13,9 +13,11 @@ const Orders = ({orders}) => {
     return <Layout fullPage={false}>
         
         <div className="orders">
-            {orders.map((order, i) => {
+            { (orders.length > 0  ) 
+            ? orders.map((order, i) => {
+                
                 return <Order order={order} key={i}/>
-            })}
+            }): <h3>You currently have no orders.</h3>}
         </div>
         
 
@@ -51,48 +53,10 @@ Orders.getInitialProps = async (ctx) => {
 
     if (await isSignedIn()) {
 
-        // TODO: get orders for db
+        let orders = await getOrders();
+        // console.log(orders);
         return {
-            orders: [
-            {
-                orderId: "1234567890",
-                date: "27/03/2020",
-                cost: "229.60",
-                Quantity: 17,
-                Address: "123 Street Ave. Toronto, ON",
-                productImages: [
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    
-                ]
-            },
-            {
-                orderId: "0987654321",
-                date: "20/02/2020",
-                cost: "70.49",
-                Quantity: 5,
-                Address: "123 Street Ave. Toronto, ON",
-                productImages: [
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    '/images/tempImages/tempImg1_1.jpg',
-                    
-                ]
-            }
-        ]};
+            orders: orders};
     } else {
         if (ctx.res) {
             ctx.res.writeHead(302, {

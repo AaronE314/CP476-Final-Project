@@ -5,11 +5,8 @@ import applyMiddleware from '../../../middleware/withMiddleware';
 import {ObjectID} from 'mongodb';
 
 const handler = nextConnect();
-
 // handler.use(middleware);
 applyMiddleware(handler, "updater");
-
-
 /**
  * @author Austin Bursey
  * @public
@@ -21,42 +18,22 @@ applyMiddleware(handler, "updater");
 handler.post(async (req, res) => {
 
     let body = req.body
-    let { userID, product,amount } = JSON.parse(body);
+    let { userID} = JSON.parse(body);
     if (userID !== undefined){
 
 
-         let doc = await req.db.collection('Users').find({"email" : userID },{projection:{_id : 0,shoppingCart:1}}).toArray();
-        let shoppingCart = doc[0].shoppingCart
-        let quantity ; 
-        let index; 
-        shoppingCart.map((item,i)=>{
-            if (item.productID === product.productID && item.size === product.size && item.colours.hex === product.colours.hex){
-                if (amount === "single"){
-                    item.quantity -=1; 
-                    quantity = item.quantity;
-                    index  = i 
-                }else if (amount == "all"){
-                    item.quantity = 0 
-                    quantity = item.quantity;
-                    index  = i 
-                }
-;   
-            }
-        })
-        if (index !== undefined &&  quantity  <= 0 ){
+        
+        let shoppingCart = []
 
-            shoppingCart.splice(index,1);
-        }
         
         
         let variable = await req.db.collection('Users').updateOne({"email" : userID }, {$set:{shoppingCart:shoppingCart}}, {upsert: false}).catch(function(err){throw err; })
 
         
 
-        
         res.status(200).send({
             status: 'ok',
-            message: `Item removed from shopping cart successfully quantity now ${quantity}`,
+            message: `Item removed ALL from shopping cart successfully`,
         }); 
         
     }

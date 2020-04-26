@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT",
+    "deploy": "next build && next export && git add -f out/ && git commit -m \"Deploy gh-pages\" && git push origin `git subtree split --prefix out master`:gh-pages --force",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
@@ -27,6 +29,8 @@
     "react-flip-move": "^3.0.4",
     "react-to-print": "^2.6.3",
     "url-loader": "^4.0.0",
-    "validator": "^13.0.0"
-  }
+    "validator": "^13.0.0",
+    "webpack": "^4.43.0"
+  },
+  "devDependencies": {}
 }

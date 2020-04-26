@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import Link from 'next/link';
 import ItemDisplayBox from '../components/ItemDisplayBox';
 import { withRouter } from 'next/router';
@@ -126,6 +126,7 @@ export class Wishlist extends React.Component {
                     grid-row-gap: 8px;
                     grid-column-gap: 32px;
                     grid-template-columns: repeat(auto-fill, minmax(343px, 1fr));
+                    margin-bottom: 32px;
                 }
 
                 .filterby label {
@@ -261,7 +262,7 @@ export class Wishlist extends React.Component {
                 @media only screen and (max-width: 610px) {
 
                     .mainContent {
-                        margin-top: 32px;
+                        margin: 32px 16px 32px 16px;
                     }
                 }
 
