@@ -84,7 +84,9 @@ export class Categories extends React.Component {
 
                 if (filter.low !== undefined) {
 
-                    matchesPrice = matchesPrice || item.price > filter.low && item.price < filter.high;
+                    let price = Math.round((item.price * (1 - item.discount)) * 100) / 100
+
+                    matchesPrice = matchesPrice || price > filter.low && price < filter.high;
 
                 } else {
 
