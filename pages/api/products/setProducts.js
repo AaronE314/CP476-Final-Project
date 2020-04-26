@@ -24,13 +24,6 @@ handler.post(async (req, res) => {
         res.json({message: 'ok'});
     }catch(err){
         throw err;
-    } finally {
-        console.log("closing");
-        try {
-            req.dbClient.close().catch();
-        } catch(e) {
-            
-        }
     }
 
 });

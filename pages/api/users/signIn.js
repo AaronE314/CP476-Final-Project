@@ -48,7 +48,7 @@ handler.post(async (req, res) => {
                 options = { httpOnly: true, maxAge: 604800, path: "/"}
             }
 
-            console.log("closing");
+            
             try {
                 req.dbClient.close().catch();
             } catch(e) {
@@ -65,7 +65,7 @@ handler.post(async (req, res) => {
             });
         })
         .catch(error => {
-            console.log("closing");
+            
             try {
                 req.dbClient.close().catch();
             } catch(e) {
