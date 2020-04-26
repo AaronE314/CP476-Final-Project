@@ -6,7 +6,7 @@ import Router from "next/router";
 import { withRouter } from 'next/router';
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
-import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
+import { isValidNumber, isValidZip, formatNumber, validAddress } from '../lib/validators';
 import {  getUserCart} from '../lib/userAuth';
 export class Checkout extends React.Component {
 
@@ -79,7 +79,7 @@ export class Checkout extends React.Component {
 
     }
 
-    validate = (formData) => {
+    validate = async (formData) => {
 
         let errors = {
             firstNameError: "",
@@ -115,6 +115,10 @@ export class Checkout extends React.Component {
             errors.zipError = "Expected Format: A1A 1A1";
         }
 
+        if (!(await validAddress(formData.country, formData.address, formData.city, formData.province, formData.zip))) {
+            errors.addressError = "Invalid Address";
+        }
+
         this.setState({...this.state, errors});
 
         return valid;
@@ -137,9 +141,15 @@ export class Checkout extends React.Component {
             province: this.state.province
         }
 
-        if (this.validate(formData)) {
-            Router.push(`/review?formData=${JSON.stringify(formData)}&products=${JSON.stringify(this.state.products)}}`, "review");
-        }
+        this.validate(formData).then(valid => {
+            if (valid) {
+                Router.push(`/review?formData=${JSON.stringify(formData)}&products=${JSON.stringify(this.state.products)}}`, "review");
+            }
+        })
+
+        // if (this.validate(formData)) {
+            
+        // }
 
     }
     componentDidMount(){
