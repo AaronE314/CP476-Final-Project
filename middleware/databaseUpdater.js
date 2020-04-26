@@ -23,12 +23,8 @@ export async function databaseUpdater(req, res, next) {
   }
 }
 
-process.on('SIGINT', () => {
-  client.close();
-  process.exit();
-});
-process.on('SIGTERM', () => {
-  client.close();
-  process.exit();
-});
+
+const middleware = nextConnect();
+
+middleware.use(databaseUpdater);
 export default databaseUpdater;

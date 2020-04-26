@@ -22,4 +22,7 @@ export async function databaseReadOnly(req, res, next) {
   }
 }
 
+const middleware = nextConnect();
+
+middleware.use(databaseReadOnly);
 export default databaseReadOnly;
