@@ -56,7 +56,7 @@ handler.post(async (req, res) => {
         
         res.status(200).send({
             status: 'ok',
-            message: `Item removed from shopping cart seccessfully quantity now ${quantity}`,
+            message: `Item removed from shopping cart successfully quantity now ${quantity}`,
         }); 
         
     }
