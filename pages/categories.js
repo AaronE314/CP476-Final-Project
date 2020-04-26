@@ -83,7 +83,9 @@ export class Categories extends React.Component {
 
                 if (filter.low !== undefined) {
 
-                    matchesPrice = matchesPrice || item.price > filter.low && item.price < filter.high;
+                    let price = Math.round((item.price * (1 - item.discount)) * 100) / 100
+
+                    matchesPrice = matchesPrice || price > filter.low && price < filter.high;
 
                 } else {
 
@@ -99,8 +101,8 @@ export class Categories extends React.Component {
     }
 
     maxShown = (width, height, showMore) => {
-        // console.log(width, height);
-        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : 8;
+        console.log(width, height);
+        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : (8 * showMore);
     }
     
     handleResize = () => {

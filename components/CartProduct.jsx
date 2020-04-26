@@ -99,7 +99,7 @@ export class CartProduct extends React.Component{
                         </tr>
                         <tr>
                             <td>Subtotal:</td>
-                            <td>${this.getAdjustedPrice() * this.props.product.quantity}</td>
+                            <td>${(this.getAdjustedPrice() * this.props.product.quantity).toFixed(2)}</td>
                         </tr>
                     </tbody>
                 </table>
