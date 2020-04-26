@@ -102,8 +102,8 @@ export class Categories extends React.Component {
     }
 
     maxShown = (width, height, showMore) => {
-        // console.log(width, height);
-        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : 8;
+        console.log(width, height);
+        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : (8 * showMore);
     }
     
     handleResize = () => {
