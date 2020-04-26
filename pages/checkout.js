@@ -175,8 +175,6 @@ export class Checkout extends React.Component {
                     <div className="shipping">
                         
                         <h1>Shipping Information</h1>
-
-                        <p>Been here before? <a href="#">Sign in</a>, or <a href="#">Sign up</a> to checkout faster in the future.</p>
                         
                         <form className="shippingInfo" autoComplete="on" method="post" onSubmit={this.handleSubmit}>
                             <div className="formInputs">
