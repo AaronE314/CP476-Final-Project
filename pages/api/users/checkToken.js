@@ -20,8 +20,8 @@ handler.get(async (req, res) => {
     } else {
 
         try {
-            jwt.verify(token, process.env.jwtSecret);
-            res.json({loggedIn: true, validToken: true});
+            let payload = jwt.verify(token, process.env.jwtSecret);
+            res.json({loggedIn: true, validToken: true, payload});
         } catch(err) {
             res.json({loggedIn: true, validToken: false});
         }

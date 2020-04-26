@@ -13,7 +13,7 @@ handler.post(async (req, res) => {
 
     if (req.email) {
         req.email = undefined;
-        res.cookie('token', "", { httpOnly: true, maxAge: 0});
+        res.cookie('token', "", { httpOnly: true, maxAge: 0, path: "/"});
         
         res.send({
             status: 'ok',
