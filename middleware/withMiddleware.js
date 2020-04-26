@@ -11,7 +11,7 @@ const applyMiddleware = (handler, type = "normal") => {
 
     handler.use(cookieParser());
     handler.use(auth);
-    console.log(handler);
+    
     if (type === "normal") {
         handler.use(database);
     } else if (type === "updater") {

@@ -21,5 +21,14 @@ export async function databaseReadOnly(req, res, next) {
     throw err; 
   }
 }
-
+client.on('connectionPoolCreated', event => {});
+client.on('connectionPoolClosed', event => {});
+client.on('connectionCreated', event => {});
+client.on('connectionReady', event => {});
+client.on('connectionClosed', event => {});
+client.on('connectionCheckOutStarted', event => {});
+client.on('connectionCheckOutFailed', event => {});
+client.on('connectionCheckedOut', event => {});
+client.on('connectionCheckedIn', event => {});
+client.on('connectionPoolCleared', event => {});
 export default databaseReadOnly;
