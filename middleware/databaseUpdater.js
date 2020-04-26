@@ -23,5 +23,12 @@ export async function databaseUpdater(req, res, next) {
   }
 }
 
-
+process.on('SIGINT', () => {
+  client.close();
+  process.exit();
+});
+process.on('SIGTERM', () => {
+  client.close();
+  process.exit();
+});
 export default databaseUpdater;
