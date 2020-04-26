@@ -6,7 +6,7 @@ import Router from "next/router";
 import { withRouter } from 'next/router';
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
-import { isValidNumber, isValidZip, formatNumber, validAddress } from '../lib/validators';
+import { isValidNumber, isValidZip, formatNumber} from '../lib/validators';
 import {  getUserCart} from '../lib/userAuth';
 export class Checkout extends React.Component {
 
@@ -113,10 +113,6 @@ export class Checkout extends React.Component {
 
         if (!isValidZip(formData.zip)) {
             errors.zipError = "Expected Format: A1A 1A1";
-        }
-
-        if (!(await validAddress(formData.country, formData.address, formData.city, formData.province, formData.zip))) {
-            errors.addressError = "Invalid Address";
         }
 
         this.setState({...this.state, errors});
