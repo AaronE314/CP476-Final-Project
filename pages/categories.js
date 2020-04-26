@@ -23,10 +23,9 @@ export class Categories extends React.Component {
             category: [
                 {name: "View All", link: "/categories", filter: ""},
                 {name: "Shirts", link: "/categories", filter: "shirts"},
-                {name: "T-shirts", link: "/categories", filter: "t-shirts"},
-                {name: "Sweaters & Cardigans", link: "/categories", filter: "sweaters"},
+                {name: "Sweaters", link: "/categories", filter: "sweaters"},
                 {name: "Pants", link: "/categories", filter: "pants"},
-                {name: "Jeans", link: "/categories", filter: "jeans"},
+                {name: "Shorts", link: "/categories", filter: "shorts"},
                 {name: "Joggers", link: "/categories", filter: "joggers"}
             ],
             showMore: 1,
