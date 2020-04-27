@@ -32,7 +32,6 @@ export class Cart extends React.Component {
         let products = this.state.products;
 
         if (property === "quantity"){
-            // console.log("GOING INTO userAuth.js");
             await updateCart(products[i], false, "single", value - products[i].quantity);
             
         }else if (property === "wishlisted"){
@@ -90,7 +89,6 @@ export class Cart extends React.Component {
 
     componentDidMount() {
         let cart =  getUserCart();
-        // console.log("cart",cart)
         this.setState({...this.state, products: (cart) ? cart : []});
     }
     render() {

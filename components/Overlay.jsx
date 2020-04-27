@@ -6,6 +6,11 @@ import styles from "../css/Overlay.module.css";
 
 import { getOverlay } from "../lib/apiRequester";
 
+/**
+ * Defines the look and functionality of the overlay
+ * 
+ * @author Aaron Exley
+ */
 export class Overlay extends React.Component {
 
     constructor(props) {
@@ -37,11 +42,9 @@ export class Overlay extends React.Component {
         let link = item.link;
         
         if (item.filter !== "") {
-            // return {pathname: link, query: {mainCategory: this.props.category, subCategory: item.filter}};
             return `${link}?mainCategory=${this.props.category}&subCategory=${item.filter}`
         }
         return `${link}?mainCategory=${this.props.category}`
-        // return {pathname: link, query: {mainCategory: this.props.category}};
 
         
     }
@@ -75,8 +78,6 @@ export class Overlay extends React.Component {
     }
 
     render() {
-
-        // document.documentElement.style.setProperty("--overlayOffset", (112 + this.props.offset) + "px");
 
         return <div className={styles.overlay}>
 

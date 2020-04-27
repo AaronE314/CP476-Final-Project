@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout';
-import Link from 'next/link'
 import CheckoutProduct from '../components/CheckoutProduct';
 import Router, { useRouter } from "next/router";
 import { withRouter } from 'next/router';
 import { getUser} from '../lib/userAuth';
 import {getSingleOrder, checkToken} from '../lib/apiRequester';
 import { countries } from '../public/countriesRegions'
-import isEmail from 'validator/lib/isEmail';
-import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
 
 const OrderReview = (props) => {
 
     const router = useRouter();
-    const [numberOfItems, setNumberOfItems] = useState(8);
     const [total, setTotal] = useState(0);
     const [value, setValue] = useState(0);
     const [shipping, setShipping] = useState(0);
@@ -43,26 +39,7 @@ const OrderReview = (props) => {
 
         let tempTax = value * 0.13;
 
-        let tempTotal = tempValue + tempShipping + tempTax;
-
-        // let shippingInfo = {
-        //     firstName: "",
-        //     lastName: "",
-        //     email: "",
-        //     phone: "",
-        //     address: "",
-        //     unit: "",
-        //     city: "",
-        //     zip: "",
-        //     country: "",
-        //     province: ""
-        // }
-
-        // console.log(router.query.formData);
-        
-        // if (router.query.formData) {
-        //     shippingInfo = JSON.parse(router.query.formData)
-        // } 
+        let tempTotal = tempValue + tempShipping + tempTax; 
 
         setTotal(tempTotal.toFixed(2));
         setValue(tempValue.toFixed(2));
@@ -542,7 +519,6 @@ OrderReview.getInitialProps = async (ctx) => {
 
         let orderNumber = ctx.query.orderNumber
         let order = await getSingleOrder(orderNumber, user);
-        // console.log(order);
         return {
 
             products: order.line_items[0].products,
@@ -559,7 +535,6 @@ OrderReview.getInitialProps = async (ctx) => {
             province: order.line_items[0].billingInfo.province,
         }
     } else {
-        // console.log("not");
         if (ctx.res) {
             ctx.res.writeHead(302, {
                 Location: "/",

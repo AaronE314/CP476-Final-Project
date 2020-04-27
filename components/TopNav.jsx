@@ -9,6 +9,11 @@ import { getUserEmailName, isSignedIn, getNumberOfItemsInCart, setUser, initUser
 import { signOut } from '../lib/apiRequester'
 import Router from 'next/router';
 
+/**
+ * Defines the TopNav
+ * 
+ * @author Aaron Exley
+ */
 export class TopNav extends React.Component {
 
     constructor(props) {

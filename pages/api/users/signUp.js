@@ -19,12 +19,9 @@ require('dotenv').config();
 
 const handler = nextConnect();
 
-// handler.use(middleware);
 applyMiddleware(handler);
 
 handler.post(async (req, res) => {
-
-    // console.log("signUp");
 
     let body = JSON.parse(req.body);
 

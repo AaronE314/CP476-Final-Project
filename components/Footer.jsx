@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from "../css/Footer.module.css";
 
-
+/**
+ * Defines the component for the footer
+ * 
+ * @author Austin Bursey
+ */
 export class Footer extends React.Component {
 
     render() {

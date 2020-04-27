@@ -60,7 +60,6 @@ Orders.getInitialProps = async (ctx) => {
     let user = (ctx.req && loggedIn) ? res.payload.username : undefined;
 
     if (loggedIn) {
-        console.log("Signed In");
         let orders = await getOrders(user);
         return {
             orders: orders

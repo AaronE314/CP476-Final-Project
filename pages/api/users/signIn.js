@@ -6,7 +6,6 @@
  * @argument password [in body] user password. 
  */
 import nextConnect from 'next-connect';
-// import middleware from '../../../middleware/database';
 import applyMiddleware from '../../../middleware/withMiddleware';
 import * as argon2 from 'argon2';
 import cookies from '../../../lib/cookies';
@@ -16,12 +15,9 @@ require('dotenv').config();
 
 let handler = nextConnect();
 
-// handler.use(middleware);
 applyMiddleware(handler);
 
 handler.post(async (req, res) => {
-
-    // console.log("signIn");
 
     let body = req.body
     let { email, password, expires } = JSON.parse(body);
@@ -41,14 +37,12 @@ handler.post(async (req, res) => {
             return Promise.reject(Error("The email does not exist"));
         })
         .then((user) => {
-            // req.session.userId = user._id;
             const token = jwt.sign({ username: user.email, admin: user.admin}, process.env.jwtSecret, {expiresIn: '7d'});
             let options = { httpOnly: true, path: "/"};
             if (expires) {
                 options = { httpOnly: true, maxAge: 604800, path: "/"}
             }
 
-            // console.log(token);
             res.cookie('token', token, options);
             return res.send({
                 status: 'ok',

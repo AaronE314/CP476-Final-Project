@@ -4,10 +4,16 @@ import styles from '../css/Dialog.module.css';
 import SignUpDialog from './SignUpDialog';
 import SignInDialog from './SignInDialog';
 
-// import '../css/Dialog.module.css';
-
+/**
+ * Defines the component for the a popup dialog
+ * 
+ * @author Aaron Exley
+ */
 export class Dialog extends React.Component {
 
+    /**
+     * @param {*} props 
+     */
     constructor(props) {
         super(props);
 
@@ -30,8 +36,6 @@ export class Dialog extends React.Component {
     }
 
     close() {
-
-        // this.setState({...this.state, hidden: true});
 
         if (!this.state.hidden) {
             if (this.props.close) {

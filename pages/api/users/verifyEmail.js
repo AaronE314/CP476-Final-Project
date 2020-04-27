@@ -1,6 +1,5 @@
 import nextConnect from 'next-connect';
 import applyMiddleware from '../../../middleware/withMiddleware';
-// import middleware from '../../../middleware/databaseUpdater';
 import {resendVerification} from '../../../lib/email';
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -17,7 +16,6 @@ applyMiddleware(handler);
  */
 
 handler.post(async (req, res) => {
-    console.log("Verifying Email");
     let {token} = JSON.parse(req.body);
     try{
         //Decodes and verifies the token, will throw an error if passed expiry date.

@@ -21,7 +21,6 @@ handler.get(async (req, res) => {
             let doc = {}
             doc = await req.db.collection('Users').find({"email" : req.email },{projection:{_id : 0,shoppingCart:1}}).toArray();
     
-            console.log(doc[0]);
             res.json(doc[0])
         }
     }catch(err){

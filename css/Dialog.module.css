@@ -59,7 +59,6 @@ p.error {
 
     position: relative;
     width: 256px;
-    /* height: 24px; */
     margin: 16px 0 0 0;
     text-align: left;
     
@@ -139,7 +138,6 @@ p.error {
 
 
 .submit:hover {
-    /* background: #ffeb00; */
     filter: brightness(95%);
     cursor: pointer;
 }
@@ -183,11 +181,6 @@ p.error {
     float: right;    
 }
 
-/* body:not(.dialog), body:not(.dialog) * {
-    -webkit-filter: blur(2px);
-    filter: blur(2px);   
-} */
-
 .popUpBackground {
     background: rgba(255, 255, 255, 0.418);
     position: absolute;
@@ -221,7 +214,6 @@ p.error {
 
     width: 100%;
     max-width: 256px;
-    /* width: 256px; */
     height: 16px;
     background-color: rgba(0, 0, 0, 0.07);
 
@@ -229,9 +221,6 @@ p.error {
     padding-bottom: 4px;
     padding-left: 8px;
     overflow: hidden;
-
-    /* margin: 8px;
-    margin-left: 0; */
 
     border: none;
 
@@ -252,6 +241,5 @@ p.error {
 }
 
 .clickableText:hover {
-    /* color: #414141; */
     background: var(--highlightColor);
 }

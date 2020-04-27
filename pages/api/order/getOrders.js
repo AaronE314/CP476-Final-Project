@@ -16,7 +16,6 @@ handler.get(async (req, res) => {
         
         let findQuery = {email: req.query.email}; 
 
-        // console.log(findQuery);
         doc = await req.db.collection('Orders').find(findQuery).toArray();
         res.json(doc)
     }catch(err){

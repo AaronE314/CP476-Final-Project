@@ -3,6 +3,11 @@ import styles from "../css/Order.module.css";
 import Link from 'next/link';
 import Router from 'next/router';
 
+/**
+ * Defines the overall General Layout of an order
+ * 
+ * @author Aaron Exley
+ */
 export default class Order extends React.Component {
 
     constructor(props) {
@@ -23,7 +28,6 @@ export default class Order extends React.Component {
         let shown = Math.floor((windowWidth - (192 * 2) - (windowWidth * 0.2) - (windowWidth * 0.15)) / (8 + 95));
 
         return shown;
-        // return (shown < 7) ? shown : 7;
 
     }
 

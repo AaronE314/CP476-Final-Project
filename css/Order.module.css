@@ -30,9 +30,7 @@
 }
 
 .pictures div {
-    /* width: 95px; */
     width: 10%;
-    /* width: 100%; */
     height: auto;
     background-color: #F0F0F0;
     margin-right: 8px;
@@ -45,16 +43,13 @@
 }
 
 .pictures .showMore {
-    /* width: 95px; */
     width: 10%;
     height: auto;
     text-align: center;
-    /* background: rgba(255, 255, 255, 0.75); */
     cursor: pointer;
 }
 
 .pictures .showMore p {
-    /* margin: 57% 32%; */
     margin-top: 69%;
     margin-left: -6px;
 
@@ -73,7 +68,6 @@
 
 .buttons button {
     width: 50%;
-    /* width: 105px; */
     height: 32px;
     background: var(--highlightColor);
     border: none;

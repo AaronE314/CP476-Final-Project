@@ -6,6 +6,11 @@ import { signIn } from "../lib/apiRequester";
 import { setUser } from '../lib/userAuth'
 import isEmail from 'validator/lib/isEmail';
 
+/**
+ * Defines the signIn part of the dialog
+ * 
+ * @author Aaron Exley
+ */
 export class SignInDialog extends React.Component {
 
     constructor(props) {

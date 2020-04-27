@@ -54,7 +54,6 @@
 
 .right div {
     line-height: 19px;
-    /* padding-top: 12px; */
     display: flex;
 }
 
@@ -125,7 +124,6 @@
 .search img {
     position: relative;
     cursor: pointer;
-    /* padding-top: ; */
     width: 20px;
     height: 20px;
     background-color: var(--backgroundColor);
@@ -145,10 +143,7 @@
     display: grid;
     top: 35px;
     left: -6px;
-    /* width: 121px; */
-    /* max-height: 0; */
     height: 0;
-    /* display: none; */
     padding: 0 6px;
     z-index: 5;
     overflow: hidden;
@@ -170,7 +165,6 @@
 }
 
 .clickableText span:hover {
-    /* color: #414141; */
     background: var(--highlightColor);
 }
 
@@ -306,7 +300,6 @@
         height: 3px;
         width: 100%;
         background: var(--foregroundColor);
-        /* border-radius: 9px; */
         opacity: 1;
         left: 0;
         -webkit-transform: rotate(0deg);
@@ -350,8 +343,6 @@
         transform: rotate(45deg);
         top: 3px;
         left: 3px;
-        /* top: -22px;
-        left: 10px; */
       }
       
       .hamburger.open span:nth-child(2) {

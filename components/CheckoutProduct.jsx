@@ -1,7 +1,17 @@
 import React from 'react';
 import styles from "../css/CheckoutProduct.module.css";
 
-export class CheckoutProduct extends React.Component{
+/**
+ * Defines the component for the look and functionality of a Checkout product
+ * 
+ * @author Aaron Exley
+ * @author Chris Labatt
+ */
+export class CheckoutProduct extends React.Component {
+
+    /**
+     * @param {*} props the product to display
+     */
     constructor(props){
         super(props);
 
@@ -13,7 +23,10 @@ export class CheckoutProduct extends React.Component{
         this.getAdjustedPrice = this.getAdjustedPrice.bind(this);
     }
 
-    getSubtotal(){
+    /**
+     * Gets the subtotal for the price
+     */
+    getSubtotal() {
         if(this.props.product.discount == 0){
             return Math.round((this.props.product.price * this.props.product.quantity) * 100) / 100;
         }
@@ -22,10 +35,16 @@ export class CheckoutProduct extends React.Component{
         }
     }
 
+    /**
+     * Gets the sale price for the product
+     */
     getAdjustedPrice(){
         return Math.round((this.props.product.price * (1 - this.props.product.discount)) * 100) / 100
     }
     
+    /**
+     * Render the componenet
+     */
     render(){
 
         let highlightColor = "#FFF500";

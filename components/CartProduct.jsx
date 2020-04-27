@@ -1,7 +1,19 @@
 import React from 'react';
 import styles from "../css/CartProduct.module.css";
 import {isProductWishlisted} from "../lib/utils"
-export class CartProduct extends React.Component{
+
+/**
+ * Defines the component for the look and functionality of a cart product
+ * 
+ * @author Aaron Exley
+ * @author Chris Labatt
+ */
+export class CartProduct extends React.Component {
+
+    /**
+     * 
+     * @param {*} props a product
+     */
     constructor(props){
         super(props);
 
@@ -18,6 +30,9 @@ export class CartProduct extends React.Component{
         this.decreaseRef = React.createRef();
     }
 
+    /**
+     * Calulates the subTotal
+     */
     getSubtotal(){
         if(this.props.product.discount == 0){
             return Math.round((this.props.product.price * this.props.product.quantity) * 100) / 100;
@@ -27,10 +42,16 @@ export class CartProduct extends React.Component{
         }
     }
 
+    /**
+     * Calculates the sale price for the product
+     */
     getAdjustedPrice(){
         return Math.round((this.props.product.price * (1 - this.props.product.discount)) * 100) / 100
     }
 
+    /**
+     * Decreases the quantity.
+     */
     async decreaseQuantity(){
         if (this.props.product.quantity > 1){
             // this.setState({...this.state, quantity: this.props.product.quantity - 1});
@@ -42,32 +63,39 @@ export class CartProduct extends React.Component{
             });
         }
     }
+
+    /**
+     * Increase the quantity.
+     */
     async increaseQuantity(){
-        // this.setState({...this.state, quantity: this.props.product.quantity + 1});
-        
-        
+
         this.increaseRef.current.setAttribute("disabled",true);
         this.decreaseRef.current.setAttribute("disabled",true);
         this.props.updateProduct("quantity", this.props.product.quantity + 1, this.props.i).then(() => {
             this.increaseRef.current.removeAttribute("disabled");
-            this.decreaseRef.current.removeAttribute("disabled");
-            
+            this.decreaseRef.current.removeAttribute("disabled");     
         });
         
-
-
     }
 
+    /**
+     * Updates the wishlist
+     */
     updateWishlist(){
-        // this.setState({...this.state, wishlisted: !this.props.product.wishlisted});
         this.props.updateProduct("wishlisted", !this.props.product.wishlisted, this.props.i);
     }
 
+    /**
+     * Removes itself from the list of its parent
+     */
     removeProduct(){
         //Removes product
         this.props.removeProduct(this.props.i);
     }
 
+    /**
+     * Renders the component
+     */
     render(){
         
         let highlightColor = "#FFF500";

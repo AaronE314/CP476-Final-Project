@@ -19,8 +19,6 @@ handler.get(async (req, res) => {
 
     try {
 
-        // console.log("searching");
-        
         let doc = {}
         
         let findQuery = {productName: new RegExp(req.query.search, "i")}; 

@@ -50,7 +50,6 @@ handler.get(async (req, res) => {
             }
            
         }
-        // console.log(findQuery);
         doc = await req.db.collection('StoreProducts').find(findQuery, {projection:returnQuery}).sort(sortQuery).toArray();
         res.json(doc)
     }catch(err){

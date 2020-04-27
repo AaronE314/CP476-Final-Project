@@ -3,7 +3,11 @@ import { Footer } from './Footer'
 import TopNav from './TopNav'
 import React from 'react'
 
-//const Home = () => (
+/**
+ * Defines the overall General Layout of the page
+ * 
+ * @author Aaron Exley
+ */
 export class Layout extends React.Component {
 
     constructor(props) {
@@ -21,7 +25,6 @@ export class Layout extends React.Component {
         <Head>
             <title>Web Store</title>
             <link rel="icon" href="/favicon.ico" />
-            {/* {(this.props.stripe) ? <script src="https://js.stripe.com/v3/"></script> : null} */}
         </Head>
 
         <header>
@@ -39,14 +42,12 @@ export class Layout extends React.Component {
         <style jsx>{`
             .container {
                 position: relative;
-                /*height: calc(100vh + 310px) !important;*/
                 min-height: calc(100vh + 310px);
             }
         
             main {
                 position: relative;
                 padding-top: 80px;
-                /*height: calc(100vh - 80px);*/
                 min-height: calc(100vh - 80px);
             }
         `}</style>

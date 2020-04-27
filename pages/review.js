@@ -157,14 +157,9 @@ export class Review extends React.Component {
         }
 
         if (this.validate(formData) && this.state.shippingInfo) {
-            // Router.push("/confirmation");
-            
-            // TODO: Make payment call.
-            // TODO: Add order to user.
+
             buildCheckout(formData, this.state.products, {price: this.state.total, quantity: this.state.numberOfItems, address: formData.address})
             .then((data) => {
-
-                // console.log("hiiii");
 
                 if (data.message === "ok") {
                     loading = false;

@@ -5,6 +5,11 @@ import { signUp } from "../lib/apiRequester";
 import { setUser } from '../lib/userAuth'
 import isEmail from 'validator/lib/isEmail';
 
+/**
+ * Defines the signUp part of the dialog 
+ * 
+ * @author Aaron Exley
+ */
 export class SignUpDialog extends React.Component {
 
     constructor(props) {

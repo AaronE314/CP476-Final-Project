@@ -87,10 +87,6 @@ export class ProductDetail extends React.Component {
             
             if (isNumeric(id)){
                 let productDetails = await  getDetailedProduct(id)
-                
-
-
-                // console.log(productDetails[0]);
 
                 this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
             }
@@ -102,7 +98,6 @@ export class ProductDetail extends React.Component {
             
             if (isNumeric(id)){
                 let productDetails = await  getDetailedProduct(id)
-                // console.log(productDetails[0]);
                 this.setState({...this.state,productDetails: this.hasFeilds(productDetails[0])})
             }
 

@@ -4,7 +4,18 @@ import Link from 'next/link';
 import {isProductWishlisted} from "../lib/utils"; 
 import { updateWishList as updateUserWishList} from '../lib/userAuth';
 
-export class ItemDisplayBox extends React.Component{
+/**
+ * Defines the component for the look and functionality of a product
+ * 
+ * @author Aaron Exley
+ * @author Chris Labatt
+ */
+export class ItemDisplayBox extends React.Component {
+
+    /**
+     * 
+     * @param {*} props The product
+     */
     constructor(props){
         super(props);
         this.state = {
@@ -18,32 +29,28 @@ export class ItemDisplayBox extends React.Component{
         
     }
 
-    getAdjustedPrice(){
+    getAdjustedPrice() {
         return Math.round((this.props.value.price * (1 - this.props.value.discount)) * 100) / 100
     }
 
-    hoverOn(colourLink){
-        // document.getElementById("displayTemp").style.background = colourLink;
-        //Replace later with changing the image with id = displayImage
-        // document.getElementById("displayImage").src = colourLink;
+    hoverOn(colourLink) {
         this.setState({...this.props.value, displayImageIndex: colourLink, displayColorIndex: colourLink});
     }
 
-    hoverOff(){
-        // document.getElementById("displayTemp").style.background = this.props.value.colours[0].link;
-        //Replace later with changing the image with id = displayImage
-        // document.getElementById("displayImage").src = this.props.value.colours[0].link;
+    hoverOff() {
         this.setState({...this.props.value, displayImageIndex: 0, displayColorIndex: 0});
     }
 
-    updateWishlist(){
+    updateWishlist() {
         
         updateUserWishList(this.props.value, this.state.wishlisted);
         this.setState({...this.state, wishlisted: !this.state.wishlisted});
     }
-    componentDidMount(){
+    
+    componentDidMount() {
         this.state.wishlisted = isProductWishlisted(this.props.value);
     }
+
     render() {
         let highlightColor = "#FFF500";
         if (typeof window !== 'undefined') {
