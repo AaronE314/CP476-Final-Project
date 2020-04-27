@@ -11,6 +11,8 @@ This is a [Next.js](https://nextjs.org/)
 Run the development server:
 
 ```bash
+npm install
+then
 npm run dev
 ```
 
