@@ -162,7 +162,8 @@ export class ProductDetail extends React.Component {
 
                     <div className="buttons">
                         <button onClick={e => {
-                            if (this.state.productDetails.productID !== undefined){
+                            if (this.state.productDetails.productID !== undefined && this.state.color > -1 && this.state.size > -1){
+                                console.log(this.state);
                                 updateCart({
                                     productID:this.state.productDetails.productID, 
                                     productName: this.state.productDetails.productName, 

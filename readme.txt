@@ -6,4 +6,4 @@ Email: burs5200@mylaurier.ca, exle9710@mylaurier.ca, laba9990@mylaurier.ca,yoha4
 Project statement: I claim that the enclosed submission is the shared work of the team members
 
 Link to the github account: https://github.com/AaronE314/CP476-Final-Project
-URL (used for last phase):
+URL (used for last phase):https://cp476groupproject.herokuapp.com/
