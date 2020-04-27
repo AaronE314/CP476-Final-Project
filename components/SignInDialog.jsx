@@ -99,9 +99,6 @@ export class SignInDialog extends React.Component {
             <button className={styles.submit} type="submit">SIGN IN</button>
 
             <p className={styles.error}>{this.state.userError}</p>
-
-            <p className={styles.span}><a href="#">Forgot your password?</a></p>
-
         </form>
 
     }
