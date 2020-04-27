@@ -215,7 +215,6 @@ export class TopNav extends React.Component {
                                 </a>
                                 <div className={`${styles.userDropdown} ${(this.state.userOpen) ? styles.userOpen : ""}`}>
                                     <Link href="/orders"><span className={styles.clickableText}><img src="/images/clock.svg"/><span>ORDERS</span></span></Link>
-                                    <span className={styles.clickableText}><img src="/images/card.svg"/><span>SAVED INFO</span></span>
                                     <span onClick={this.logout} className={styles.clickableText}><img src="/images/signout.svg"/><span>SIGN OUT</span></span>
                                 </div>
                             </div>

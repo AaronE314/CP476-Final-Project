@@ -62,11 +62,6 @@ handler.post(async (req, res) => {
     
     orderConfirmation(order);
 
-    try {
-        req.dbClient.close().catch();
-    } catch(e) {
-        
-    }
     res.json({message: "ok", orderNumber: orderNumber});
 
 }); 

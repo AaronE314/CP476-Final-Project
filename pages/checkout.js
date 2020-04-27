@@ -6,7 +6,7 @@ import Router from "next/router";
 import { withRouter } from 'next/router';
 import { countries } from '../public/countriesRegions'
 import isEmail from 'validator/lib/isEmail';
-import { isValidNumber, isValidZip, formatNumber } from '../lib/validators';
+import { isValidNumber, isValidZip, formatNumber} from '../lib/validators';
 import {  getUserCart} from '../lib/userAuth';
 export class Checkout extends React.Component {
 
@@ -79,7 +79,7 @@ export class Checkout extends React.Component {
 
     }
 
-    validate = (formData) => {
+    validate = async (formData) => {
 
         let errors = {
             firstNameError: "",
@@ -137,9 +137,15 @@ export class Checkout extends React.Component {
             province: this.state.province
         }
 
-        if (this.validate(formData)) {
-            Router.push(`/review?formData=${JSON.stringify(formData)}&products=${JSON.stringify(this.state.products)}}`, "review");
-        }
+        this.validate(formData).then(valid => {
+            if (valid) {
+                Router.push(`/review?formData=${JSON.stringify(formData)}&products=${JSON.stringify(this.state.products)}}`, "review");
+            }
+        })
+
+        // if (this.validate(formData)) {
+            
+        // }
 
     }
     componentDidMount(){
@@ -175,8 +181,6 @@ export class Checkout extends React.Component {
                     <div className="shipping">
                         
                         <h1>Shipping Information</h1>
-
-                        <p>Been here before? <a href="#">Sign in</a>, or <a href="#">Sign up</a> to checkout faster in the future.</p>
                         
                         <form className="shippingInfo" autoComplete="on" method="post" onSubmit={this.handleSubmit}>
                             <div className="formInputs">

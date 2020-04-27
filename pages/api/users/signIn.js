@@ -60,12 +60,6 @@ handler.post(async (req, res) => {
         })
         .catch(error => {
             
-            try {
-                req.dbClient.close().catch();
-            } catch(e) {
-                
-            }
-            
             res.send({
                 status: 'error',
                 message: error.toString()

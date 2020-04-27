@@ -23,10 +23,9 @@ export class Categories extends React.Component {
             category: [
                 {name: "View All", link: "/categories", filter: ""},
                 {name: "Shirts", link: "/categories", filter: "shirts"},
-                {name: "T-shirts", link: "/categories", filter: "t-shirts"},
-                {name: "Sweaters & Cardigans", link: "/categories", filter: "sweaters"},
+                {name: "Sweaters", link: "/categories", filter: "sweaters"},
                 {name: "Pants", link: "/categories", filter: "pants"},
-                {name: "Jeans", link: "/categories", filter: "jeans"},
+                {name: "Shorts", link: "/categories", filter: "shorts"},
                 {name: "Joggers", link: "/categories", filter: "joggers"}
             ],
             showMore: 1,
@@ -84,7 +83,9 @@ export class Categories extends React.Component {
 
                 if (filter.low !== undefined) {
 
-                    matchesPrice = matchesPrice || item.price > filter.low && item.price < filter.high;
+                    let price = Math.round((item.price * (1 - item.discount)) * 100) / 100
+
+                    matchesPrice = matchesPrice || price > filter.low && price < filter.high;
 
                 } else {
 
@@ -100,8 +101,8 @@ export class Categories extends React.Component {
     }
 
     maxShown = (width, height, showMore) => {
-        // console.log(width, height);
-        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : 8;
+        console.log(width, height);
+        return (width > 815) ? ((2 * showMore) * Math.floor((height - 80 - (32 * 3)) / 533) * Math.floor((width - 244) / 343)) : (8 * showMore);
     }
     
     handleResize = () => {
